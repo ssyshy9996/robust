@@ -1,0 +1,227 @@
+<div class=" content">
+  <div class=" row">
+
+
+    <div class=" col-12">
+      <div class=" card card-chart">
+        <div class=" card-header">
+          <div class=" row">
+            <div class=" col-sm-6 text-left">
+              <h5 class=" card-category">Local Scores</h5>
+              <h2 class=" card-title">Score</h2>
+            </div>
+            <div class=" col-sm-6">
+              <div
+                class=" btn-group btn-group-toggle float-right"
+                data-toggle="buttons"
+              >
+                <label class=" btn btn-sm btn-danger btn-simple" (click)="data=datasets[0];updateOptions();clicked=true;clicked1=false;clicked2=false" [ngClass]="{'active':clicked===true}">
+                  <input checked="checked" name="options" type="radio" />
+
+                  <span
+                    class=" d-none d-sm-block d-md-block d-lg-block d-xl-block"
+                  >
+                    Score 1
+                  </span>
+                  <span class=" d-block d-sm-none">
+                    <i class=" tim-icons icon-single-02"> </i>
+                  </span>
+                </label>
+                <label class=" btn btn-sm btn-danger btn-simple" (click)="data=datasets[1];updateOptions();clicked=false;clicked1=true;clicked2=false" [ngClass]="{'active':clicked1===true}">
+                  <input
+                    class=" d-none d-sm-none"
+                    name="options"
+                    type="radio"
+                  />
+
+                  <span
+                    class=" d-none d-sm-block d-md-block d-lg-block d-xl-block"
+                  >
+                    Score 2
+                  </span>
+                  <span class=" d-block d-sm-none">
+                    <i class=" tim-icons icon-gift-2"> </i>
+                  </span>
+                </label>
+                <label class=" btn btn-sm btn-danger btn-simple" (click)="data=datasets[2];updateOptions();clicked=false;clicked1=false;clicked2=true" [ngClass]="{'active':clicked2===true}">
+                  <input class=" d-none" name="options" type="radio" />
+
+                  <span
+                    class=" d-none d-sm-block d-md-block d-lg-block d-xl-block"
+                  >
+                    Score 3
+                  </span>
+                  <span class=" d-block d-sm-none">
+                    <i class=" tim-icons icon-tap-02"> </i>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class=" card-body">
+          <div class=" chart-area"><canvas id="chartBig1"> </canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class=" row">
+    <div class=" col-lg-4">
+      <div class=" card card-chart">
+        <div class=" card-header">
+          <h5 class=" card-category">Score1</h5>
+          <h3 class=" card-title">
+            <i class=" tim-icons icon-bell-55 text-danger-states"> </i> 763,215
+          </h3>
+        </div>
+        <div class=" card-body">
+          <div class=" chart-area"><canvas id="chartLineRed"> </canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class=" col-lg-4">
+      <div class=" card card-chart">
+        <div class=" card-header">
+          <h5 class=" card-category">Score2</h5>
+          <h3 class=" card-title">
+            <i class=" tim-icons icon-delivery-fast text-info"> </i> 3,500€
+          </h3>
+        </div>
+        <div class=" card-body">
+          <div class=" chart-area"><canvas id="CountryChart"> </canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class=" col-lg-4">
+      <div class=" card card-chart">
+        <div class=" card-header">
+          <h5 class=" card-category">Score3</h5>
+          <h3 class=" card-title">
+            <i class=" tim-icons icon-send text-success"> </i> 12,100K
+          </h3>
+        </div>
+        <div class=" card-body">
+          <div class=" chart-area"><canvas id="chartLineGreen"> </canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class=" row">
+    <div class="col-md-12">
+      <div class="col-md-12">
+        <button class="col-md-5 btn btn-fill btn-danger">Scenarios</button>
+        <label class="col-md-1"></label>
+        <button class="col-md-5 btn btn-fill btn-danger">Solutions</button>
+      </div>
+      <!-- <div class="col-md-6">
+        
+      </div> -->
+    </div>
+    <div
+  id="carouselVideoExample"
+  class="carousel slide carousel-fade"
+  data-mdb-ride="carousel"
+>
+  <!-- Indicators -->
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-mdb-target="#carouselVideoExample"
+      data-mdb-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+  </div>
+
+  <!-- Inner -->
+  <div class="carousel-inner">
+    <!-- Single item -->
+    <div class="carousel-item active">
+      <video class="img-fluid" autoplay loop muted>
+        <source src="https://mdbcdn.b-cdn.net/img/video/Tropical.mp4" type="video/mp4" />
+      </video>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>How to use the webapp</h5>
+      </div>
+    </div>
+
+  </div>
+  <!-- Inner -->
+
+  <!-- Controls -->
+  
+</div>
+
+    <div style="margin-top: 10px;" class="col-md-12">
+      <div class="card">
+        <section>
+          <h3 class="text-center mb-4 pb-2 text-primary fw-bold">FAQ</h3>
+          <p class="text-center mb-5">
+            Find the answers for the most frequently asked questions below
+          </p>
+        
+          <div class="row">
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h6 class="mb-3 text-primary"><i class="far fa-paper-plane text-primary pe-2"></i> A simple
+                question?</h6>
+              <p>
+                <strong><u>Absolutely!</u></strong> We work with top payment companies which guarantees
+                your
+                safety and
+                security. All billing information is stored on our payment processing partner.
+              </p>
+            </div>
+        
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h6 class="mb-3 text-primary"><i class="fas fa-pen-alt text-primary pe-2"></i> A question
+                that
+                is longer then the previous one?</h6>
+              <p>
+                <strong><u>Yes, it is possible!</u></strong> You can cancel your subscription anytime in
+                your
+                account. Once the subscription is
+                cancelled, you will not be charged next month.
+              </p>
+            </div>
+        
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h6 class="mb-3 text-primary"><i class="fas fa-user text-primary pe-2"></i> A simple
+                question?
+              </h6>
+              <p>
+                Currently, we only offer monthly subscription. You can upgrade or cancel your monthly
+                account at any time with no further obligation.
+              </p>
+            </div>
+        
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h6 class="mb-3 text-primary"><i class="fas fa-rocket text-primary pe-2"></i> A simple
+                question?
+              </h6>
+              <p>
+                Yes. Go to the billing section of your dashboard and update your payment information.
+              </p>
+            </div>
+        
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h6 class="mb-3 text-primary"><i class="fas fa-home text-primary pe-2"></i> A simple
+                question?
+              </h6>
+              <p><strong><u>Unfortunately no</u>.</strong> We do not issue full or partial refunds for any
+                reason.</p>
+            </div>
+        
+            <div class="col-md-6 col-lg-4 mb-4">
+              <h6 class="mb-3 text-primary"><i class="fas fa-book-open text-primary pe-2"></i> Another
+                question that is longer than usual</h6>
+              <p>
+                Of course! We’re happy to offer a free plan to anyone who wants to try our service.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
