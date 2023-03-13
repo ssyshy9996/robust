@@ -96,6 +96,7 @@ export class IconsComponent implements OnInit {
   }
 
   onFileChange(event) {
+    this.TrainnigDatafile = event.target.files[0];
     const reader = new FileReader();
     reader.readAsText(event.target.files[0]);
     reader.onload = () => {
@@ -211,11 +212,13 @@ export class IconsComponent implements OnInit {
     formData.append('TrainingFile', this.TrainnigDatafile);
     formData.append('TestFile', this.TestFile);
     formData.append('FactsheetFile', this.FactsheetFile);
-    formData.append('Solutiontype', this.Solutiontype);
+    formData.append('Solutiontype', this.tutorial.Solutiontype);
 
 
-    formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
-    formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
+    // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
+    formData.append('ProtectedFeature', this.tutorial.Protectedfeatures);
+    // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
+    formData.append('Protectedvalues', this.tutorial.Protectedvalues);
 
 
     formData.append('Outlierdatafile', this.Outlierdatafile);
@@ -240,7 +243,7 @@ export class IconsComponent implements OnInit {
       .subscribe(
         response => {
           console.log("Response data:", response);
-          this.router.navigate(['/dashboard'])
+          // this.router.navigate(['/dashboard'])
         },
         error => {
           console.log(error);
@@ -263,8 +266,10 @@ export class IconsComponent implements OnInit {
     formData.append('FactsheetFile', this.FactsheetFile);
     formData.append('Solutiontype', this.Solutiontype);
 
-    formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
-    formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
+    // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
+    formData.append('ProtectedFeature', this.tutorial.Protectedfeatures);
+    // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
+    formData.append('Protectedvalues', this.tutorial.Protectedvalues);
 
 
     formData.append('Outlierdatafile', this.Outlierdatafile);
@@ -277,7 +282,7 @@ export class IconsComponent implements OnInit {
       .subscribe(
         response => {
           console.log("Response data:", response);
-          this.router.navigate(['/dashboard'])
+          // this.router.navigate(['/dashboard'])
         },
         error => {
           console.log(error);
