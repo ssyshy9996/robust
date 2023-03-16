@@ -14,22 +14,20 @@ export class SignupComponent implements OnInit {
     email: '',
     password: '',
   };
-  
-  constructor(private tutorialservice: TutorialService, private router: Router, public auth:AuthService) { }
+
+  constructor(private tutorialservice: TutorialService, private router: Router, public auth: AuthService) { }
 
   ngOnInit(): void {
   }
-  
+
   signUp() {
     const formData = new FormData();
-    formData.append('fullname', this.tutorial.fullname);
     formData.append('email', this.tutorial.email);
     formData.append('password', this.tutorial.password);
 
-    this.tutorialservice.registeruser(formData)
+    this.tutorialservice.register(formData)
       .subscribe(
         response => {
-          console.log("Response data:", response);
           this.router.navigate(['/login']);
         },
         error => {

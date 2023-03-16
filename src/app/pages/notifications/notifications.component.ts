@@ -107,23 +107,19 @@ export class NotificationsComponent implements OnInit {
   constructor(public auth: AuthService, private tutorialservice: TutorialService) { }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => {
-      this.tutorial.Userid = user.sub.split('|')[1];
-      this.tutorial.emailid = user.email;
-      console.log("User details:", user.email)
-      this.tutorialservice.get(user.email).subscribe((data: any) => {
-        this.ScenarioName = data.ScenarioName;
-        console.log("ScenarioNameList:", data.ScenarioName);
-      });
-      this.tutorialservice.getsolution(user.email).subscribe((data: any) => {
-        this.SolutionName = data.SolutionName;
-        console.log("ScenarioNameList:", data.SolutionName);
-      });
-      // this.form = this.formBuilder.group({
-      //   profile: ['']
-      // });
-      // console.log("User is:",user);
+    this.tutorial.emailid = localStorage.getItem('email');
+    this.tutorialservice.get(localStorage.getItem('email')).subscribe((data: any) => {
+      this.ScenarioName = data.ScenarioName;
+      console.log("ScenarioNameList:", data.ScenarioName);
     });
+    this.tutorialservice.getsolution(localStorage.getItem('email')).subscribe((data: any) => {
+      this.SolutionName = data.SolutionName;
+      console.log("ScenarioNameList:", data.SolutionName);
+    });
+    // this.form = this.formBuilder.group({
+    //   profile: ['']
+    // });
+    // console.log("User is:",user);
 
 
     var gradientBarChartConfiguration: any = {

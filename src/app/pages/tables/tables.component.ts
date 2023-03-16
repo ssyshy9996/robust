@@ -63,24 +63,20 @@ export class TablesComponent implements OnInit {
   constructor(public auth: AuthService, private tutorialservice: TutorialService) { }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => {
-      this.tutorial.Userid = user.sub.split('|')[1];
-      this.tutorial.emailid = user.email;
-      this.tutorialservice.get(user.email).subscribe((data: any) => {
-        this.ScenarioName = data.ScenarioName;
-        console.log("ScenarioNameList:", data.ScenarioName);
-      });
-      this.tutorialservice.getsolution(user.email).subscribe((data: any) => {
-        this.SolutionName = data.SolutionName;
-        console.log("ScenarioNameList:", data.SolutionName);
-      });
+    this.tutorialservice.get(localStorage.getItem('email')).subscribe((data: any) => {
+      this.ScenarioName = data.ScenarioName;
+      console.log("ScenarioNameList:", data.ScenarioName);
+    });
+    this.tutorialservice.getsolution(localStorage.getItem('email')).subscribe((data: any) => {
+      this.SolutionName = data.SolutionName;
+      console.log("ScenarioNameList:", data.SolutionName);
     });
   }
 
   saveTutorial(): void {
     const formData = new FormData();
     formData.append('Userid', this.tutorial.Userid);
-    formData.append('emailid', this.tutorial.emailid);
+    formData.append('emailid', localStorage.getItem('email'));
     formData.append('SelectScenario', this.tutorial.SelectScenario);
     formData.append('SelectSolution1', this.tutorial.SelectSolution1);
     formData.append('SelectSolution2', this.tutorial.SelectSolution2);

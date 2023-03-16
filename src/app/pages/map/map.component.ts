@@ -25,12 +25,7 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     console.log('paramdId:', this.router.url);
 
-    this.auth.user$.subscribe(user => {
-      this.tutorial.emailid = user.email;
-      this.tutorial.Userid = user.sub.split('|')[1];
-      this.Getdata(user.sub.split('|')[1]);
-      console.log("User is:", user);
-    });
+    this.tutorial.emailid = localStorage.getItem('email');
 
     const scenarioId = this.router.url.substring(6);
     if (scenarioId.length > 0) {

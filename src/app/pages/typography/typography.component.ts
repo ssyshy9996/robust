@@ -27,25 +27,19 @@ export class TypographyComponent implements OnInit {
 
   ngOnInit() {
 
-    this.auth.user$.subscribe(user => {
-      // this.tutorial.Userid = user.sub.split('|')[1];
-      this.tutorialservice.get(user.email).subscribe((data: any) => {
-        this.ScenarioName = data.ScenarioName;
-        console.log("ScenarioNameList:", data.ScenarioName);
-      });
-      this.tutorialservice.getsolution(user.email).subscribe((data: any) => {
-        this.SolutionName = data.SolutionName;
-        console.log("ScenarioNameList:", data.SolutionName);
-      });
-      this.tutorialservice.userpageUrl(user.email).subscribe((data: any) => {
-        this.Admintag = data.Admin;
-        this.users = data.users;
-        console.log("admin data:", data);
-      });
-      // this.form = this.formBuilder.group({
-      //   profile: ['']
-      // });
-      // console.log("User is:",user);
+    const email = localStorage.getItem('email');
+    this.tutorialservice.get(email).subscribe((data: any) => {
+      this.ScenarioName = data.ScenarioName;
+      console.log("ScenarioNameList:", data.ScenarioName);
+    });
+    this.tutorialservice.getsolution(email).subscribe((data: any) => {
+      this.SolutionName = data.SolutionName;
+      console.log("ScenarioNameList:", data.SolutionName);
+    });
+    this.tutorialservice.userpageUrl(email).subscribe((data: any) => {
+      this.Admintag = data.Admin;
+      this.users = data.users;
+      console.log("admin data:", data);
     });
   }
 

@@ -17,12 +17,8 @@ export class UserComponent implements OnInit {
   constructor(public auth: AuthService, private tutorialService: TutorialService, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.auth.user$.subscribe(user => {
-      this.tutorialService.getUser(user.email).subscribe((data: any) => {
-        this.tutorial.email = data.email;
-        this.tutorial.password = data.password;
-      });
-    });
+    this.tutorial.email = localStorage.getItem('email');
+    this.tutorial.password = localStorage.getItem('password');
   }
 
   saveUser() {

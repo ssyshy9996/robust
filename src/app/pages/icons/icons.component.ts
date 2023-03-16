@@ -35,6 +35,7 @@ export class IconsComponent implements OnInit {
   FactsheetFile: File;
   Outlierdatafile: File;
   ModelFile: File;
+  MapFile: File;
   ProtectedFeatures: string[];
   Protectedvalues: string[];
   // form: FormGroup;
@@ -66,17 +67,15 @@ export class IconsComponent implements OnInit {
     if (!this.showVal1) {
       this.tutorial.Solutiontype = 'unsupervised';
     }
-    this.auth.user$.subscribe(user => {
-      this.tutorial.emailid = user.email;
-      this.tutorialservice.get(user.email).subscribe((data: any) => {
-        this.ScenarioName = data.ScenarioName;
-        console.log("ScenarioNameList:", data.ScenarioName);
-      });
-      // this.form = this.formBuilder.group({
-      //   profile: ['']
-      // });
-      // console.log("User is:",user);
+    this.tutorial.emailid = localStorage.getItem('email');
+    this.tutorialservice.get(localStorage.getItem('email')).subscribe((data: any) => {
+      this.ScenarioName = data.ScenarioName;
+      console.log("ScenarioNameList:", data.ScenarioName);
     });
+    // this.form = this.formBuilder.group({
+    //   profile: ['']
+    // });
+    // console.log("User is:",user);
 
     const id = this.router.url.substring(7);
     if (id.length <= 0)
@@ -202,6 +201,10 @@ export class IconsComponent implements OnInit {
     this.ModelFile = event.target.files[0];
   }
 
+  onMapChange(event) {
+    this.MapFile = event.target.files[0];
+  }
+
   saveTutorial(): void {
     let formData = new FormData();
     formData.append('Userid', this.tutorial.Userid);
@@ -222,7 +225,7 @@ export class IconsComponent implements OnInit {
 
 
     formData.append('Outlierdatafile', this.Outlierdatafile);
-
+    formData.append('MapFile', this.MapFile);
     formData.append('ModelFile', this.ModelFile);
     formData.append('Targetcolumn', this.tutorial.Targetcolumn);
     formData.append('Favourableoutcome', this.tutorial.Favourableoutcome);
@@ -243,7 +246,7 @@ export class IconsComponent implements OnInit {
       .subscribe(
         response => {
           console.log("Response data:", response);
-          // this.router.navigate(['/dashboard'])
+          this.router.navigate(['/dashboard']) //ok? yes
         },
         error => {
           console.log(error);
@@ -266,6 +269,7 @@ export class IconsComponent implements OnInit {
     formData.append('FactsheetFile', this.FactsheetFile);
     formData.append('Solutiontype', this.Solutiontype);
 
+    formData.append('MapFile', this.MapFile);
     // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
     formData.append('ProtectedFeature', this.tutorial.Protectedfeatures);
     // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
@@ -282,7 +286,7 @@ export class IconsComponent implements OnInit {
       .subscribe(
         response => {
           console.log("Response data:", response);
-          // this.router.navigate(['/dashboard'])
+          this.router.navigate(['/dashboard'])
         },
         error => {
           console.log(error);

@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
     unsupervised_algorithm_class: '',
     unsupervised_correlated_features: '',
     unsupervised_model_size: '',
-    unsupervised_feature_relevance: '',
+    unsupervised_permutation_importance: '',
 
     unsupervised_confidence_score: '',
     unsupervised_clique_method: '',
@@ -100,80 +100,77 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.auth.user$.subscribe(user => {
-      console.log('user:', user)
-      // this.tutorial.Userid = user.sub.split('|')[1];
-      this.tutorialservice.dashboard(user.email).subscribe((data: any) => {
-        // this.ScenarioName=data.ScenarioName;
-        this.tutorial.fairness_score = data.fairness_score;
-        this.tutorial.explainability_score = data.explainability_score;
-        this.tutorial.methodology_score = data.methodology_score;
-        this.tutorial.robustness_score = data.robustness_score;
+    // this.tutorial.Userid = user.sub.split('|')[1];
+    this.tutorialservice.dashboard(localStorage.getItem('email')).subscribe((data: any) => {
+      // this.ScenarioName=data.ScenarioName;
+      this.tutorial.fairness_score = data.fairness_score;
+      this.tutorial.explainability_score = data.explainability_score;
+      this.tutorial.methodology_score = data.methodology_score;
+      this.tutorial.robustness_score = data.robustness_score;
 
-        this.tutorial.underfitting = data.underfitting;
-        this.tutorial.overfitting = data.overfitting;
-        this.tutorial.statistical_parity_difference = data.statistical_parity_difference;
-        this.tutorial.equal_opportunity_difference = data.equal_opportunity_difference;
-        this.tutorial.average_odds_difference = data.average_odds_difference;
-        this.tutorial.disparate_impact = data.disparate_impact;
-        this.tutorial.class_balance = data.class_balance;
+      this.tutorial.underfitting = data.underfitting;
+      this.tutorial.overfitting = data.overfitting;
+      this.tutorial.statistical_parity_difference = data.statistical_parity_difference;
+      this.tutorial.equal_opportunity_difference = data.equal_opportunity_difference;
+      this.tutorial.average_odds_difference = data.average_odds_difference;
+      this.tutorial.disparate_impact = data.disparate_impact;
+      this.tutorial.class_balance = data.class_balance;
 
-        this.tutorial.algorithm_class = data.algorithm_class;
-        this.tutorial.correlated_features = data.correlated_features;
-        this.tutorial.model_size = data.model_size;
-        this.tutorial.feature_relevance = data.feature_relevance;
+      this.tutorial.algorithm_class = data.algorithm_class;
+      this.tutorial.correlated_features = data.correlated_features;
+      this.tutorial.model_size = data.model_size;
+      this.tutorial.feature_relevance = data.feature_relevance;
 
-        this.tutorial.confidence_score = data.confidence_score;
-        this.tutorial.clique_method = data.clique_method;
-        this.tutorial.loss_sensitivity = data.loss_sensitivity;
-        this.tutorial.clever_score = data.clever_score;
-        this.tutorial.er_fast_gradient_attack = data.er_fast_gradient_attack;
-        this.tutorial.er_carlini_wagner_attack = data.er_carlini_wagner_attack;
-        this.tutorial.er_deepfool_attack = data.er_deepfool_attack;
+      this.tutorial.confidence_score = data.confidence_score;
+      this.tutorial.clique_method = data.clique_method;
+      this.tutorial.loss_sensitivity = data.loss_sensitivity;
+      this.tutorial.clever_score = data.clever_score;
+      this.tutorial.er_fast_gradient_attack = data.er_fast_gradient_attack;
+      this.tutorial.er_carlini_wagner_attack = data.er_carlini_wagner_attack;
+      this.tutorial.er_deepfool_attack = data.er_deepfool_attack;
 
-        this.tutorial.normalization = data.normalization;
-        this.tutorial.missing_data = data.missing_data;
-        this.tutorial.regularization = data.regularization;
-        this.tutorial.train_test_split = data.train_test_split;
-        this.tutorial.factsheet_completeness = data.factsheet_completeness;
+      this.tutorial.normalization = data.normalization;
+      this.tutorial.missing_data = data.missing_data;
+      this.tutorial.regularization = data.regularization;
+      this.tutorial.train_test_split = data.train_test_split;
+      this.tutorial.factsheet_completeness = data.factsheet_completeness;
 
 
 
-        this.tutorial.unsupervised_fairness_score = data.unsupervised_fairness_score;
-        this.tutorial.unsupervised_explainability_score = data.unsupervised_explainability_score;
-        this.tutorial.unsupervised_methodology_score = data.unsupervised_methodology_score;
-        this.tutorial.unsupervised_robustness_score = data.unsupervised_robustness_score;
+      this.tutorial.unsupervised_fairness_score = data.unsupervised_fairness_score;
+      this.tutorial.unsupervised_explainability_score = data.unsupervised_explainability_score;
+      this.tutorial.unsupervised_methodology_score = data.unsupervised_methodology_score;
+      this.tutorial.unsupervised_robustness_score = data.unsupervised_robustness_score;
 
-        this.tutorial.unsupervised_underfitting = data.unsupervised_underfitting;
-        this.tutorial.unsupervised_overfitting = data.unsupervised_overfitting;
-        this.tutorial.unsupervised_statistical_parity_difference = data.unsupervised_statistical_parity_difference;
-        // this.tutorial.unsupervised_equal_opportunity_difference =data.unsupervised_equal_opportunity_difference;
-        // this.tutorial.unsupervised_average_odds_difference =data.unsupervised_average_odds_difference;
-        this.tutorial.unsupervised_disparate_impact = data.unsupervised_disparate_impact;
-        // this.tutorial.unsupervised_class_balance =data.unsupervised_class_balance;
+      this.tutorial.unsupervised_underfitting = data.unsupervised_underfitting;
+      this.tutorial.unsupervised_overfitting = data.unsupervised_overfitting;
+      this.tutorial.unsupervised_statistical_parity_difference = data.unsupervised_statistical_parity_difference;
+      // this.tutorial.unsupervised_equal_opportunity_difference =data.unsupervised_equal_opportunity_difference;
+      // this.tutorial.unsupervised_average_odds_difference =data.unsupervised_average_odds_difference;
+      this.tutorial.unsupervised_disparate_impact = data.unsupervised_disparate_impact;
+      // this.tutorial.unsupervised_class_balance =data.unsupervised_class_balance;
 
-        // this.tutorial.unsupervised_algorithm_class =data.unsupervised_algorithm_class;
-        this.tutorial.unsupervised_correlated_features = data.unsupervised_correlated_features;
-        this.tutorial.unsupervised_model_size = data.unsupervised_model_size;
-        this.tutorial.unsupervised_feature_relevance = data.unsupervised_feature_relevance;
+      // this.tutorial.unsupervised_algorithm_class =data.unsupervised_algorithm_class;
+      this.tutorial.unsupervised_correlated_features = data.unsupervised_correlated_features;
+      this.tutorial.unsupervised_model_size = data.unsupervised_model_size;
+      this.tutorial.unsupervised_permutation_importance = data.unsupervised_permutation_importance;
 
-        // this.tutorial.unsupervised_confidence_score =data.unsupervised_confidence_score;
-        // this.tutorial.unsupervised_clique_method =data.unsupervised_clique_method;
-        // this.tutorial.unsupervised_loss_sensitivity =data.unsupervised_loss_sensitivity;
-        this.tutorial.unsupervised_clever_score = data.unsupervised_clever_score;
-        // this.tutorial.unsupervised_er_fast_gradient_attack =data.unsupervised_er_fast_gradient_attack;
-        // this.tutorial.unsupervised_er_carlini_wagner_attack =data.unsupervised_er_carlini_wagner_attack;
-        // this.tutorial.unsupervised_er_deepfool_attack =data.unsupervised_er_deepfool_attack;
+      // this.tutorial.unsupervised_confidence_score =data.unsupervised_confidence_score;
+      // this.tutorial.unsupervised_clique_method =data.unsupervised_clique_method;
+      // this.tutorial.unsupervised_loss_sensitivity =data.unsupervised_loss_sensitivity;
+      this.tutorial.unsupervised_clever_score = data.unsupervised_clever_score;
+      // this.tutorial.unsupervised_er_fast_gradient_attack =data.unsupervised_er_fast_gradient_attack;
+      // this.tutorial.unsupervised_er_carlini_wagner_attack =data.unsupervised_er_carlini_wagner_attack;
+      // this.tutorial.unsupervised_er_deepfool_attack =data.unsupervised_er_deepfool_attack;
 
-        this.tutorial.unsupervised_normalization = data.unsupervised_normalization;
-        this.tutorial.unsupervised_missing_data = data.unsupervised_missing_data;
-        this.tutorial.unsupervised_regularization = data.unsupervised_regularization;
-        this.tutorial.unsupervised_train_test_split = data.unsupervised_train_test_split;
-        this.tutorial.unsupervised_factsheet_completeness = data.unsupervised_factsheet_completeness;
+      this.tutorial.unsupervised_normalization = data.unsupervised_normalization;
+      this.tutorial.unsupervised_missing_data = data.unsupervised_missing_data;
+      this.tutorial.unsupervised_regularization = data.unsupervised_regularization;
+      this.tutorial.unsupervised_train_test_split = data.unsupervised_train_test_split;
+      this.tutorial.unsupervised_factsheet_completeness = data.unsupervised_factsheet_completeness;
 
-        this.tutorial.scenarioList = data.scenarioList;
-        this.tutorial.solutionList = data.solutionList;
-      });
+      this.tutorial.scenarioList = data.scenarioList;
+      this.tutorial.solutionList = data.solutionList;
     });
 
     var gradientChartOptionsConfigurationWithTooltipBlue: any = {

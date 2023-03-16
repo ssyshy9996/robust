@@ -7,7 +7,7 @@ const solutionUrl = 'http://127.0.0.1:8000/api/solution';
 const analyzeUrl = 'http://127.0.0.1:8000/api/analyze';
 const compareUrl = 'http://127.0.0.1:8000/api/compare';
 const dashboardUrl = 'http://127.0.0.1:8000/api/dashboard';
-const RegisterUrl = 'http://127.0.0.1:8000/api/registerUser';
+const authUrl = 'http://127.0.0.1:8000/api/auth';
 const userpageUrl = 'http://127.0.0.1:8000/api/userpage';
 const setuserUrl = 'http://127.0.0.1:8000/api/setuser';
 const scenarioUrl = 'http://127.0.0.1:8000/api/scenario';
@@ -19,6 +19,10 @@ const solutionDetailUrl = 'http://127.0.0.1:8000/api/solution_detail';
 export class TutorialService {
 
   constructor(private http: HttpClient) { }
+
+  login(data): Observable<any> {
+    return this.http.get(authUrl, { params: data });
+  }
 
   getAll(): Observable<any> {
     return this.http.get(baseUrl);
@@ -48,8 +52,8 @@ export class TutorialService {
     return this.http.post(solutionUrl, data);
   }
 
-  registeruser(data): Observable<any> {
-    return this.http.post(RegisterUrl, data);
+  register(data): Observable<any> {
+    return this.http.post(authUrl, data);
   }
 
   getsolution(email): Observable<any> {
