@@ -63,6 +63,12 @@ export class MapComponent implements OnInit {
     const scenarioId = this.router.url.substring(6);
     if (scenarioId.length <= 0)
       return;
+
+    if (this.tutorial.ScenarioName.length <= 0 || this.tutorial.Description.length <= 0) {
+      this.toastr.error("Values can not be empty", "Update Error");
+      return;
+    }
+
     const data = {
       id: scenarioId,
       name: this.tutorial.ScenarioName,

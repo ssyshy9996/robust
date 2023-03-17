@@ -1,13 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { ToastrService } from 'ngx-toastr';
-import { Chart } from 'chart.js';
-import { AuthService, User } from '@auth0/auth0-angular';
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { TutorialService } from "src/app/services/tutorial.service";
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModalConfig, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-notifications",
-  templateUrl: "notifications.component.html"
+  templateUrl: "notifications.component.html",
+  providers: [NgbModalConfig, NgbModal],
 })
 export class NotificationsComponent implements OnInit {
   public canvas: any;
@@ -19,6 +17,9 @@ export class NotificationsComponent implements OnInit {
   public clicked1: boolean = false;
   public clicked2: boolean = false;
   public showVal1: boolean = true;
+
+  @ViewChild("dialogRef") dialogRef: TemplateRef<any>;
+
   toggleVal(): void {
     this.showVal1 = !this.showVal1;
   }
@@ -104,7 +105,10 @@ export class NotificationsComponent implements OnInit {
 
   };
 
-  constructor(public auth: AuthService, private tutorialservice: TutorialService) { }
+  constructor(private tutorialservice: TutorialService, config: NgbModalConfig, public modalService: NgbModal) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngOnInit() {
     this.tutorial.emailid = localStorage.getItem('email');
@@ -116,77 +120,13 @@ export class NotificationsComponent implements OnInit {
       this.SolutionName = data.SolutionName;
       console.log("ScenarioNameList:", data.SolutionName);
     });
-    // this.form = this.formBuilder.group({
-    //   profile: ['']
-    // });
-    // console.log("User is:",user);
-
-
-    var gradientBarChartConfiguration: any = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 60,
-            suggestedMax: 120,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
-
-        xAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
-      }
-    };
-    this.canvas = document.getElementById("CountryChart");
-
-    if (this.canvas != null) {
-      this.ctx = this.canvas.getContext("2d");
-      var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
-      gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
-      gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
-
-    }
 
   }
+
   public updateOptions() {
     this.myChartData.data.datasets[0].data = this.data;
     this.myChartData.update();
   }
-
 
   saveTutorial(): void {
     const formData = new FormData();
@@ -260,8 +200,22 @@ export class NotificationsComponent implements OnInit {
         },
         error => {
           console.log(error);
+          this.modalService.open(this.dialogRef);
         }
       )
   };
 
+  open(dialogRef) {
+    this.modalService.open(dialogRef);
+  }
+
+  downloadFile() {
+    console.log('this download clicked');
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', 'http://127.0.0.1:8000/api/factsheet_download');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
 }

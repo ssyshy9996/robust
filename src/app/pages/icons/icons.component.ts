@@ -3,6 +3,7 @@ import { AuthService, User } from '@auth0/auth0-angular';
 import { TutorialService } from "src/app/services/tutorial.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import Papa from 'papaparse';
+import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "app-icons",
   templateUrl: "icons.component.html"
@@ -35,6 +36,8 @@ export class IconsComponent implements OnInit {
   FactsheetFile: File;
   Outlierdatafile: File;
   ModelFile: File;
+  WeightMetricFile: File;
+  WeightPillarFile: File;
   MapFile: File;
   ProtectedFeatures: string[];
   Protectedvalues: string[];
@@ -61,7 +64,7 @@ export class IconsComponent implements OnInit {
     Userid: '',
   };
 
-  constructor(public auth: AuthService, private tutorialservice: TutorialService, private router: Router) { }
+  constructor(public auth: AuthService, private tutorialservice: TutorialService, private router: Router, public toast: ToastrService) { }
 
   ngOnInit() {
     if (!this.showVal1) {
@@ -81,7 +84,6 @@ export class IconsComponent implements OnInit {
     if (id.length <= 0)
       return;
     this.tutorialservice.getSolution(id).subscribe(data => {
-      console.log('data:', data);
       this.tutorial.NameSolution = data.solution_name;
       this.tutorial.DescriptionSolution = data.description;
       this.tutorial.Solutiontype = data.solution_type;
@@ -156,11 +158,6 @@ export class IconsComponent implements OnInit {
     }
   }
 
-
-
-
-
-
   onTrainnigDatafile(event: any) {
     // const file = event.target.files[0];
     // this.form.get('profile').setValue(file);
@@ -205,6 +202,15 @@ export class IconsComponent implements OnInit {
     this.MapFile = event.target.files[0];
   }
 
+
+  onWeightMetricChange(event) {
+    this.WeightMetricFile = event.target.files[0];
+  }
+
+  onWeightPillarChange(event) {
+    this.WeightPillarFile = event.target.files[0];
+  }
+
   saveTutorial(): void {
     let formData = new FormData();
     formData.append('Userid', this.tutorial.Userid);
@@ -218,6 +224,8 @@ export class IconsComponent implements OnInit {
     formData.append('Solutiontype', this.tutorial.Solutiontype);
 
 
+    formData.append('WeightMetric', this.WeightMetricFile);
+    formData.append('WeightPillar', this.WeightPillarFile);
     // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
     formData.append('ProtectedFeature', this.tutorial.Protectedfeatures);
     // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
@@ -235,6 +243,8 @@ export class IconsComponent implements OnInit {
       TrainnigDatafile: this.TrainnigDatafile,
       // TrainnigDatafile: this.form.get('profile').value,
       // DatafileName: this.TrainnigDatafile.name,
+      WeightMetric: this.WeightPillarFile,
+      WeightPillar: this.WeightPillarFile,
       ModelLinks: this.tutorial.ModelLinks,
       LinktoDataset: this.tutorial.LinktoDataset,
       Description: this.tutorial.Description,
@@ -246,13 +256,99 @@ export class IconsComponent implements OnInit {
       .subscribe(
         response => {
           console.log("Response data:", response);
-          this.router.navigate(['/dashboard']) //ok? yes
+          // this.router.navigate(['/dashboard']) //ok? yes
         },
         error => {
           console.log(error);
         }
       );
   };
+
+  validateFields(data: FormData): { errorText: string, hasError: boolean } {
+    let errorText = '';
+    let hasError = false;
+
+    if (data.get('SelectScenario').toString().length <= 0) {
+      errorText = 'Please Select Scenario';
+      hasError = true;
+      return { errorText, hasError };
+    }
+
+    if (data.get('NameSolution').toString().length <= 0) {
+      errorText = 'Please input solution name';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('DescriptionSolution').toString().length <= 0) {
+      errorText = 'Please input solution description';
+      hasError = true;
+    }
+    if (data.get('TrainingFile').toString() == 'undefined') {
+      errorText = 'Please select train file';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('TestFile').toString() == 'undefined') {
+      errorText = 'Please select test file';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('FactsheetFile').toString() == 'undefined') {
+      errorText = 'Please select factsheet file';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('MapFile').toString() == 'undefined') {
+      errorText = 'Please select map file';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('ProtectedFeature').toString().length <= 0) {
+      errorText = 'Please select protected feature';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('Protectedvalues').toString().length <= 0) {
+      errorText = 'Please select protected values';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('Solutiontype') == 'unsupervised' && data.get('Outlierdatafile').toString() == 'undefined') {
+      errorText = 'Please select outlier data file';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('WeightPillar').toString() == 'undefined') {
+      errorText = 'Please select weight pillar';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('WeightMetric').toString() == 'undefined') {
+      errorText = 'Please select weight metric';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('ModelFile').toString() == 'undefined') {
+      errorText = 'Please select model file';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('Targetcolumn').toString() == 'undefined') {
+      errorText = 'Please select target column';
+      hasError = true;
+      return { errorText, hasError };
+    }
+    if (data.get('Favourableoutcome').toString().length <= 0) {
+      errorText = 'Please select favourable outcome';
+      hasError = true;
+      return { errorText, hasError };
+    }
+
+    return {
+      errorText,
+      hasError,
+    };
+  }
 
   changeTutorial(): void {
     const id = this.router.url.substring(7);
@@ -274,13 +370,18 @@ export class IconsComponent implements OnInit {
     formData.append('ProtectedFeature', this.tutorial.Protectedfeatures);
     // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
     formData.append('Protectedvalues', this.tutorial.Protectedvalues);
-
-
     formData.append('Outlierdatafile', this.Outlierdatafile);
-
+    formData.append('WeightPillar', this.WeightPillarFile);
+    formData.append('WeightMetric', this.WeightMetricFile);
     formData.append('ModelFile', this.ModelFile);
     formData.append('Targetcolumn', this.tutorial.Targetcolumn);
     formData.append('Favourableoutcome', this.tutorial.Favourableoutcome);
+
+    const validateResult = this.validateFields(formData);
+    if (validateResult.hasError) {
+      this.toast.error(validateResult.errorText, 'Update Error');
+      return;
+    }
 
     this.tutorialservice.updateSolution(formData)
       .subscribe(
@@ -305,5 +406,4 @@ export class IconsComponent implements OnInit {
         }
       );
   }
-
 }

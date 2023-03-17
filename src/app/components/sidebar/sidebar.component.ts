@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthGuard } from "@auth0/auth0-angular";
 import { AuthService } from "@auth0/auth0-angular";
 declare interface RouteInfo {
@@ -28,15 +29,15 @@ export const ROUTES: RouteInfo[] = [
     title: "CreateScenario",
     rtlTitle: "خرائط",
     icon: "icon-pin",
-    class: "" 
-  },
-  {
-    path: "/user",
-    title: "Profile",
-    rtlTitle: "ملف تعريفي للمستخدم",
-    icon: "icon-single-02",
     class: ""
   },
+  // {
+  //   path: "/user",
+  //   title: "Profile",
+  //   rtlTitle: "ملف تعريفي للمستخدم",
+  //   icon: "icon-single-02",
+  //   class: ""
+  // },
   {
     path: "/notifications",
     title: "Analyze solution",
@@ -51,13 +52,13 @@ export const ROUTES: RouteInfo[] = [
     icon: "icon-puzzle-10",
     class: ""
   },
-  {
-    path: "/typography",
-    title: "User's Page",
-    rtlTitle: "طباعة",
-    icon: "icon-align-center",
-    class: ""
-  },
+  // {
+  //   path: "/typography",
+  //   title: "User's Page",
+  //   rtlTitle: "طباعة",
+  //   icon: "icon-align-center",
+  //   class: ""
+  // },
   // {
   //   path: "/rtl",
   //   title: "RTL Support",
@@ -75,7 +76,7 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor(public auth:AuthService) {}
+  constructor(public auth: AuthService, public route: Router) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -85,5 +86,13 @@ export class SidebarComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  ongonave(event) {
+    const email = localStorage.getItem('email');
+    if (!email || email.length <= 0) {
+      this.route.navigate(['/login']);
+    }
+    console.log('event:', event);
   }
 }
