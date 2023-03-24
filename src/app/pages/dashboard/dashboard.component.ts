@@ -1,24 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart } from 'chart.js';
 import { AuthService } from "@auth0/auth0-angular";
-import { TutorialService } from "src/app/services/tutorial.service";
+import { trustcalcService } from "src/app/services/trustcalc.service";
 
 @Component({
   selector: "app-dashboard",
   templateUrl: "dashboard.component.html"
 })
 export class DashboardComponent implements OnInit {
-  public canvas: any;
-  public ctx;
-  public datasets: any;
-  public data: any;
-  public myChartData;
-  public clicked: boolean = true;
-  public clicked1: boolean = false;
-  public clicked2: boolean = false;
-
-
-  tutorial = {
+  trustcalc = {
     SelectScenario: '',
     SelectSolution1: '',
     SelectSolution2: '',
@@ -96,498 +85,132 @@ export class DashboardComponent implements OnInit {
     solutionList: [],
   };
 
-  constructor(public auth: AuthService, private tutorialservice: TutorialService) { }
+  descriptions = [{
+    title: 'Underfitting',
+    description: 'Metric Scores - Compares the models achieved test accuracy against a baseline. Depends on: Model, Test Data'
+  }, {
+    title: 'Overfitting',
+    description: ' Metric Description: Overfitting is present if the training accuracy is significantly higher than the test accuracy Depends on: Model, Training Data, Test Data',
+  }, {
+    title: 'Statistical Parity Difference:',
+    description: 'Metric Description: The spread between the percentage of observations from the majority group receiving a favorable outcome compared to the protected group.The closes this spread is to zero the better.Depends on: Training Data, Factsheet(Definition of Protected Group and Favorable Outcome) '
+  }, {
+    title: 'Equal Opportunity Difference:',
+    description: 'Metric Description: Difference in true positive rates between protected and unprotected group. Depends on: Model, Test Data, Factsheet(Definition of Protected Group and Favorable Outcome) '
+  }, {
+    title: 'Average Odds Difference:',
+    description: 'Metric Description: Is the average of difference in false positive rates and true positive rates between the protected and unprotected group Depends on: Model, Test Data, Factsheet(Definition of Protected Group and Favorable Outcome)'
+  }, {
+    title: 'Disparate Impact:',
+    description: 'Metric Description: Is quotient of the ratio of samples from the protected group receiving a favorable prediction divided by the ratio of samples from the unprotected group receiving a favorable prediction Depends on: Model, Test Data, Factsheet(Definition of Protected Group and Favorable Outcome) ',
+  }, {
+    title: 'Class Balance:',
+    description: 'Metric Description: Measures how well the training data is balanced or unbalanced Depends on: Training Data',
+  }];
+
+  showSpinner: Boolean = true;
+
+  constructor(public auth: AuthService, private trustcalcservice: trustcalcService) { }
+
+  convertFunction = (data: any) => {
+    for (const keyIt in data) {
+      if (typeof data[keyIt] == 'object') continue;
+      data[keyIt] = parseFloat(data[keyIt]).toFixed(2);
+    }
+
+    return data;
+  }
+
+  pickHex = (weight) => {
+    const color1 = [255, 255, 0];
+    const color2 = [0, 0, 0];
+    var w1 = (weight - 1) * 0.25;
+    var w2 = (5 - w1) * 0.25;
+    const firstColor = ("0" + Math.round(255 - color1[0] * w1 + color2[0] * w2).toString(16)).slice(-2);
+    const secondColor = ("0" + Math.round(color1[1] * w1 + color2[1] * w2).toString(16)).slice(-2);
+    const thirdColor = ("0" + Math.round(color1[2] * w1 + color2[2] * w2).toString(16)).slice(-2);
+    return `#${firstColor}${secondColor}${thirdColor}`;
+  }
+
 
   ngOnInit() {
-
-    // this.tutorial.Userid = user.sub.split('|')[1];
-    this.tutorialservice.dashboard(localStorage.getItem('email')).subscribe((data: any) => {
+    // this.spinner.show();
+    this.trustcalcservice.dashboard(localStorage.getItem('email')).subscribe((data: any) => {
       // this.ScenarioName=data.ScenarioName;
-      this.tutorial.fairness_score = data.fairness_score;
-      this.tutorial.explainability_score = data.explainability_score;
-      this.tutorial.methodology_score = data.methodology_score;
-      this.tutorial.robustness_score = data.robustness_score;
+      data = this.convertFunction(data);
 
-      this.tutorial.underfitting = data.underfitting;
-      this.tutorial.overfitting = data.overfitting;
-      this.tutorial.statistical_parity_difference = data.statistical_parity_difference;
-      this.tutorial.equal_opportunity_difference = data.equal_opportunity_difference;
-      this.tutorial.average_odds_difference = data.average_odds_difference;
-      this.tutorial.disparate_impact = data.disparate_impact;
-      this.tutorial.class_balance = data.class_balance;
+      this.trustcalc.fairness_score = data.fairness_score;
+      this.trustcalc.explainability_score = data.explainability_score;
+      this.trustcalc.methodology_score = data.methodology_score;
+      this.trustcalc.robustness_score = data.robustness_score;
 
-      this.tutorial.algorithm_class = data.algorithm_class;
-      this.tutorial.correlated_features = data.correlated_features;
-      this.tutorial.model_size = data.model_size;
-      this.tutorial.feature_relevance = data.feature_relevance;
+      this.trustcalc.underfitting = data.underfitting;
+      this.trustcalc.overfitting = data.overfitting;
+      this.trustcalc.statistical_parity_difference = data.statistical_parity_difference;
+      this.trustcalc.equal_opportunity_difference = data.equal_opportunity_difference;
+      this.trustcalc.average_odds_difference = data.average_odds_difference;
+      this.trustcalc.disparate_impact = data.disparate_impact;
+      this.trustcalc.class_balance = data.class_balance;
 
-      this.tutorial.confidence_score = data.confidence_score;
-      this.tutorial.clique_method = data.clique_method;
-      this.tutorial.loss_sensitivity = data.loss_sensitivity;
-      this.tutorial.clever_score = data.clever_score;
-      this.tutorial.er_fast_gradient_attack = data.er_fast_gradient_attack;
-      this.tutorial.er_carlini_wagner_attack = data.er_carlini_wagner_attack;
-      this.tutorial.er_deepfool_attack = data.er_deepfool_attack;
+      this.trustcalc.algorithm_class = data.algorithm_class;
+      this.trustcalc.correlated_features = data.correlated_features;
+      this.trustcalc.model_size = data.model_size;
+      this.trustcalc.feature_relevance = data.feature_relevance;
 
-      this.tutorial.normalization = data.normalization;
-      this.tutorial.missing_data = data.missing_data;
-      this.tutorial.regularization = data.regularization;
-      this.tutorial.train_test_split = data.train_test_split;
-      this.tutorial.factsheet_completeness = data.factsheet_completeness;
+      this.trustcalc.confidence_score = data.confidence_score;
+      this.trustcalc.clique_method = data.clique_method;
+      this.trustcalc.loss_sensitivity = data.loss_sensitivity;
+      this.trustcalc.clever_score = data.clever_score;
+      this.trustcalc.er_fast_gradient_attack = data.er_fast_gradient_attack;
+      this.trustcalc.er_carlini_wagner_attack = data.er_carlini_wagner_attack;
+      this.trustcalc.er_deepfool_attack = data.er_deepfool_attack;
+
+      this.trustcalc.normalization = data.normalization;
+      this.trustcalc.missing_data = data.missing_data;
+      this.trustcalc.regularization = data.regularization;
+      this.trustcalc.train_test_split = data.train_test_split;
+      this.trustcalc.factsheet_completeness = data.factsheet_completeness;
 
 
 
-      this.tutorial.unsupervised_fairness_score = data.unsupervised_fairness_score;
-      this.tutorial.unsupervised_explainability_score = data.unsupervised_explainability_score;
-      this.tutorial.unsupervised_methodology_score = data.unsupervised_methodology_score;
-      this.tutorial.unsupervised_robustness_score = data.unsupervised_robustness_score;
+      this.trustcalc.unsupervised_fairness_score = data.unsupervised_fairness_score;
+      this.trustcalc.unsupervised_explainability_score = data.unsupervised_explainability_score;
+      this.trustcalc.unsupervised_methodology_score = data.unsupervised_methodology_score;
+      this.trustcalc.unsupervised_robustness_score = data.unsupervised_robustness_score;
 
-      this.tutorial.unsupervised_underfitting = data.unsupervised_underfitting;
-      this.tutorial.unsupervised_overfitting = data.unsupervised_overfitting;
-      this.tutorial.unsupervised_statistical_parity_difference = data.unsupervised_statistical_parity_difference;
-      // this.tutorial.unsupervised_equal_opportunity_difference =data.unsupervised_equal_opportunity_difference;
-      // this.tutorial.unsupervised_average_odds_difference =data.unsupervised_average_odds_difference;
-      this.tutorial.unsupervised_disparate_impact = data.unsupervised_disparate_impact;
-      // this.tutorial.unsupervised_class_balance =data.unsupervised_class_balance;
+      this.trustcalc.unsupervised_underfitting = data.unsupervised_underfitting;
+      this.trustcalc.unsupervised_overfitting = data.unsupervised_overfitting;
+      this.trustcalc.unsupervised_statistical_parity_difference = data.unsupervised_statistical_parity_difference;
+      // this.trustcalc.unsupervised_equal_opportunity_difference =data.unsupervised_equal_opportunity_difference;
+      // this.trustcalc.unsupervised_average_odds_difference =data.unsupervised_average_odds_difference;
+      this.trustcalc.unsupervised_disparate_impact = data.unsupervised_disparate_impact;
+      // this.trustcalc.unsupervised_class_balance =data.unsupervised_class_balance;
 
-      // this.tutorial.unsupervised_algorithm_class =data.unsupervised_algorithm_class;
-      this.tutorial.unsupervised_correlated_features = data.unsupervised_correlated_features;
-      this.tutorial.unsupervised_model_size = data.unsupervised_model_size;
-      this.tutorial.unsupervised_permutation_importance = data.unsupervised_permutation_importance;
+      // this.trustcalc.unsupervised_algorithm_class =data.unsupervised_algorithm_class;
+      this.trustcalc.unsupervised_correlated_features = data.unsupervised_correlated_features;
+      this.trustcalc.unsupervised_model_size = data.unsupervised_model_size;
+      this.trustcalc.unsupervised_permutation_importance = data.unsupervised_permutation_importance;
 
-      // this.tutorial.unsupervised_confidence_score =data.unsupervised_confidence_score;
-      // this.tutorial.unsupervised_clique_method =data.unsupervised_clique_method;
-      // this.tutorial.unsupervised_loss_sensitivity =data.unsupervised_loss_sensitivity;
-      this.tutorial.unsupervised_clever_score = data.unsupervised_clever_score;
-      // this.tutorial.unsupervised_er_fast_gradient_attack =data.unsupervised_er_fast_gradient_attack;
-      // this.tutorial.unsupervised_er_carlini_wagner_attack =data.unsupervised_er_carlini_wagner_attack;
-      // this.tutorial.unsupervised_er_deepfool_attack =data.unsupervised_er_deepfool_attack;
+      // this.trustcalc.unsupervised_confidence_score =data.unsupervised_confidence_score;
+      // this.trustcalc.unsupervised_clique_method =data.unsupervised_clique_method;
+      // this.trustcalc.unsupervised_loss_sensitivity =data.unsupervised_loss_sensitivity;
+      this.trustcalc.unsupervised_clever_score = data.unsupervised_clever_score;
+      // this.trustcalc.unsupervised_er_fast_gradient_attack =data.unsupervised_er_fast_gradient_attack;
+      // this.trustcalc.unsupervised_er_carlini_wagner_attack =data.unsupervised_er_carlini_wagner_attack;
+      // this.trustcalc.unsupervised_er_deepfool_attack =data.unsupervised_er_deepfool_attack;
 
-      this.tutorial.unsupervised_normalization = data.unsupervised_normalization;
-      this.tutorial.unsupervised_missing_data = data.unsupervised_missing_data;
-      this.tutorial.unsupervised_regularization = data.unsupervised_regularization;
-      this.tutorial.unsupervised_train_test_split = data.unsupervised_train_test_split;
-      this.tutorial.unsupervised_factsheet_completeness = data.unsupervised_factsheet_completeness;
+      this.trustcalc.unsupervised_normalization = data.unsupervised_normalization;
+      this.trustcalc.unsupervised_missing_data = data.unsupervised_missing_data;
+      this.trustcalc.unsupervised_regularization = data.unsupervised_regularization;
+      this.trustcalc.unsupervised_train_test_split = data.unsupervised_train_test_split;
+      this.trustcalc.unsupervised_factsheet_completeness = data.unsupervised_factsheet_completeness;
 
-      this.tutorial.scenarioList = data.scenarioList;
-      this.tutorial.solutionList = data.solutionList;
+      this.trustcalc.scenarioList = data.scenarioList;
+      this.trustcalc.solutionList = data.solutionList;
+    }, error => {
+
+    }, () => {
+      // this.spinner.hide();
     });
-
-    var gradientChartOptionsConfigurationWithTooltipBlue: any = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 60,
-            suggestedMax: 125,
-            padding: 20,
-            fontColor: "#2380f7"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#2380f7"
-          }
-        }]
-      }
-    };
-
-    var gradientChartOptionsConfigurationWithTooltipPurple: any = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 60,
-            suggestedMax: 125,
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(225,78,202,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }]
-      }
-    };
-
-    var gradientChartOptionsConfigurationWithTooltipRed: any = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 60,
-            suggestedMax: 125,
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(233,32,16,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }]
-      }
-    };
-
-    var gradientChartOptionsConfigurationWithTooltipOrange: any = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 50,
-            suggestedMax: 110,
-            padding: 20,
-            fontColor: "#ff8a76"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(220,53,69,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#ff8a76"
-          }
-        }]
-      }
-    };
-
-    var gradientChartOptionsConfigurationWithTooltipGreen: any = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 50,
-            suggestedMax: 125,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(0,242,195,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
-      }
-    };
-
-
-    var gradientBarChartConfiguration: any = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 60,
-            suggestedMax: 120,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
-
-        xAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
-      }
-    };
-
-    this.canvas = document.getElementById("chartLineRed");
-    if (this.canvas != null) {
-      this.ctx = this.canvas.getContext("2d");
-
-      var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, 'rgba(233,32,16,0.2)');
-      gradientStroke.addColorStop(0.4, 'rgba(233,32,16,0.0)');
-      gradientStroke.addColorStop(0, 'rgba(233,32,16,0)'); //red colors
-
-      var data = {
-        labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-        datasets: [{
-          label: "Data",
-
-          backgroundColor: gradientStroke,
-          borderColor: '#ec250d',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#ec250d',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#ec250d',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 4,
-          data: [80, 100, 70, 80, 120, 80],
-        }]
-      };
-    }
-
-
-    this.canvas = document.getElementById("chartLineGreen");
-
-    if (this.canvas != null) {
-      this.ctx = this.canvas.getContext("2d");
-
-      var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, 'rgba(66,134,121,0.15)');
-      gradientStroke.addColorStop(0.4, 'rgba(66,134,121,0.0)'); //green colors
-      gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
-
-      var data = {
-        labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV'],
-        datasets: [{
-          label: "My First dataset",
-
-          backgroundColor: gradientStroke,
-          borderColor: '#00d6b4',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#00d6b4',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#00d6b4',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 4,
-          data: [90, 27, 60, 12, 80],
-        }]
-      };
-
-    }
-
-    var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    this.datasets = [
-      [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
-      [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
-      [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130]
-    ];
-    this.data = this.datasets[0];
-
-    this.canvas = document.getElementById("chartBig1");
-    if (this.canvas != null) {
-      this.ctx = this.canvas.getContext("2d");
-
-      var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, 'rgba(233,32,16,0.2)');
-      gradientStroke.addColorStop(0.4, 'rgba(233,32,16,0.0)');
-      gradientStroke.addColorStop(0, 'rgba(233,32,16,0)'); //red colors
-
-      var config = {
-        type: 'line',
-        data: {
-          labels: chart_labels,
-          datasets: [{
-            label: "My First dataset",
-
-            backgroundColor: gradientStroke,
-            borderColor: '#ec250d',
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: '#ec250d',
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: '#ec250d',
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.data,
-          }]
-        },
-        options: gradientChartOptionsConfigurationWithTooltipRed
-      };
-    }
-
-    this.canvas = document.getElementById("CountryChart");
-    if (this.canvas != null) {
-      this.ctx = this.canvas.getContext("2d");
-      var gradientStroke = this.ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
-      gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
-      gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
-
-    }
-
-
-  }
-  public updateOptions() {
-    this.myChartData.data.datasets[0].data = this.data;
-    this.myChartData.update();
   }
 }

@@ -51,9 +51,9 @@ We are very excited to share this dashboard with you and we look forward to hear
 
 ## Demo
 
-| Dashboard | User Profile | Tables | RTL | Notification |
+| Dashboard | User Profile | compare | RTL | Notification |
 | --- | --- | --- | --- | --- |
-| [![Start page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/dashboard.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/dashboard?ref=bda-readme) | [![User profile page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/user.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/user?ref=bda-readme) | [![Tables page ](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/tables.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/tables?ref=bda-readme) | [![RTL Page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/rtl.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/maps?ref=bda-readme) | [![Notification page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/notifications.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/notifications?ref=bda-readme)
+| [![Start page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/dashboard.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/dashboard?ref=bda-readme) | [![User profile page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/user.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/user?ref=bda-readme) | [![compare page ](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/compare.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/compare?ref=bda-readme) | [![RTL Page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/rtl.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/maps?ref=bda-readme) | [![Notification page](https://raw.githubusercontent.com/creativetimofficial/public-assets/master/black-dashboard-angular/analyze.png?raw=true)](https://demos.creative-tim.com/black-dashboard-angular/#/analyze?ref=bda-readme)
 
 [View More](https://demos.creative-tim.com/black-dashboard-angular/#/dashboard?ref=bda-readme).
 
@@ -139,15 +139,15 @@ black-dashboard-angular
 │   │       ├── map
 │   │       │   ├── map.component.html
 │   │       │   └── map.component.ts
-│   │       ├── notifications
-│   │       │   ├── notifications.component.html
-│   │       │   └── notifications.component.ts
+│   │       ├── analyze
+│   │       │   ├── analyze.component.html
+│   │       │   └── analyze.component.ts
 │   │       ├── rtl
 │   │       │   ├── rtl.component.html
 │   │       │   └── rtl.component.ts
-│   │       ├── tables
-│   │       │   ├── tables.component.html
-│   │       │   └── tables.component.ts
+│   │       ├── compare
+│   │       │   ├── compare.component.html
+│   │       │   └── compare.component.ts
 │   │       ├── typography
 │   │       │   ├── typography.component.html
 │   │       │   └── typography.component.ts
@@ -188,7 +188,7 @@ At present, we officially aim to support the last two versions of the following 
 ## Resources
 - Demo: https://demos.creative-tim.com/black-dashboard-angular/#/dashboard?ref=bda-readme
 - Download Page: https://www.creative-tim.com/product/black-dashboard-angular?ref=bda-readme
-- Documentation: https://demos.creative-tim.com/black-dashboard-angular/#/documentation/tutorial?ref=bda-readme
+- Documentation: https://demos.creative-tim.com/black-dashboard-angular/#/documentation/trustcalc?ref=bda-readme
 - License Agreement: https://www.creative-tim.com/license?ref=bda-readme
 - Support: https://www.creative-tim.com/contact-us?ref=bda-readme
 - Issues: [Github Issues Page](https://github.com/creativetimofficial/black-dashboard-angular/issues?ref=bda-readme)
@@ -213,7 +213,7 @@ If you have questions or need help integrating the product please [contact us](h
 
 More products from Creative Tim: <https://www.creative-tim.com/products?ref=bda-readme>
 
-Tutorials: <https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w>
+trustcalcs: <https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w>
 
 Freebies: <https://www.creative-tim.com/products?ref=bda-readme>
 

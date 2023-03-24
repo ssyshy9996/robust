@@ -316,11 +316,9 @@
             <form enctype="multipart/form-data">
               <div hidden>
 
-                <input class="text" id="Solutiontype" required name="Solutiontype" [(ngModel)]="tutorial.Solutiontype"
+                <input class="text" id="Solutiontype" required name="Solutiontype" [(ngModel)]="trustcalc.Solutiontype"
                   type="text" value="supervised" />
               </div>
-
-
               <div class=" row">
                 <div class=" col-md-12">
                   <div class=" form-group">
@@ -328,7 +326,7 @@
                       <th>Select Scenarios</th>
                       <td class="unwrap">
                         <select class="dropdown" name="ScenarioSelect" id="ScenarioSelect"
-                          [(ngModel)]="tutorial.SelectScenario" required>
+                          [(ngModel)]="trustcalc.SelectScenario" required>
                           <option>Select Scenario</option>
                           <option *ngFor="let scname of ScenarioName">
                             {{scname}}
@@ -345,7 +343,7 @@
                   <div class=" form-group">
                     <label> Name of Solution </label>
                     <input class=" form-control" placeholder="Name of Solution" id="SolutionName" required
-                      name="SolutionName" [(ngModel)]="tutorial.NameSolution" type="text" value="Mike" />
+                      name="SolutionName" [(ngModel)]="trustcalc.NameSolution" type="text" value="Mike" />
                   </div>
                 </div>
                 <div class="mx-3 col-md-10 pl-md-1">
@@ -353,7 +351,7 @@
                     <label> Description of Solution </label>
                     <textarea class=" form-control" cols="80" placeholder="Here can be your description"
                       id="DescriptionSolution" required name="DescriptionSolution"
-                      [(ngModel)]="tutorial.DescriptionSolution" rows="4" value="Mike">Description of Solution.
+                      [(ngModel)]="trustcalc.DescriptionSolution" rows="4" value="Mike">Description of Solution.
                     </textarea>
                   </div>
                 </div>
@@ -412,7 +410,7 @@
                   <div class=" form-group">
                     <label>Protected Features </label>
                     <input class=" form-control" placeholder="ProtectedFeature" id="ProtectedFeature" required
-                      name="ProtectedFeature" [(ngModel)]="tutorial.Protectedfeatures" type="text"
+                      name="ProtectedFeature" [(ngModel)]="trustcalc.Protectedfeatures" type="text"
                       [value]="protectedFeatures.join(', ')" />
                   </div>
                 </div>
@@ -420,9 +418,10 @@
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
                     <label>Protected Values </label>
-                    <select class="form-control" [(ngModel)]="tutorial.Protectedvalues" id="Protectedvalues"
-                      name="Protectedvalues">
-                      <option *ngFor="let value of uniqueValues" [value]="value">{{value}}</option>
+                    <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"
+                      name="Protectedvalues" multiple>
+                      <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">{{value}}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -434,7 +433,8 @@
                     <label> Target column </label>
                     <select class="form-control" [(ngModel)]="selectedTargetColumn" name="Targetcolumn"
                       (change)="setUniqueOutcomes()">
-                      <option *ngFor="let column of headers" [value]="column">{{column}}</option>
+                      <option *ngFor="let column of headers" [value]="column" style="background: black;">{{column}}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -473,8 +473,10 @@
             </form>
           </div>
           <div class=" card-footer">
-            <button (click)="saveTutorial()" class=" btn btn-fill btn-danger" type="submit">Upload</button>
-            <button (click)="changeTutorial()" class=" btn btn-fill" type="submit">Change</button>
+            <button (click)="savetrustcalc()" *ngIf="!isEditing" class=" btn btn-fill btn-danger"
+              type="submit">Upload</button>
+            <button (click)="changetrustcalc()" *ngIf="isEditing" class=" btn btn-fill" type="submit">Change</button>
+            <button (click)="deletetrustcalc()" class=" btn btn-fill" type="submit" *ngIf="isEditing">Delete</button>
           </div>
         </div>
       </div>
@@ -504,7 +506,7 @@
             <form enctype="multipart/form-data">
               <div hidden>
 
-                <input class="text" id="Solutiontype" required name="Solutiontype" [(ngModel)]="tutorial.Solutiontype"
+                <input class="text" id="Solutiontype" required name="Solutiontype" [(ngModel)]="trustcalc.Solutiontype"
                   type="text" value="unsupervised" />
               </div>
 
@@ -515,7 +517,7 @@
                       <th>Select Scenarios</th>
                       <td class="unwrap">
                         <select class="dropdown" name="ScenarioSelect" id="ScenarioSelect"
-                          [(ngModel)]="tutorial.SelectScenario" required>
+                          [(ngModel)]="trustcalc.SelectScenario" required>
                           <option>Select Scenario</option>
                           <option *ngFor="let scname of ScenarioName">
                             {{scname}}
@@ -532,7 +534,7 @@
                   <div class=" form-group">
                     <label> Name of Solution </label>
                     <input class=" form-control" placeholder="Name of Solution" id="SolutionName" required
-                      name="SolutionName" [(ngModel)]="tutorial.NameSolution" type="text" value="Mike" />
+                      name="SolutionName" [(ngModel)]="trustcalc.NameSolution" type="text" value="Mike" />
                   </div>
                 </div>
 
@@ -541,7 +543,7 @@
                     <label> Description of Solution </label>
                     <textarea class=" form-control" cols="80" placeholder="Here can be your description"
                       id="SolutionDescription" required name="SolutionDescription"
-                      [(ngModel)]="tutorial.DescriptionSolution" rows="4" value="Mike">Description of Solution.
+                      [(ngModel)]="trustcalc.DescriptionSolution" rows="4" value="Mike">Description of Solution.
                     </textarea>
                   </div>
                 </div>
@@ -604,7 +606,7 @@
                   <div class=" form-group">
                     <label>Protected Features </label>
                     <input class=" form-control" placeholder="ProtectedFeature" id="ProtectedFeature" required
-                      name="ProtectedFeature" [(ngModel)]="tutorial.Protectedfeature" type="text"
+                      name="ProtectedFeature" [(ngModel)]="trustcalc.Protectedfeature" type="text"
                       [value]="protectedFeatures.join(', ')" />
                   </div>
                 </div>
@@ -612,18 +614,14 @@
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
                     <label>Protected Values </label>
-                    <select class="form-control" [(ngModel)]="tutorial.Protectedvalues" id="Protectedvalues"
-                      name="Protectedvalues">
-                      <option *ngFor="let value of uniqueValues" [value]="value">{{value}}</option>
+                    <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"
+                      name="Protectedvalues" multiple>
+                      <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">{{value}}
+                      </option>
                     </select>
                   </div>
                 </div>
               </div>
-
-
-
-
-
               <div class=" row">
                 <div class=" col-md-6">
 
@@ -637,32 +635,18 @@
                   <label for="formFileLg" class="form-label">Model</label>
                   <input class="form-control" id="Modelfile" name="Modelfile" (change)="onModelfile($event)" required
                     type="file" />
-
                 </div>
               </div>
-
             </form>
           </div>
           <div class=" card-footer">
-            <button (click)="saveTutorial()" class=" btn btn-fill btn-danger" type="submit">Upload</button>
-            <button (click)="changeTutorial()" class=" btn btn-fill" type="submit">Change</button>
+            <button (click)="savetrustcalc()" class=" btn btn-fill btn-danger" *ngIf="!isEditing"
+              type="submit">Upload</button>
+            <button (click)="changetrustcalc()" class=" btn btn-fill" type="submit" *ngIf="isEditing">Change</button>
+            <button (click)="deletetrustcalc()" class=" btn btn-fill" type="submit" *ngIf="isEditing">Delete</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-<!-- <script>
-  $(document).ready(function(){
-    $("#demo_overview_minimal_multiselect").selectDropdown({
-      'search': false,
-      'badges': false,
-      'deselectAll': false,
-      'selectAll': false,
-      'showSelected': false
-    });
-  });
-</script> -->

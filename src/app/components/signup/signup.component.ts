@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TutorialService } from "src/app/services/tutorial.service";
+import { trustcalcService } from "src/app/services/trustcalc.service";
 import { Router } from '@angular/router';
 import { AuthService } from "@auth0/auth0-angular";
 
@@ -9,29 +9,28 @@ import { AuthService } from "@auth0/auth0-angular";
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  tutorial = {
+  trustcalc = {
     fullname: '',
     email: '',
     password: '',
   };
 
-  constructor(private tutorialservice: TutorialService, private router: Router, public auth: AuthService) { }
+  constructor(private trustcalcservice: trustcalcService, private router: Router, public auth: AuthService) { }
 
   ngOnInit(): void {
   }
 
   signUp() {
     const formData = new FormData();
-    formData.append('email', this.tutorial.email);
-    formData.append('password', this.tutorial.password);
+    formData.append('email', this.trustcalc.email);
+    formData.append('password', this.trustcalc.password);
 
-    this.tutorialservice.register(formData)
+    this.trustcalcservice.register(formData)
       .subscribe(
         response => {
           this.router.navigate(['/login']);
         },
         error => {
-          console.log(error);
         }
       );
   }

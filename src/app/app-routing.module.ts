@@ -10,6 +10,7 @@ import { SignupComponent } from "./components/signup/signup.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { AuthGuard } from "@auth0/auth0-angular";
 import { LoginService } from "./services/login.service";
+import { CommentComponent } from "./comment/comment.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
     pathMatch: "full",
     canActivate: [LoginService],
   },
+  {
+    path: 'comment',
+    component: CommentComponent,
+  },
   // {
   //   path: "",
   //   redirectTo: "dashboard",
@@ -42,7 +47,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        loadChildren: () => import ("./layouts/admin-layout/admin-layout.module").then(m => m.AdminLayoutModule)
+        loadChildren: () => import("./layouts/admin-layout/admin-layout.module").then(m => m.AdminLayoutModule)
       }
     ]
   }, {
@@ -51,7 +56,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        loadChildren: () => import ("./layouts/auth-layout/auth-layout.module").then(m => m.AuthLayoutModule)
+        loadChildren: () => import("./layouts/auth-layout/auth-layout.module").then(m => m.AuthLayoutModule)
       }
     ]
   },
@@ -72,4 +77,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

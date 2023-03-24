@@ -19,14 +19,14 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "/icons",
-    title: "UplaodSolution",
+    title: "Upload a Solution",
     rtlTitle: "الرموز",
     icon: "icon-atom",
     class: ""
   },
   {
     path: "/maps",
-    title: "CreateScenario",
+    title: "Create a Scenario",
     rtlTitle: "خرائط",
     icon: "icon-pin",
     class: ""
@@ -39,15 +39,15 @@ export const ROUTES: RouteInfo[] = [
   //   class: ""
   // },
   {
-    path: "/notifications",
-    title: "Analyze solution",
+    path: "/analyze",
+    title: "Analyze a Solution",
     rtlTitle: "إخطارات",
     icon: "icon-bell-55",
     class: ""
   },
   {
-    path: "/tables",
-    title: "Compare solutions",
+    path: "/compare",
+    title: "Compare two solutions",
     rtlTitle: "قائمة الجدول",
     icon: "icon-puzzle-10",
     class: ""
@@ -81,6 +81,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
+
   isMobileMenu() {
     if (window.innerWidth > 991) {
       return false;
@@ -88,11 +89,10 @@ export class SidebarComponent implements OnInit {
     return true;
   }
 
-  ongonave(event) {
+  handleNavigate(event) {
     const email = localStorage.getItem('email');
     if (!email || email.length <= 0) {
       this.route.navigate(['/login']);
     }
-    console.log('event:', event);
   }
 }

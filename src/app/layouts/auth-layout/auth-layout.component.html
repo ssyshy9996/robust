@@ -12,11 +12,7 @@
     </div>
     <div class="sidebar-wrapper">
       <ul class="nav">
-        <li
-          routerLinkActive="active"
-          *ngFor="let menuItem of menuItems"
-          class="{{ menuItem.class }} nav-item"
-        >
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{ menuItem.class }} nav-item">
           <a [routerLink]="[menuItem.path]">
             <i class="tim-icons  {{ menuItem.icon }}"></i>
             <p>{{ menuItem.rtlTitle }}</p>
@@ -39,15 +35,8 @@
           </div>
           <a class=" navbar-brand" href="javascript:void(0)"> ار تي ال </a>
         </div>
-        <button
-          aria-label="Toggle navigation"
-          class=" navbar-toggler"
-          (click)="collapse()"
-          [attr.aria-expanded]="!isCollapsed"
-          aria-controls="collapseExample"
-          id="navigation"
-          type="button"
-        >
+        <button aria-label="Toggle navigation" class=" navbar-toggler" (click)="collapse()"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" id="navigation" type="button">
           <span class=" navbar-toggler-bar navbar-kebab"> </span>
           <span class=" navbar-toggler-bar navbar-kebab"> </span>
           <span class=" navbar-toggler-bar navbar-kebab"> </span>
@@ -55,23 +44,14 @@
         <div class=" navbar-collapse" [ngbCollapse]="isCollapsed" id="navigation">
           <ul class=" navbar-nav mr-auto">
             <li class=" search-bar input-group">
-              <button
-                class=" btn btn-link"
-                data-target="#searchModal"
-                data-toggle="modal"
-                (click)="open(content)"
-                id="search-button"
-              >
+              <button class=" btn btn-link" data-target="#searchModal" data-toggle="modal" (click)="open(content)"
+                id="search-button">
                 <i class=" tim-icons icon-zoom-split"> </i>
                 <span class=" d-lg-none d-md-block"> بحث </span>
               </button>
             </li>
             <li class=" nav-item" ngbDropdown>
-              <a
-                class=" nav-link"
-                data-toggle="dropdown"
-                ngbDropdownToggle
-              >
+              <a class=" nav-link" data-toggle="dropdown" ngbDropdownToggle>
                 <div class=" notification d-none d-lg-block d-xl-block"></div>
                 <i class=" tim-icons icon-sound-wave"> </i>
                 <p class=" d-lg-none">إخطارات</p>
@@ -105,11 +85,7 @@
               </ul>
             </li>
             <li class=" nav-item" ngbDropdown>
-              <a
-                class=" nav-link"
-                data-toggle="dropdown"
-                ngbDropdownToggle
-              >
+              <a class=" nav-link" data-toggle="dropdown" ngbDropdownToggle>
                 <div class=" photo">
                   <img alt="Profile Photo" src="assets/img/anime3.png" />
                 </div>
@@ -179,19 +155,16 @@
       <li class=" adjustments-line">
         <a class=" switch-trigger background-color" href="javascript:void(0)">
           <div class=" badge-colors text-center">
-            <span
-              class=" badge filter badge-danger"
-              [ngClass]="{'active':sidebarColor==='red'}" (click)="changeSidebarColor('red')"
-            >
+            <span class=" badge filter badge-danger" [ngClass]="{'active':sidebarColor==='red'}"
+              (click)="changeSidebarColor('red')">
             </span>
-            <span
-              class=" badge filter badge-primary"
-              data-color="primary"
-              [ngClass]="{'active':sidebarColor==='primary'}" (click)="changeSidebarColor('primary')"
-            >
+            <span class=" badge filter badge-primary" data-color="primary"
+              [ngClass]="{'active':sidebarColor==='primary'}" (click)="changeSidebarColor('primary')">
             </span>
-            <span class=" badge filter badge-info" [ngClass]="{'active':sidebarColor==='blue'}" (click)="changeSidebarColor('blue')"> </span>
-            <span class=" badge filter badge-success" [ngClass]="{'active':sidebarColor==='green'}" (click)="changeSidebarColor('green')">
+            <span class=" badge filter badge-info" [ngClass]="{'active':sidebarColor==='blue'}"
+              (click)="changeSidebarColor('blue')"> </span>
+            <span class=" badge filter badge-success" [ngClass]="{'active':sidebarColor==='green'}"
+              (click)="changeSidebarColor('green')">
             </span>
           </div>
           <div class=" clearfix"></div>
@@ -204,18 +177,14 @@
         <span class=" color-label"> وضع الظلام</span>
       </li>
       <li class=" button-container">
-        <a
-          class=" btn btn-primary btn-block btn-round"
+        <a class=" btn btn-primary btn-block btn-round"
           href="https://www.creative-tim.com/product/black-dashboard-angular?ref=bda-auth-layout-fixed-plugin"
-          target="_blank"
-        >
+          target="_blank">
           التحميل الان
         </a>
-        <a
-          class=" btn btn-default btn-block btn-round"
-          href="https://demos.creative-tim.com/black-dashboard-angular/#/documentation/tutorial?ref=bda-auth-layout-fixed-plugin"
-          target="_blank"
-        >
+        <a class=" btn btn-default btn-block btn-round"
+          href="https://demos.creative-tim.com/black-dashboard-angular/#/documentation/trustcalc?ref=bda-auth-layout-fixed-plugin"
+          target="_blank">
           كابل بيانات
         </a>
       </li>
@@ -231,14 +200,9 @@
 
         <br />
 
-        <a
-          aria-label="Star ntkme/github-buttons on GitHub"
-          class=" github-button"
-          data-icon="octicon-star"
-          data-show-count="true"
-          data-size="large"
-          href="https://github.com/creativetimofficial/black-dashboard-angular?ref=bda-auth-layout-fixed-plugin"
-        >
+        <a aria-label="Star ntkme/github-buttons on GitHub" class=" github-button" data-icon="octicon-star"
+          data-show-count="true" data-size="large"
+          href="https://github.com/creativetimofficial/black-dashboard-angular?ref=bda-auth-layout-fixed-plugin">
           نجمة
         </a>
       </li>
@@ -246,24 +210,13 @@
   </div>
 </div>
 
-    <ng-template #content let-modal>
-      <div class=" modal-header">
-        <input
-          class=" form-control"
-          id="inlineFormInputGroup"
-          placeholder="بحث"
-          type="text"
-        />
+<ng-template #content let-modal>
+  <div class=" modal-header">
+    <input class=" form-control" id="inlineFormInputGroup" placeholder="بحث" type="text" />
 
-        <button
-          aria-label="Close"
-          class=" close"
-          data-dismiss="modal"
-          type="button"
-          (click)="modal.dismiss('Cross click')"
-        >
-          <i class=" tim-icons icon-simple-remove"> </i>
-        </button>
-      </div>
+    <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="modal.dismiss('Cross click')">
+      <i class=" tim-icons icon-simple-remove"> </i>
+    </button>
+  </div>
 
-    </ng-template>
+</ng-template>

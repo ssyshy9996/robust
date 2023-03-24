@@ -16,7 +16,7 @@ const solutionDetailUrl = 'http://127.0.0.1:8000/api/solution_detail';
 @Injectable({
   providedIn: 'root'
 })
-export class TutorialService {
+export class trustcalcService {
 
   constructor(private http: HttpClient) { }
 
@@ -45,7 +45,7 @@ export class TutorialService {
   }
 
   create(data): Observable<any> {
-    return this.http.post(baseUrl, data);
+    return this.http.post(scenarioUrl, data);
   }
 
   uploadsolution(data): Observable<any> {
@@ -88,11 +88,19 @@ export class TutorialService {
     return this.http.put(scenarioUrl, data);
   }
 
+  deleteSenario(scenarioId): Observable<any> {
+    return this.http.get(`${scenarioUrl}/${scenarioId}`);
+  }
+
   getSolution(id): Observable<any> {
     return this.http.get(`${solutionDetailUrl}/${id}`);
   }
 
   updateSolution(data): Observable<any> {
     return this.http.put(solutionDetailUrl, data);
+  }
+
+  deleteSolution(id): Observable<any> {
+    return this.http.delete(`${solutionDetailUrl}/${id}`);
   }
 }

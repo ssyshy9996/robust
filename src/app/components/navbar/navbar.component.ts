@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private sidebarVisible: boolean;
 
   public isCollapsed = true;
+  public isAdmin: Boolean = false;
 
   closeResult: string;
 
@@ -33,17 +34,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.location = location;
     this.sidebarVisible = false;
   }
-  // function that adds color white/transparent to the navbar on resize (this is for the collapse)
-   updateColor = () => {
-   var navbar = document.getElementsByClassName('navbar')[0];
-     if (window.innerWidth < 993 && !this.isCollapsed) {
-       navbar.classList.add('bg-white');
-       navbar.classList.remove('navbar-transparent');
-     } else {
-       navbar.classList.remove('bg-white');
-       navbar.classList.add('navbar-transparent');
-     }
-   };
+
+  updateColor = () => {
+    var navbar = document.getElementsByClassName('navbar')[0];
+    if (window.innerWidth < 993 && !this.isCollapsed) {
+      navbar.classList.add('bg-white');
+      navbar.classList.remove('navbar-transparent');
+    } else {
+      navbar.classList.remove('bg-white');
+      navbar.classList.add('navbar-transparent');
+    }
+  };
+
   ngOnInit() {
     window.addEventListener("resize", this.updateColor);
     this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -57,6 +59,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.mobile_menu_visible = 0;
       }
     });
+
+    this.isAdmin = localStorage.getItem('is_admin') == 'true';
   }
 
 
@@ -65,18 +69,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     localStorage.setItem('password', '');
 
     this.router.navigate(['/login']);
-  }
-  
-  collapse() {
-    this.isCollapsed = !this.isCollapsed;
-    const navbar = document.getElementsByTagName("nav")[0];
-    if (!this.isCollapsed) {
-      navbar.classList.remove("navbar-transparent");
-      navbar.classList.add("bg-white");
-    } else {
-      navbar.classList.add("navbar-transparent");
-      navbar.classList.remove("bg-white");
-    }
   }
 
   sidebarOpen() {
@@ -89,7 +81,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       mainPanel.style.position = "fixed";
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
       toggleButton.classList.add("toggled");
     }, 500);
 
@@ -97,6 +89,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.sidebarVisible = true;
   }
+
   sidebarClose() {
     const html = document.getElementsByTagName("html")[0];
     this.toggleButton.classList.remove("toggled");
@@ -105,16 +98,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     );
 
     if (window.innerWidth < 991) {
-      setTimeout(function() {
+      setTimeout(function () {
         mainPanel.style.position = "";
       }, 500);
     }
     this.sidebarVisible = false;
     html.classList.remove("nav-open");
   }
+
   sidebarToggle() {
-    // const toggleButton = this.toggleButton;
-    // const html = document.getElementsByTagName('html')[0];
     var $toggle = document.getElementsByClassName("navbar-toggler")[0];
 
     if (this.sidebarVisible === false) {
@@ -125,18 +117,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const html = document.getElementsByTagName("html")[0];
 
     if (this.mobile_menu_visible == 1) {
-      // $('html').removeClass('nav-open');
       html.classList.remove("nav-open");
       if ($layer) {
         $layer.remove();
       }
-      setTimeout(function() {
+      setTimeout(function () {
         $toggle.classList.remove("toggled");
       }, 400);
 
       this.mobile_menu_visible = 0;
     } else {
-      setTimeout(function() {
+      setTimeout(function () {
         $toggle.classList.add("toggled");
       }, 430);
 
@@ -151,16 +142,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
           .appendChild($layer);
       }
 
-      setTimeout(function() {
+      setTimeout(function () {
         $layer.classList.add("visible");
       }, 100);
 
-      $layer.onclick = function() {
-        //asign a function
+      $layer.onclick = function () {
         html.classList.remove("nav-open");
         this.mobile_menu_visible = 0;
         $layer.classList.remove("visible");
-        setTimeout(function() {
+        setTimeout(function () {
           $layer.remove();
           $toggle.classList.remove("toggled");
         }, 400);
@@ -186,7 +176,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   open(content) {
-    this.modalService.open(content, {windowClass: 'modal-search'}).result.then((result) => {
+    this.modalService.open(content, { windowClass: 'modal-search' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -199,10 +189,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
-  ngOnDestroy(){
-     window.removeEventListener("resize", this.updateColor);
+  ngOnDestroy() {
+    window.removeEventListener("resize", this.updateColor);
   }
 }

@@ -13,6 +13,9 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AuthModule } from "@auth0/auth0-angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
+import { NgHttpLoaderModule } from 'ng-http-loader';
+import { CommentComponent } from './comment/comment.component';
+// import { LoadingInterceptor } from './loading.interceptor';
 
 @NgModule({
   imports: [
@@ -23,14 +26,18 @@ import { ComponentsModule } from "./components/components.module";
     NgbModule,
     RouterModule,
     AppRoutingModule,
+    NgHttpLoaderModule.forRoot(),
+    // NgxSpinnerModule,
     AuthModule.forRoot({
       domain: 'dev-pg885vf5puf75lpx.us.auth0.com',
       clientId: 'WtX01rYykVtUT2N9iT3XxUJT0jTvsyev',
     }),
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
-  providers: [],
+  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent, CommentComponent],
+  providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

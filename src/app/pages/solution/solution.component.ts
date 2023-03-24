@@ -1,13 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService, User } from '@auth0/auth0-angular';
-import { TutorialService } from "src/app/services/tutorial.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { trustcalcService } from "src/app/services/trustcalc.service";
+import { Router } from "@angular/router";
 import Papa from 'papaparse';
 import { ToastrService } from "ngx-toastr";
+
 @Component({
-  selector: "app-icons",
-  templateUrl: "icons.component.html"
+  selector: "app-solution",
+  templateUrl: "solution.component.html"
 })
+
 export class IconsComponent implements OnInit {
   data: string[][];
   headers: string[];
@@ -17,18 +19,16 @@ export class IconsComponent implements OnInit {
   selectedTargetColumn: string;
   uniqueOutcomes: string[];
   Solutiontype: string;
-  selectedFavourableOutcomes: string[];
-  //protectedFeatures: string[] = [];
+  selectedFavourableOutcomes: string;
   public showVal1: boolean = true;
 
   toggleVal(): void {
     this.showVal1 = !this.showVal1;
-    if (this.tutorial.Solutiontype == 'unsupervised') {
-      this.tutorial.Solutiontype = 'supervised';
-    }
-    else { this.tutorial.Solutiontype = 'unsupervised'; }
-
+    if (this.trustcalc.Solutiontype == 'unsupervised') { this.trustcalc.Solutiontype = 'supervised'; }
+    else { this.trustcalc.Solutiontype = 'unsupervised'; }
   }
+
+  isEditing: Boolean = false;
 
   ScenarioName: any;
   TrainnigDatafile: File;
@@ -42,7 +42,7 @@ export class IconsComponent implements OnInit {
   ProtectedFeatures: string[];
   Protectedvalues: string[];
   // form: FormGroup;
-  tutorial = {
+  trustcalc = {
     SelectScenario: '',
     NameSolution: '',
     DescriptionSolution: '',
@@ -64,30 +64,27 @@ export class IconsComponent implements OnInit {
     Userid: '',
   };
 
-  constructor(public auth: AuthService, private tutorialservice: TutorialService, private router: Router, public toast: ToastrService) { }
+  constructor(public auth: AuthService, private trustcalcservice: trustcalcService, private router: Router, public toast: ToastrService) { }
 
   ngOnInit() {
     if (!this.showVal1) {
-      this.tutorial.Solutiontype = 'unsupervised';
+      this.trustcalc.Solutiontype = 'unsupervised';
     }
-    this.tutorial.emailid = localStorage.getItem('email');
-    this.tutorialservice.get(localStorage.getItem('email')).subscribe((data: any) => {
+    this.trustcalc.emailid = localStorage.getItem('email');
+    this.trustcalcservice.get(localStorage.getItem('email')).subscribe((data: any) => {
       this.ScenarioName = data.ScenarioName;
-      console.log("ScenarioNameList:", data.ScenarioName);
     });
-    // this.form = this.formBuilder.group({
-    //   profile: ['']
-    // });
-    // console.log("User is:",user);
 
     const id = this.router.url.substring(7);
     if (id.length <= 0)
       return;
-    this.tutorialservice.getSolution(id).subscribe(data => {
-      this.tutorial.NameSolution = data.solution_name;
-      this.tutorial.DescriptionSolution = data.description;
-      this.tutorial.Solutiontype = data.solution_type;
-      this.tutorial.Protectedvalues = data.protected_features;
+
+    this.isEditing = true;
+    this.trustcalcservice.getSolution(id).subscribe(data => {
+      this.trustcalc.NameSolution = data.solution_name;
+      this.trustcalc.DescriptionSolution = data.description;
+      this.trustcalc.Solutiontype = data.solution_type;
+      this.trustcalc.Protectedvalues = data.protected_features;
     })
   }
 
@@ -119,7 +116,6 @@ export class IconsComponent implements OnInit {
       this.headers = headers;
     };
     reader.onerror = function () {
-      console.log('error is occured while reading file!');
     };
   }
 
@@ -133,12 +129,13 @@ export class IconsComponent implements OnInit {
     }
   }
 
-  toggleFavourableOutcome(value) {
-    const index = this.selectedFavourableOutcomes.indexOf(value);
+  toggleFavourableOutcome(outcome) {
+    console.log('value:', outcome);
+    const index = this.selectedFavourableOutcomes.indexOf(outcome);
     if (index === -1) {
-      this.selectedFavourableOutcomes.push(value);
+      // this.selectedFavourableOutcomes.push(value);
     } else {
-      this.selectedFavourableOutcomes.splice(index, 1);
+      // this.selectedFavourableOutcomes.splice(index, 1);
     }
   }
   toggleProtectedFeature(feature) {
@@ -211,55 +208,53 @@ export class IconsComponent implements OnInit {
     this.WeightPillarFile = event.target.files[0];
   }
 
-  saveTutorial(): void {
+  savetrustcalc(): void {
     let formData = new FormData();
-    formData.append('Userid', this.tutorial.Userid);
-    formData.append('emailid', this.tutorial.emailid);
-    formData.append('SelectScenario', this.tutorial.SelectScenario);
-    formData.append('NameSolution', this.tutorial.NameSolution);
-    formData.append('DescriptionSolution', this.tutorial.DescriptionSolution);
+    formData.append('Userid', this.trustcalc.Userid);
+    formData.append('emailid', this.trustcalc.emailid);
+    formData.append('SelectScenario', this.trustcalc.SelectScenario);
+    formData.append('NameSolution', this.trustcalc.NameSolution);
+    formData.append('DescriptionSolution', this.trustcalc.DescriptionSolution);
     formData.append('TrainingFile', this.TrainnigDatafile);
     formData.append('TestFile', this.TestFile);
     formData.append('FactsheetFile', this.FactsheetFile);
-    formData.append('Solutiontype', this.tutorial.Solutiontype);
+    formData.append('Solutiontype', this.trustcalc.Solutiontype);
 
 
     formData.append('WeightMetric', this.WeightMetricFile);
     formData.append('WeightPillar', this.WeightPillarFile);
     // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
-    formData.append('ProtectedFeature', this.tutorial.Protectedfeatures);
+    formData.append('ProtectedFeature', this.trustcalc.Protectedfeatures);
     // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
-    formData.append('Protectedvalues', this.tutorial.Protectedvalues);
+    formData.append('Protectedvalues', this.trustcalc.Protectedvalues);
 
 
     formData.append('Outlierdatafile', this.Outlierdatafile);
     formData.append('MapFile', this.MapFile);
     formData.append('ModelFile', this.ModelFile);
-    formData.append('Targetcolumn', this.tutorial.Targetcolumn);
-    formData.append('Favourableoutcome', this.tutorial.Favourableoutcome);
+    formData.append('Targetcolumn', this.trustcalc.Targetcolumn);
+    formData.append('Favourableoutcome', this.selectedFavourableOutcomes);
 
     const data = {
-      SelectScenario: this.tutorial.SelectScenario,
+      SelectScenario: this.trustcalc.SelectScenario,
       TrainnigDatafile: this.TrainnigDatafile,
       // TrainnigDatafile: this.form.get('profile').value,
       // DatafileName: this.TrainnigDatafile.name,
       WeightMetric: this.WeightPillarFile,
       WeightPillar: this.WeightPillarFile,
-      ModelLinks: this.tutorial.ModelLinks,
-      LinktoDataset: this.tutorial.LinktoDataset,
-      Description: this.tutorial.Description,
-      emailid: this.tutorial.emailid,
-      Userid: this.tutorial.Userid
+      ModelLinks: this.trustcalc.ModelLinks,
+      LinktoDataset: this.trustcalc.LinktoDataset,
+      Description: this.trustcalc.Description,
+      emailid: this.trustcalc.emailid,
+      Userid: this.trustcalc.Userid
     };
 
-    this.tutorialservice.uploadsolution(formData)
+    this.trustcalcservice.uploadsolution(formData)
       .subscribe(
         response => {
-          console.log("Response data:", response);
-          // this.router.navigate(['/dashboard']) //ok? yes
+          this.router.navigate(['/dashboard']) //redirecting works.. ok? it seems to not work
         },
         error => {
-          console.log(error);
         }
       );
   };
@@ -350,16 +345,16 @@ export class IconsComponent implements OnInit {
     };
   }
 
-  changeTutorial(): void {
+  changetrustcalc(): void {
     const id = this.router.url.substring(7);
     if (id.length <= 0)
       return;
 
     let formData = new FormData();
     formData.append('SolutionId', id);
-    formData.append('SelectScenario', this.tutorial.SelectScenario);
-    formData.append('NameSolution', this.tutorial.NameSolution);
-    formData.append('DescriptionSolution', this.tutorial.DescriptionSolution);
+    formData.append('SelectScenario', this.trustcalc.SelectScenario);
+    formData.append('NameSolution', this.trustcalc.NameSolution);
+    formData.append('DescriptionSolution', this.trustcalc.DescriptionSolution);
     formData.append('TrainingFile', this.TrainnigDatafile);
     formData.append('TestFile', this.TestFile);
     formData.append('FactsheetFile', this.FactsheetFile);
@@ -367,15 +362,15 @@ export class IconsComponent implements OnInit {
 
     formData.append('MapFile', this.MapFile);
     // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
-    formData.append('ProtectedFeature', this.tutorial.Protectedfeatures);
+    formData.append('ProtectedFeature', this.trustcalc.Protectedfeatures);
     // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
-    formData.append('Protectedvalues', this.tutorial.Protectedvalues);
+    formData.append('Protectedvalues', this.trustcalc.Protectedvalues);
     formData.append('Outlierdatafile', this.Outlierdatafile);
     formData.append('WeightPillar', this.WeightPillarFile);
     formData.append('WeightMetric', this.WeightMetricFile);
     formData.append('ModelFile', this.ModelFile);
-    formData.append('Targetcolumn', this.tutorial.Targetcolumn);
-    formData.append('Favourableoutcome', this.tutorial.Favourableoutcome);
+    formData.append('Targetcolumn', this.trustcalc.Targetcolumn);
+    formData.append('Favourableoutcome', this.trustcalc.Favourableoutcome);
 
     const validateResult = this.validateFields(formData);
     if (validateResult.hasError) {
@@ -383,26 +378,35 @@ export class IconsComponent implements OnInit {
       return;
     }
 
-    this.tutorialservice.updateSolution(formData)
+    this.trustcalcservice.updateSolution(formData)
       .subscribe(
         response => {
-          console.log("Response data:", response);
           this.router.navigate(['/dashboard'])
         },
         error => {
-          console.log(error);
         }
       );
   }
 
+  deletetrustcalc(): void {
+    const id = this.router.url.substring(7);
+    if (id.length <= 0)
+      return;
+
+    if (confirm("Are you sure to delete?")) {
+      this.trustcalcservice.deleteSolution(id).subscribe(response => {
+        this.toast.info('Successfully deleted', 'DELETE');
+        this.router.navigate(['/dashboard']);
+      })
+    }
+  }
+
   Getdata(id): void {
-    this.tutorialservice.get(id)
+    this.trustcalcservice.get(id)
       .subscribe(
         response => {
-          console.log("Response data:", response);
         },
         error => {
-          console.log(error);
         }
       );
   }

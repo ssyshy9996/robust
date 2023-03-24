@@ -307,7 +307,7 @@
                     <th>Select Scenarios</th>
                     <td class="unwrap">
                       <select class="dropdown" name="ScenarioSelect" id="ScenarioSelect"
-                        [(ngModel)]="tutorial.SelectScenario" required>
+                        [(ngModel)]="trustcalc.SelectScenario" required>
                         <option>Select Scenario</option>
                         <option *ngFor="let scname of ScenarioName">
                           {{scname}}
@@ -324,7 +324,7 @@
                     <th>Select Solutions 1</th>
                     <td class="unwrap">
                       <select class="dropdown" name="SolutionSelect1" id="SolutionSelect1"
-                        [(ngModel)]="tutorial.SelectSolution1" required>
+                        [(ngModel)]="trustcalc.SelectSolution1" required>
                         <option>Select Solution 1</option>
                         <option *ngFor="let scname of SolutionName">
                           {{scname}}
@@ -341,7 +341,7 @@
                     <th>Select Solutions 2</th>
                     <td class="unwrap">
                       <select class="dropdown" name="SolutionSelect2" id="SolutionSelect2"
-                        [(ngModel)]="tutorial.SelectSolution2" required>
+                        [(ngModel)]="trustcalc.SelectSolution2" required>
                         <option>Select Solution 2</option>
                         <option *ngFor="let scname of SolutionName">
                           {{scname}}
@@ -365,22 +365,22 @@
                     <h4>Model2 Information1:</h4>
                   </div>
                   <div class="mx-3 row">
-                    <label> Model Name: {{tutorial.modelname1}} </label>
+                    <label> Model Name: {{trustcalc.modelname1}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Purpose Desscription: {{tutorial.purposedesc1}} </label>
+                    <label> Purpose Desscription: {{trustcalc.purposedesc1}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Training Data Description: {{tutorial.trainingdatadesc1}} </label>
+                    <label> Training Data Description: {{trustcalc.trainingdatadesc1}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Model Information: {{tutorial.modelinfo1}} </label>
+                    <label> Model Information: {{trustcalc.modelinfo1}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Authors: {{tutorial.authors1}} </label>
+                    <label> Authors: {{trustcalc.authors1}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Contact Information: {{tutorial.contactinfo1}} </label>
+                    <label> Contact Information: {{trustcalc.contactinfo1}} </label>
                   </div>
                 </div>
               </div>
@@ -391,22 +391,22 @@
                     <h4>Model2 Information:</h4>
                   </div>
                   <div class="mx-3 row">
-                    <label> Model Name: {{tutorial.modelname2}} </label>
+                    <label> Model Name: {{trustcalc.modelname2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Purpose Desscription: {{tutorial.purposedesc2}} </label>
+                    <label> Purpose Desscription: {{trustcalc.purposedesc2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Training Data Description: {{tutorial.trainingdatadesc2}} </label>
+                    <label> Training Data Description: {{trustcalc.trainingdatadesc2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Model Information: {{tutorial.modelinfo2}} </label>
+                    <label> Model Information: {{trustcalc.modelinfo2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Authors: {{tutorial.authors2}} </label>
+                    <label> Authors: {{trustcalc.authors2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Contact Information: {{tutorial.contactinfo2}} </label>
+                    <label> Contact Information: {{trustcalc.contactinfo2}} </label>
                   </div>
                 </div>
               </div>
@@ -417,25 +417,25 @@
                     <h4>Model2 Information1:</h4>
                   </div>
                   <div class="mx-3 row">
-                    <label> Accuracy: {{tutorial.accuracy}} </label>
+                    <label> Accuracy: {{trustcalc.accuracy}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Global Recall: {{tutorial.globalrecall}}</label>
+                    <label> Global Recall: {{trustcalc.globalrecall}}</label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Class Weighted Recall: {{tutorial.classweightedrecall}} </label>
+                    <label> Class Weighted Recall: {{trustcalc.classweightedrecall}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Global Precision: {{tutorial.globalprecision}} </label>
+                    <label> Global Precision: {{trustcalc.globalprecision}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Class Weighted Precions: {{tutorial.classweightedprecision}} </label>
+                    <label> Class Weighted Precions: {{trustcalc.classweightedprecision}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Global F1 Score: {{tutorial.globalf1score}}</label>
+                    <label> Global F1 Score: {{trustcalc.globalf1score}}</label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Class Weighted F1 Score: {{tutorial.classweightedf1score}} </label>
+                    <label> Class Weighted F1 Score: {{trustcalc.classweightedf1score}} </label>
                   </div>
                 </div>
               </div>
@@ -446,25 +446,25 @@
                     <h4>Model2 Information:</h4>
                   </div>
                   <div class="mx-3 row">
-                    <label> Accuracy: {{tutorial.accuracy2}} </label>
+                    <label> Accuracy: {{trustcalc.accuracy2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Global Recall: {{tutorial.globalrecall2}} </label>
+                    <label> Global Recall: {{trustcalc.globalrecall2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Class Weighted Recall: {{tutorial.classweightedrecall2}} </label>
+                    <label> Class Weighted Recall: {{trustcalc.classweightedrecall2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Global Precision: {{tutorial.globalprecision2}} </label>
+                    <label> Global Precision: {{trustcalc.globalprecision2}} </label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Class Weighted Precions: {{tutorial.classweightedprecision2}}</label>
+                    <label> Class Weighted Precions: {{trustcalc.classweightedprecision2}}</label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Global F1 Score: {{tutorial.globalf1score2}}</label>
+                    <label> Global F1 Score: {{trustcalc.globalf1score2}}</label>
                   </div>
                   <div class="mx-3 row">
-                    <label> Class Weighted F1 Score: {{tutorial.classweightedf1score2}} </label>
+                    <label> Class Weighted F1 Score: {{trustcalc.classweightedf1score2}} </label>
                   </div>
                 </div>
               </div>
@@ -515,14 +515,14 @@
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Trust Score: </label>
-                      <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{tutorial.trust_score1}}
+                      <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{trustcalc.trust_score1}}
                       </label>
                     </label>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Fairness Score: </label>
-                      <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{tutorial.fairness_score1}}
+                      <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{trustcalc.fairness_score1}}
                       </label>
                     </label>
                   </div>
@@ -530,20 +530,21 @@
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Explainability Score: </label>
                       <label class="col-md-3" style="text-align: right; color: #8FFF00;">
-                        {{tutorial.explainability_score1}} </label>
+                        {{trustcalc.explainability_score1}} </label>
                     </label>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Methodology Score: </label>
                       <label class="col-md-3" style="text-align: right; color: #FF0202;">
-                        {{tutorial.methodology_score1}} </label>
+                        {{trustcalc.methodology_score1}} </label>
                     </label>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Robustness Score: </label>
-                      <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{tutorial.robustness_score1}}
+                      <label class="col-md-3" style="text-align: right; color: #8FFF00;">
+                        {{trustcalc.robustness_score1}}
                       </label>
                     </label>
                   </div>
@@ -561,14 +562,14 @@
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Trust Score: </label>
-                      <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{tutorial.trust_score2}}
+                      <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{trustcalc.trust_score2}}
                       </label>
                     </label>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Fairness Score: </label>
-                      <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{tutorial.fairness_score2}}
+                      <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{trustcalc.fairness_score2}}
                       </label>
                     </label>
                   </div>
@@ -576,20 +577,21 @@
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Explainability Score: </label>
                       <label class="col-md-3" style="text-align: right; color: #FF0202;">
-                        {{tutorial.explainability_score2}} </label>
+                        {{trustcalc.explainability_score2}} </label>
                     </label>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Methodology Score: </label>
                       <label class="col-md-3" style="text-align: right; color: #8FFF00;">
-                        {{tutorial.methodology_score2}} </label>
+                        {{trustcalc.methodology_score2}} </label>
                     </label>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
                       <label class="col-md-9"> Robustness Score: </label>
-                      <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{tutorial.robustness_score2}}
+                      <label class="col-md-3" style="text-align: right; color: #FF0202;">
+                        {{trustcalc.robustness_score2}}
                       </label>
                     </label>
                   </div>
@@ -602,7 +604,7 @@
           </form>
         </div>
         <div class=" card-footer">
-          <button (click)="saveTutorial()" class=" btn btn-fill btn-danger" type="submit">Compare Solution</button>
+          <button (click)="savetrustcalc()" class=" btn btn-fill btn-danger" type="submit">Compare Solution</button>
         </div>
       </div>
     </div>

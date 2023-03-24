@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TutorialService } from './tutorial.service';
+import { trustcalcService } from './trustcalc.service';
 
-describe('TutorialService', () => {
-  let service: TutorialService;
+describe('trustcalcService', () => {
+  let service: trustcalcService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TutorialService);
+    service = TestBed.inject(trustcalcService);
   });
 
   it('should be created', () => {
