@@ -4,13 +4,19 @@ import { trustcalcService } from "src/app/services/trustcalc.service";
 import { Router } from "@angular/router";
 import Papa from 'papaparse';
 import { ToastrService } from "ngx-toastr";
+import { FormControl } from '@angular/forms';
+import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
   selector: "app-solution",
+  styleUrls: ["solution.component.css"],
   templateUrl: "solution.component.html"
 })
 
 export class IconsComponent implements OnInit {
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
+  position = new FormControl(this.positionOptions[0]);
+
   data: string[][];
   headers: string[];
   protectedFeatures: string[] = [];
@@ -41,6 +47,7 @@ export class IconsComponent implements OnInit {
   MapFile: File;
   ProtectedFeatures: string[];
   Protectedvalues: string[];
+  solutionList: [];
   // form: FormGroup;
   trustcalc = {
     SelectScenario: '',
@@ -75,8 +82,25 @@ export class IconsComponent implements OnInit {
       this.ScenarioName = data.ScenarioName;
     });
 
+    this.trustcalcservice.getSolutionList(this.trustcalc.emailid).subscribe(data => {
+      this.solutionList = data.solutionList;
+    });
+
     const id = this.router.url.substring(7);
     if (id.length <= 0)
+      return;
+
+    this.isEditing = true;
+    this.trustcalcservice.getSolution(id).subscribe(data => {
+      this.trustcalc.NameSolution = data.solution_name;
+      this.trustcalc.DescriptionSolution = data.description;
+      this.trustcalc.Solutiontype = data.solution_type;
+      this.trustcalc.Protectedvalues = data.protected_features;
+    })
+  }
+
+  showDetail(id): void {
+    if (id <= 0)
       return;
 
     this.isEditing = true;
@@ -119,7 +143,10 @@ export class IconsComponent implements OnInit {
     };
   }
 
-  setUniqueOutcomes() {
+  setUniqueOutcomes(value) {
+    console.log('targt columm:', value);
+    this.selectedTargetColumn = value;
+
     this.uniqueOutcomes = [];
     for (const row of this.data) {
       const value = row[this.headers.indexOf(this.selectedTargetColumn)];
@@ -129,14 +156,25 @@ export class IconsComponent implements OnInit {
     }
   }
 
+  onProtectedValueChange(value) {
+    console.log('pro value:', value);
+    this.Protectedvalues = value.substring(value.indexOf(':') + 3, value.length - 1);
+  }
+
+  setTargetColumn(value) {
+  }
+
   toggleFavourableOutcome(outcome) {
-    console.log('value:', outcome);
-    const index = this.selectedFavourableOutcomes.indexOf(outcome);
-    if (index === -1) {
-      // this.selectedFavourableOutcomes.push(value);
-    } else {
-      // this.selectedFavourableOutcomes.splice(index, 1);
+    if (outcome.length > 1) {
+      console.log('value:', outcome.substring(outcome.indexOf(':') + 3, outcome.length - 1));
+      this.selectedFavourableOutcomes = outcome.substring(outcome.indexOf(':') + 3, outcome.length - 1);
     }
+    // const index = this.selectedFavourableOutcomes.indexOf(outcome);
+    // if (index === -1) {
+    //   // this.selectedFavourableOutcomes.push(value);
+    // } else {
+    //   // this.selectedFavourableOutcomes.splice(index, 1);
+    // }
   }
   toggleProtectedFeature(feature) {
     const index = this.protectedFeatures.indexOf(feature);
@@ -223,16 +261,14 @@ export class IconsComponent implements OnInit {
 
     formData.append('WeightMetric', this.WeightMetricFile);
     formData.append('WeightPillar', this.WeightPillarFile);
-    // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
-    formData.append('ProtectedFeature', this.trustcalc.Protectedfeatures);
-    // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
-    formData.append('Protectedvalues', this.trustcalc.Protectedvalues);
+    formData.append('ProtectedFeature', this.protectedFeatures.toString());
+    formData.append('Protectedvalues', this.Protectedvalues.toString());
 
 
     formData.append('Outlierdatafile', this.Outlierdatafile);
     formData.append('MapFile', this.MapFile);
     formData.append('ModelFile', this.ModelFile);
-    formData.append('Targetcolumn', this.trustcalc.Targetcolumn);
+    formData.append('Targetcolumn', this.selectedTargetColumn);
     formData.append('Favourableoutcome', this.selectedFavourableOutcomes);
 
     const data = {
@@ -252,7 +288,7 @@ export class IconsComponent implements OnInit {
     this.trustcalcservice.uploadsolution(formData)
       .subscribe(
         response => {
-          this.router.navigate(['/dashboard']) //redirecting works.. ok? it seems to not work
+          this.router.navigate(['/dashboard'])
         },
         error => {
         }
@@ -358,19 +394,17 @@ export class IconsComponent implements OnInit {
     formData.append('TrainingFile', this.TrainnigDatafile);
     formData.append('TestFile', this.TestFile);
     formData.append('FactsheetFile', this.FactsheetFile);
-    formData.append('Solutiontype', this.Solutiontype);
+    formData.append('Solutiontype', this.trustcalc.Solutiontype);
 
     formData.append('MapFile', this.MapFile);
-    // formData.append('ProtectedFeature', new Blob(this.ProtectedFeatures, { type: 'text/plain' }));
-    formData.append('ProtectedFeature', this.trustcalc.Protectedfeatures);
-    // formData.append('Protectedvalues', new Blob(this.Protectedvalues, { type: 'text/plain' }));
-    formData.append('Protectedvalues', this.trustcalc.Protectedvalues);
+    formData.append('ProtectedFeature', this.protectedFeatures.toString());
+    formData.append('Protectedvalues', this.Protectedvalues.toString());
     formData.append('Outlierdatafile', this.Outlierdatafile);
     formData.append('WeightPillar', this.WeightPillarFile);
     formData.append('WeightMetric', this.WeightMetricFile);
     formData.append('ModelFile', this.ModelFile);
-    formData.append('Targetcolumn', this.trustcalc.Targetcolumn);
-    formData.append('Favourableoutcome', this.trustcalc.Favourableoutcome);
+    formData.append('Targetcolumn', this.selectedTargetColumn);
+    formData.append('Favourableoutcome', this.selectedFavourableOutcomes);
 
     const validateResult = this.validateFields(formData);
     if (validateResult.hasError) {
@@ -409,5 +443,32 @@ export class IconsComponent implements OnInit {
         error => {
         }
       );
+  }
+
+  showScenario: boolean = false;
+  showName: boolean = false;
+  showDescription: boolean = false;
+  showTestToolTip: boolean = false;
+  showOutlierToolTip: boolean = false;
+  showTrainingToolTip: boolean = false;
+  showMappingToolTip: boolean = false;
+  showMetricToolTip: boolean = false;
+  showPillarToolTip: boolean = false;
+  showProtectedToolTip: boolean = false;
+  showProtectedValueToolTip: boolean = false;
+  showTargetToolTip: boolean = false;
+  showFavOutToolTip: boolean = false;
+  showFactToolTip: boolean = false;
+  showModelToolTip: boolean = false;
+  showScenarioToolTip = (flag: boolean) => {
+    this.showScenario = flag;
+  }
+
+  showNameTooltip = (flag: boolean) => {
+    this.showName = flag;
+  }
+
+  showDescriptionTooltip = (flag: boolean) => {
+    this.showDescription = flag;
   }
 }

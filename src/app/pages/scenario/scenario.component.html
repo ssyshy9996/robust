@@ -293,7 +293,7 @@
 
 <div class=" content">
   <div class=" row">
-    <div class=" col-md-10">
+    <div class=" col">
       <div *ngIf="!submitted" class="submit-form card">
         <div class=" card-header">
           <h5 class=" title">CreateScenario</h5>
@@ -319,6 +319,18 @@
             </div>
 
           </form>
+          <ul class="p-1">
+            <li class="card-header">
+              Your Scenarios
+            </li>
+            <li *ngFor="let contact of trustcalc.scenarioList" style="border-bottom: 1px solid gray">
+              <div class="card-item" style="display: flex; align-items: center; justify-content: space-between;">
+                <a [routerLink]="['/maps', contact.id]" (click)="showDetail(contact.id)">
+                  <span class="mr-3" style="color: red">Name: {{ contact.scenario_name }}</span>
+                </a>
+              </div>
+            </li>
+          </ul>
         </div>
         <div class=" card-footer">
           <button (click)="savetrustcalc()" *ngIf="!isEditing" class=" btn btn-fill btn-danger" type="submit">Create

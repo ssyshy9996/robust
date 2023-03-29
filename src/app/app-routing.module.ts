@@ -8,14 +8,13 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { LoginComponent } from "./components/login/login.component";
 import { SignupComponent } from "./components/signup/signup.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
-import { AuthGuard } from "@auth0/auth0-angular";
 import { LoginService } from "./services/login.service";
 import { CommentComponent } from "./comment/comment.component";
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "login",
+    redirectTo: "dashboard",
     pathMatch: "full"
   },
   {
@@ -36,11 +35,6 @@ const routes: Routes = [
     path: 'comment',
     component: CommentComponent,
   },
-  // {
-  //   path: "",
-  //   redirectTo: "dashboard",
-  //   pathMatch: "full"
-  // },
   {
     path: "",
     component: AdminLayoutComponent,

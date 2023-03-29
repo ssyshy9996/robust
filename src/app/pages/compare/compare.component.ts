@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService, User } from '@auth0/auth0-angular';
 import { trustcalcService } from "src/app/services/trustcalc.service";
+import { Toast, ToastrService } from "ngx-toastr";
 import { Chart } from 'chart.js';
 
 @Component({
@@ -185,7 +186,7 @@ export class compareComponent implements OnInit {
     return data;
   }
 
-  constructor(public auth: AuthService, private trustcalcservice: trustcalcService) { }
+  constructor(public auth: AuthService, private trustcalcservice: trustcalcService, private toast: ToastrService) { }
 
   ngOnInit() {
     this.trustcalcservice.get(localStorage.getItem('email')).subscribe((data: any) => {
@@ -389,6 +390,8 @@ export class compareComponent implements OnInit {
           ]);
         },
         error => {
+          if (error.status != 500)
+            this.toast.error(error.error, 'Compare Error');
         }
       );
   };

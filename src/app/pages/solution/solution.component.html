@@ -292,15 +292,27 @@
   }
 </style>
 
-<div *ngIf="showVal1">
-
-
-  <div class=" content">
-    <div class=" row">
-      <div class=" col-md-10">
+<div class=" content">
+  <div class="row p-2">
+    <div class="card">
+      <ul class="p-3">
+        <li class="card-header">
+          Your Solutions
+        </li>
+        <li *ngFor="let contact of solutionList" style="border-bottom: 1px solid gray">
+          <div class="card-item" style="display: flex; align-items: center; justify-content: space-between;">
+            <a [routerLink]="['/icons', contact.id]" (click)="showDetail(contact.id)">
+              <span class="mr-3" style="color: red">Name: {{ contact.solution_name }}</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="showVal1">
+      <div class=" col">
         <div class=" card">
           <div class=" card-header">
-            <h5 class=" title">UplaodSolution</h5>
+            <h5 class=" title">Upload a Solution</h5>
           </div>
 
           <div class="collapse navbar-collapse" id="navbarNav">
@@ -323,8 +335,11 @@
                 <div class=" col-md-12">
                   <div class=" form-group">
                     <tr class="us-form error">
-                      <th>Select Scenarios</th>
-                      <td class="unwrap">
+                      <span style="color:red">
+                        <label (mouseenter)="showScenarioToolTip(true)" (mouseleave)="showScenarioToolTip(false)">Select
+                          Scenarios</label>*
+                      </span>
+                      <td class="unwrap" style="background: none">
                         <select class="dropdown" name="ScenarioSelect" id="ScenarioSelect"
                           [(ngModel)]="trustcalc.SelectScenario" required>
                           <option>Select Scenario</option>
@@ -334,6 +349,7 @@
 
                         </select>
                       </td>
+                      <div class="tooltext" *ngIf="showScenario">Select the Scenario</div>
                     </tr>
                   </div>
                 </div>
@@ -341,14 +357,21 @@
               <div class=" row">
                 <div class=" col-md-6 pr-md-1">
                   <div class=" form-group">
-                    <label> Name of Solution </label>
+                    <span style="color: red"><label (mouseenter)="showNameTooltip(true)"
+                        (mouseleave)="showNameTooltip(false)"> Name of Solution </label>*
+                      <span class="tooltext" *ngIf="showName">Type the name of the solution
+                      </span>
+                    </span>
                     <input class=" form-control" placeholder="Name of Solution" id="SolutionName" required
                       name="SolutionName" [(ngModel)]="trustcalc.NameSolution" type="text" value="Mike" />
                   </div>
                 </div>
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
-                    <label> Description of Solution </label>
+                    <span style="color: red"><label (mouseenter)="showDescriptionTooltip(true)"
+                        (mouseleave)="showDescriptionTooltip(false)"> Description of Solution </label>*
+                      <span class="tooltext" *ngIf="showDescription">Type the Description of the solution</span>
+                    </span>
                     <textarea class=" form-control" cols="80" placeholder="Here can be your description"
                       id="DescriptionSolution" required name="DescriptionSolution"
                       [(ngModel)]="trustcalc.DescriptionSolution" rows="4" value="Mike">Description of Solution.
@@ -358,34 +381,47 @@
               </div>
               <div class=" row">
                 <div class=" col-md-6">
-                  <label for="formFileLg" class="form-label">Tesdtata</label>
+                  <span style="color: red">
+                    <label (mouseenter)="showTestToolTip=true" (mouseleave)="showTestToolTip=false" for="formFileLg"
+                      class="form-label">Tesdtata</label>*
+                    <span class="tooltext" *ngIf="showTestToolTip">Select the test file</span>
+                  </span>
                   <input class="form-control" id="TestFile" name="TestFile" (change)="onTestFile($event)" required
                     type="file" />
                 </div>
-
-
-
-
                 <div class="col-md-6">
-                  <label for="file-input">Training Data File:</label>
+                  <span style="color: red"><label for="file-input" (mouseenter)="showTrainingToolTip=true"
+                      (mouseleave)="showTrainingToolTip=false">Training Data File:</label>*
+                    <span class="tooltext" *ngIf="showTrainingToolTip">Select the Training file</span></span>
                   <input class="form-control" id="TestFile" name="TestFile" (change)="onFileChange($event)" required
                     type="file" />
                 </div>
 
                 <div class="col-md-6">
-                  <label for="file-input">Mapping Data File:</label>
+                  <span style="color: red"><label for="file-input" (mouseenter)="showMappingToolTip=true"
+                      (mouseleave)="showMappingToolTip=false">Mapping Data File:</label>*
+                    <span class="tooltext" *ngIf="showMappingToolTip">Select the Mapping file</span>
+                  </span>
                   <input class="form-control" id="MapFile" name="MapFile" (change)="onMapChange($event)" required
                     type="file" />
                 </div>
 
                 <div class="col-md-6">
-                  <label for="file-input">Weight Metrics File:</label>
+                  <span>
+                    <label for="file-input" (mouseenter)="showMetricToolTip=true"
+                      (mouseleave)="showMetricToolTip=false">Weight Metrics File:</label>
+                    <span class="tooltext" *ngIf="showMetricToolTip">Select the Metric file</span>
+                  </span>
                   <input class="form-control" id="WeightMetics" name="WeightMetics"
                     (change)="onWeightMetricChange($event)" required type="file" />
                 </div>
 
                 <div class="col-md-6">
-                  <label for="file-input">Weight Pillar File:</label>
+                  <span>
+                    <label for="file-input" (mouseenter)="showPillarToolTip=true"
+                      (mouseleave)="showPillarToolTip=false">Weight Pillar File:</label>
+                    <span class="tooltext" *ngIf="showPillarToolTip">Select the Pillar file</span>
+                  </span>
                   <input class="form-control" id="WeightPillar" name="WeightPillar"
                     (change)="onWeightPillarChange($event)" required type="file" />
                 </div>
@@ -408,7 +444,11 @@
               <div class=" row">
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
-                    <label>Protected Features </label>
+                    <span>
+                      <label (mouseenter)="showProtectedToolTip=true"
+                        (mouseleave)="showProtectedToolTip=false">Protected Features </label>
+                      <span class="tooltext" *ngIf="showProtectedToolTip">Select the Protected Feature</span>
+                    </span>
                     <input class=" form-control" placeholder="ProtectedFeature" id="ProtectedFeature" required
                       name="ProtectedFeature" [(ngModel)]="trustcalc.Protectedfeatures" type="text"
                       [value]="protectedFeatures.join(', ')" />
@@ -417,9 +457,13 @@
 
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
-                    <label>Protected Values </label>
+                    <span>
+                      <label (mouseenter)="showProtectedValueToolTip=true"
+                        (mouseleave)="showProtectedValueToolTip=false">Protected Values </label>
+                      <span class="tooltext" *ngIf="showProtectedValueToolTip">Select the Protected Value</span>
+                    </span>
                     <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"
-                      name="Protectedvalues" multiple>
+                      name="Protectedvalues" multiple (change)="onProtectedValueChange($event.target.value)">
                       <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">{{value}}
                       </option>
                     </select>
@@ -430,9 +474,13 @@
               <div class=" row">
                 <div class=" col-md-4 pr-md-1">
                   <div class=" form-group">
-                    <label> Target column </label>
+                    <span>
+                      <label (mouseenter)="showTargetToolTip=true" (mouseleave)="showTargetToolTip=false"> Target column
+                      </label>
+                      <span class="tooltext" *ngIf="showTargetToolTip">Select the Target Column</span>
+                    </span>
                     <select class="form-control" [(ngModel)]="selectedTargetColumn" name="Targetcolumn"
-                      (change)="setUniqueOutcomes()">
+                      (change)="setUniqueOutcomes($event.target.value)">
                       <option *ngFor="let column of headers" [value]="column" style="background: black;">{{column}}
                       </option>
                     </select>
@@ -441,35 +489,39 @@
 
                 <div class="col-md-4 pr-md-1">
                   <div class="form-group">
-                    <label>Favourable Outcome</label>
+                    <span>
+                      <label (mouseenter)="showFavOutToolTip=true" (mouseleave)="showFavOutToolTip=false">Favourable
+                        Outcome</label>
+                      <span class="tooltext" *ngIf="showFavOutToolTip">Select the Target Column</span>
+                    </span>
                     <select class="form-control" [(ngModel)]="selectedFavourableOutcomes" name="Favourableoutcome"
-                      multiple (change)="toggleFavourableOutcome(outcome)">
+                      multiple (change)="toggleFavourableOutcome($event.target.value)">
                       <option *ngFor="let outcome of uniqueOutcomes" [value]="outcome">{{outcome}}</option>
                     </select>
                   </div>
                 </div>
               </div>
-
-
-
-
               <div class=" row">
                 <div class=" col-md-6">
-
-                  <label for="formFileLg" class="form-label">Factsheet</label>
+                  <span>
+                    <span style="color: red"><label (mouseenter)="showFactToolTip=true"
+                        (mouseleave)="showFactToolTip=false" for="formFileLg"
+                        class="form-label">Factsheet</label>*</span>
+                    <span class="tooltext" *ngIf="showFactToolTip">Select the FactSheet File</span>
+                  </span>
                   <input class="form-control" id="Factsheetfile" name="Factsheetfile" (change)="onFactsheetfile($event)"
                     required type="file" />
-
                 </div>
                 <div class=" col-md-6">
-
-                  <label for="formFileLg" class="form-label">Model</label>
+                  <span>
+                    <span style="color: red"><label (mouseenter)="showModelToolTip=true"
+                        (mouseleave)="showModelToolTip=false" for="formFileLg" class="form-label">Model</label>*</span>
+                    <span class="tooltext" *ngIf="showModelToolTip">Select the Model File</span>
+                  </span>
                   <input class="form-control" id="Modelfile" name="Modelfile" (change)="onModelfile($event)" required
                     type="file" />
-
                 </div>
               </div>
-
             </form>
           </div>
           <div class=" card-footer">
@@ -481,14 +533,8 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-<div *ngIf="!showVal1">
-  <div class=" content">
-
-
-    <div class=" row">
-      <div class=" col-md-10">
+    <div *ngIf="!showVal1">
+      <div class=" col">
         <div class=" card">
           <div class=" card-header">
             <h5 class=" title">UplaodSolution</h5>
@@ -505,17 +551,17 @@
           <div class=" card-body">
             <form enctype="multipart/form-data">
               <div hidden>
-
                 <input class="text" id="Solutiontype" required name="Solutiontype" [(ngModel)]="trustcalc.Solutiontype"
                   type="text" value="unsupervised" />
               </div>
-
               <div class=" row">
                 <div class=" col-md-12">
                   <div class=" form-group">
                     <tr class="us-form error">
-                      <th>Select Scenarios</th>
-                      <td class="unwrap">
+                      <span style="color:red"><label (mouseenter)="showScenario=true"
+                          (mouseleave)="showScenario=false">Select Scenarios</label>*
+                      </span>
+                      <td class="unwrap" style="background: none">
                         <select class="dropdown" name="ScenarioSelect" id="ScenarioSelect"
                           [(ngModel)]="trustcalc.SelectScenario" required>
                           <option>Select Scenario</option>
@@ -525,6 +571,7 @@
 
                         </select>
                       </td>
+                      <span class="tooltext" *ngIf="showScenario">Select the scenarios</span>
                     </tr>
                   </div>
                 </div>
@@ -532,7 +579,10 @@
               <div class=" row">
                 <div class=" col-md-6 pr-md-1">
                   <div class=" form-group">
-                    <label> Name of Solution </label>
+                    <span style="color: red"><label (mouseenter)="showName=true" (mouseleave)="showName=false"> Name of
+                        Solution </label>*
+                      <span class="tooltext" *ngIf="showName">Type Name of the solution</span>
+                    </span>
                     <input class=" form-control" placeholder="Name of Solution" id="SolutionName" required
                       name="SolutionName" [(ngModel)]="trustcalc.NameSolution" type="text" value="Mike" />
                   </div>
@@ -540,48 +590,71 @@
 
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
-                    <label> Description of Solution </label>
+                    <span style="color: red"><label (mouseenter)="showDescription=true"
+                        (mouseleave)="showDescription=false">
+                        Description of Solution </label>*
+                      <span class="tooltext" *ngIf="showDescription">Type Description of the solution</span>
+                    </span>
                     <textarea class=" form-control" cols="80" placeholder="Here can be your description"
                       id="SolutionDescription" required name="SolutionDescription"
                       [(ngModel)]="trustcalc.DescriptionSolution" rows="4" value="Mike">Description of Solution.
-                    </textarea>
+                        </textarea>
                   </div>
                 </div>
               </div>
               <div class=" row">
                 <div class=" col-md-6">
-                  <label for="formFileLg" class="form-label">Tesdtata</label>
+                  <span style="color: red"><label (mouseenter)="showTestToolTip=true"
+                      (mouseleave)="showTestToolTip=false" for="formFileLg" class="form-label">Tesdtata</label>*
+                    <span class="tooltext" *ngIf="showTestToolTip">Select the test file</span>
+                  </span>
                   <input class="form-control" id="TestFile" name="TestFile" (change)="onTestFile($event)" required
                     type="file" />
                 </div>
 
                 <div class=" col-md-6">
-                  <label for="formFileLg" class="form-label">Outlier Data</label>
+                  <span style="color: red"><label (mouseenter)="showOutlierToolTip=true"
+                      (mouseleave)="showOutlierToolTip=false" for="formFileLg" class="form-label">Outlier Data</label>*
+                    <span class="tooltext" *ngIf="showOutlierToolTip">Select the outlier file</span>
+                  </span>
                   <input class="form-control" id="Outlierdatafile" name="Outlierdatafile"
                     (change)="onOutlierdatafile($event)" required type="file" />
                 </div>
 
 
                 <div class="col-md-6">
-                  <label for="file-input">Training Data File:</label>
+                  <span style="color: red"><label (mouseenter)="showTrainingToolTip=true"
+                      (mouseleave)="showTrainingToolTip=false" for="file-input">Training Data File:</label>*
+                    <span class="tooltext" *ngIf="showTrainingToolTip">Select the outlier file</span>
+                  </span>
                   <input class="form-control" id="TestFile" name="TestFile" (change)="onFileChange($event)" required
                     type="file" />
                 </div>
 
                 <div class="col-md-6">
-                  <label for="file-input">Mapping Data File:</label>
+                  <span><label (mouseenter)="showMappingToolTip=true" (mouseleave)="showMappingToolTip=false"
+                      for="file-input">Mapping Data File:</label>
+                    <span class="tooltext" *ngIf="showMappingToolTip">Select the map file</span>
+                  </span>
                   <input class="form-control" id="MapFile" name="MapFile" (change)="onMapChange($event)" required
                     type="file" />
                 </div>
 
                 <div class="col-md-6">
-                  <label for="file-input">Weight Metrics File:</label>
+                  <span><label for="file-input" (mouseenter)="showMetricToolTip=true"
+                      (mouseleave)="showMetricToolTip=false">Weight Metrics File:</label>
+                    <span class="tooltext" *ngIf="showMetricToolTip">Select the metric file</span>
+                  </span>
                   <input class="form-control" id="WeightMetics" name="WeightMetics"
                     (change)="onWeightMetricChange($event)" required type="file" />
                 </div>
 
                 <div class="col-md-6">
-                  <label for="file-input">Weight Pillar File:</label>
+                  <span>
+                    <label for="file-input" (mouseenter)="showPillarToolTip=true"
+                      (mouseleave)="showPillarToolTip=false">Weight Pillar File:</label>
+                    <span class="tooltext" *ngIf="showPillarToolTip">Select the pillar file</span>
+                  </span>
                   <input class="form-control" id="WeightPillar" name="WeightPillar"
                     (change)="onWeightPillarChange($event)" required type="file" />
                 </div>
@@ -604,7 +677,11 @@
               <div class=" row">
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
-                    <label>Protected Features </label>
+                    <span>
+                      <label (mouseenter)="showProtectedValueToolTip=true"
+                        (mouseleave)="showProtectedValueToolTip=false">Protected Features </label>
+                      <span class="tooltext" *ngIf="showProtectedValueToolTip">Select the Protected Features</span>
+                    </span>
                     <input class=" form-control" placeholder="ProtectedFeature" id="ProtectedFeature" required
                       name="ProtectedFeature" [(ngModel)]="trustcalc.Protectedfeature" type="text"
                       [value]="protectedFeatures.join(', ')" />
@@ -613,9 +690,13 @@
 
                 <div class="mx-3 col-md-10 pl-md-1">
                   <div class=" form-group">
-                    <label>Protected Values </label>
+                    <span>
+                      <label (mouseenter)="showProtectedToolTip=true"
+                        (mouseleave)="showProtectedToolTip=false">Protected Values </label>
+                      <span class="tooltext" *ngIf="showProtectedToolTip">Select the Protected Values</span>
+                    </span>
                     <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"
-                      name="Protectedvalues" multiple>
+                      name="Protectedvalues" multiple (change)="onProtectedValueChange($event.target.value)">
                       <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">{{value}}
                       </option>
                     </select>
@@ -624,15 +705,19 @@
               </div>
               <div class=" row">
                 <div class=" col-md-6">
-
-                  <label for="formFileLg" class="form-label">Factsheet</label>
+                  <span style="color: red"><label (mouseenter)="showFactToolTip=true"
+                      (mouseleave)="showFactToolTip=false" for="formFileLg" class="form-label">Factsheet</label>*
+                    <span class="tooltext" *ngIf="showFactToolTip">Select the Factsheet file</span>
+                  </span>
                   <input class="form-control" id="Factsheetfile" name="Factsheetfile" (change)="onFactsheetfile($event)"
                     required type="file" />
 
                 </div>
                 <div class=" col-md-6">
-
-                  <label for="formFileLg" class="form-label">Model</label>
+                  <span style="color: red"><label (mouseenter)="showModelToolTip=true"
+                      (mouseleave)="showModelToolTip=false" for="formFileLg" class="form-label">Model</label>*
+                    <span class="tooltext" *ngIf="showModelToolTip">Select the Factsheet file</span>
+                  </span>
                   <input class="form-control" id="Modelfile" name="Modelfile" (change)="onModelfile($event)" required
                     type="file" />
                 </div>

@@ -84,6 +84,10 @@ export class trustcalcService {
     return this.http.get(`${scenarioUrl}/${scenarioId}`);
   }
 
+  getScenarioList(email): Observable<any> {
+    return this.http.get(`${scenarioUrl}/${email}`);
+  }
+
   updateScenario(data): Observable<any> {
     return this.http.put(scenarioUrl, data);
   }
@@ -94,6 +98,10 @@ export class trustcalcService {
 
   getSolution(id): Observable<any> {
     return this.http.get(`${solutionDetailUrl}/${id}`);
+  }
+
+  getSolutionList(email): Observable<any> {
+    return this.http.get(`http://127.0.0.1:8000/api/solution_list/${email}`);
   }
 
   updateSolution(data): Observable<any> {

@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { ToastrModule } from 'ngx-toastr';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
@@ -15,7 +16,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { CommentComponent } from './comment/comment.component';
-// import { LoadingInterceptor } from './loading.interceptor';
 
 @NgModule({
   imports: [
@@ -27,7 +27,6 @@ import { CommentComponent } from './comment/comment.component';
     RouterModule,
     AppRoutingModule,
     NgHttpLoaderModule.forRoot(),
-    // NgxSpinnerModule,
     AuthModule.forRoot({
       domain: 'dev-pg885vf5puf75lpx.us.auth0.com',
       clientId: 'WtX01rYykVtUT2N9iT3XxUJT0jTvsyev',
@@ -38,6 +37,6 @@ import { CommentComponent } from './comment/comment.component';
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

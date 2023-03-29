@@ -297,7 +297,88 @@
       <div class=" col-md-12">
         <div class=" card">
           <div class=" card-header">
-            <h5 class=" title">AnalyzeSolution</h5>
+            <button style="background: none;" (click)="showScoreBoard()">
+              <h5 class=" title">AnalyzeSolution</h5>
+            </button>
+            <div class="score-panel" *ngIf="scorePanelVisibility">
+              <div class="metrics">
+                <h6>Weight Metrics</h6>
+                <div class="row">
+                  <div class="fairness col-md-6 p-2">
+                    <p class="fairness">Fairness</p>
+                    <div class="adjust"><span>underfitting</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.underfitting" /></div>
+                    <div class="adjust"><span>overfitting</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.overfitting" /></div>
+                    <div class="adjust"><span>statistical_parity_difference</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.statistical_parity_difference" /></div>
+                    <div class="adjust"><span>equal_opportunity_difference</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.equal_opportunity_difference" /></div>
+                    <div class="adjust"><span>average_odds_difference</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.average_odds_difference" /></div>
+                    <div class="adjust"><span>disparate_impact</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.disparate_impact" /></div>
+                    <div class="adjust"><span>class_balance</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.class_balance" /></div>
+                  </div>
+                  <div class="explainability col-md-6 p-2">
+                    <p class="explainability">explainability</p>
+                    <div class="adjust"><span>algorithm_class</span><input type="number"
+                        [(ngModel)]="this.weights.explainability.algorithm_class" /></div>
+                    <div class="adjust"><span>correlated_features</span><input type="number"
+                        [(ngModel)]="this.weights.explainability.correlated_features" /></div>
+                    <div class="adjust"><span>model_size</span><input type="number"
+                        [(ngModel)]="this.weights.explainability.model_size" /></div>
+                    <div class="adjust"><span>feature_relevance</span><input type="number"
+                        [(ngModel)]="this.weights.explainability.feature_relevance" /></div>
+                  </div>
+                  <div class="robustness p-2 col-md-6">
+                    <p class="robustness">robustness</p>
+                    <div class="adjust"><span>confidence_score</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.confidence_score" /></div>
+                    <div class="adjust"><span>clique_method</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.clique_method" /></div>
+                    <div class="adjust"><span>loss_sensitivity</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.loss_sensitivity" /></div>
+                    <div class="adjust"><span>clever_score</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.clever_score" /></div>
+                    <div class="adjust"><span>er_fast_gradient_attack</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.er_fast_gradient_attack" /></div>
+                    <div class="adjust"><span>er_carlini_wagner_attack</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.er_carlini_wagner_attack" /></div>
+                    <div class="adjust"><span>er_deepfool_attack</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.er_deepfool_attack" /></div>
+                  </div>
+                  <div class="methodology p-2 col-md-6">
+                    <p class="methodology">methodology</p>
+                    <div class="adjust"><span>normalization</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.normalization" /></div>
+                    <div class="adjust"><span>missing_data</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.missing_data" /></div>
+                    <div class="adjust"><span>regularization</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.regularization" /></div>
+                    <div class="adjust"><span>train_test_split</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.train_test_split" /></div>
+                    <div class="adjust"><span>factsheet_completeness</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.factsheet_completeness" /></div>
+                  </div>
+                </div>
+              </div>
+              <div class="pillars">
+                <h6>Wieght Pillars</h6>
+                <div class="pillars p-2">
+                  <div class="adjust"><span>fairness</span><input type="number"
+                      [(ngModel)]="this.weights.fairness.main" /></div>
+                  <div class="adjust"><span>explainability</span><input type="number"
+                      [(ngModel)]="this.weights.explainability.main" /></div>
+                  <div class="adjust"><span>robustness</span><input type="number"
+                      [(ngModel)]="this.weights.robustness.main" /></div>
+                  <div class="adjust"><span>methodology</span><input type="number"
+                      [(ngModel)]="this.weights.methodology.main" /></div>
+                </div>
+              </div>
+            </div>
+            <button (click)="apply()">APPLY</button>
           </div>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -690,7 +771,68 @@
       <div class=" col-md-12">
         <div class=" card">
           <div class=" card-header">
-            <h5 class=" title">AnalyzeSolution</h5>
+            <button style="background: none;" (click)="showScoreBoard()">
+              <h5 class=" title">AnalyzeSolution</h5>
+            </button>
+            <div class="score-panel" *ngIf="scorePanelVisibility">
+              <div class="metrics">
+                <h6>Weight Metrics</h6>
+                <div class="row">
+                  <div class="fairness col-md-6 p-2">
+                    <p class="fairness">Fairness</p>
+                    <div class="adjust"><span>underfitting</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.underfitting" /></div>
+                    <div class="adjust"><span>overfitting</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.overfitting" /></div>
+                    <div class="adjust"><span>statistical_parity_difference</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.statistical_parity_difference" /></div>
+                    <div class="adjust"><span>disparate_impact</span><input type="number"
+                        [(ngModel)]="this.weights.fairness.disparate_impact" /></div>
+                  </div>
+                  <div class="explainability col-md-6 p-2">
+                    <p class="explainability">explainability</p>
+                    <div class="adjust"><span>correlated_features</span><input type="number"
+                        [(ngModel)]="this.weights.explainability.correlated_features" /></div>
+                    <div class="adjust"><span>model_size</span><input type="number"
+                        [(ngModel)]="this.weights.explainability.model_size" /></div>
+                    <div class="adjust"><span>permutation_feature_importance</span><input type="number"
+                        [(ngModel)]="this.weights.explainability.permutation_feature_importance" /></div>
+                  </div>
+                  <div class="robustness p-2 col-md-6">
+                    <p class="robustness">robustness</p>
+                    <div class="adjust"><span>clever_score</span><input type="number"
+                        [(ngModel)]="this.weights.robustness.clever_score" /></div>
+                  </div>
+                  <div class="methodology p-2 col-md-6">
+                    <p class="methodology">methodology</p>
+                    <div class="adjust"><span>normalization</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.normalization" /></div>
+                    <div class="adjust"><span>missing_data</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.missing_data" /></div>
+                    <div class="adjust"><span>train_test_split</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.train_test_split" /></div>
+                    <div class="adjust"><span>factsheet_completeness</span><input type="number"
+                        [(ngModel)]="this.weights.methodology.factsheet_completeness" /></div>
+                  </div>
+                </div>
+              </div>
+              <div class="pillars">
+                <h6>Wieght Pillars</h6>
+                <div class="pillars p-2">
+                  <div class="adjust"><span>fairness</span><input type="number"
+                      [(ngModel)]="this.weights.fairness.main" /></div>
+                  <div class="adjust"><span>explainability</span><input type="number"
+                      [(ngModel)]="this.weights.explainability.main" /></div>
+                  <div class="adjust"><span>robustness</span><input type="number"
+                      [(ngModel)]="this.weights.robustness.main" />
+                  </div>
+                  <div class="adjust"><span>methodology</span><input type="number"
+                      [(ngModel)]="this.weights.methodology.main" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button (click)="apply()">APPLY</button>
           </div>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">

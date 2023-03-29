@@ -351,6 +351,10 @@
                   </tr>
                 </div>
               </div>
+              <div class="col-md-6">
+                <button (click)="savetrustcalc()" class=" btn btn-fill btn-danger" type="submit">Compare
+                  Solution</button>
+              </div>
             </div>
             <hr style="background: #666;">
             <div class="row col-md-12">
@@ -362,7 +366,7 @@
               <div class=" col-md-6 pl-md-1">
                 <div class=" form-group">
                   <div class="mx-3 row">
-                    <h4>Model2 Information1:</h4>
+                    <h4>Model1 Information:</h4>
                   </div>
                   <div class="mx-3 row">
                     <label> Model Name: {{trustcalc.modelname1}} </label>
@@ -414,7 +418,7 @@
               <div class=" col-md-6 pl-md-1">
                 <div class=" form-group">
                   <div class="mx-3 row">
-                    <h4>Model2 Information1:</h4>
+                    <h4>Model1 Information:</h4>
                   </div>
                   <div class="mx-3 row">
                     <label> Accuracy: {{trustcalc.accuracy}} </label>
@@ -604,7 +608,6 @@
           </form>
         </div>
         <div class=" card-footer">
-          <button (click)="savetrustcalc()" class=" btn btn-fill btn-danger" type="submit">Compare Solution</button>
         </div>
       </div>
     </div>

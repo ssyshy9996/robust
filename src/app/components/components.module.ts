@@ -16,9 +16,9 @@ import { AuthModule } from "@auth0/auth0-angular";
 
 @NgModule({
   imports: [
-    CommonModule, 
-    RouterModule, 
-    NgbModule, 
+    CommonModule,
+    RouterModule,
+    NgbModule,
     FormsModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -35,4 +35,4 @@ import { AuthModule } from "@auth0/auth0-angular";
   declarations: [FooterComponent, NavbarComponent, SidebarComponent, LoginComponent, SignupComponent],
   exports: [FooterComponent, NavbarComponent, SidebarComponent]
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

@@ -16,6 +16,7 @@ export class ScenarioComponent implements OnInit {
     Description: '',
     emailid: '',
     Userid: '',
+    scenarioList: [],
   };
   isEditing: Boolean = false;
   submitted = false;
@@ -25,11 +26,18 @@ export class ScenarioComponent implements OnInit {
 
   ngOnInit() {
     this.trustcalc.emailid = localStorage.getItem('email');
+    this.trustcalcservice.getScenarioList(this.trustcalc.emailid).subscribe(data => {
+      this.trustcalc.scenarioList = data.scenarioList;
+    });
+  }
 
-    const scenarioId = this.router.url.substring(6);
-    if (scenarioId.length > 0) {
+  showDetail(id): void {
+    console.log('hererere', id);
+    const scenarioId = id;
+    if (scenarioId > 0) {
       this.isEditing = true;
       this.trustcalcservice.getScenario(scenarioId).subscribe(data => {
+        console.log('dfasdf:', data);
         this.trustcalc.ScenarioName = data.scenarioName;
         this.trustcalc.Description = data.description;
       });
