@@ -6,7 +6,8 @@ import { Chart } from 'chart.js';
 
 @Component({
   selector: "app-compare",
-  templateUrl: "compare.component.html"
+  templateUrl: "compare.component.html",
+  styleUrls: ["compare.component.scss"]
 })
 export class compareComponent implements OnInit {
   ScenarioName: any;
@@ -92,11 +93,13 @@ export class compareComponent implements OnInit {
       correlated1: '',
       model_size1: '',
       feature_relevance1: '',
+      permutation_feature_importance1: '',
 
       algorithm2: '',
       correlated2: '',
       model_size2: '',
       feature_relevance2: '',
+      permutation_feature_importance2: '',
     },
 
     robust: {
@@ -163,6 +166,81 @@ export class compareComponent implements OnInit {
       "rgba(153, 102, 255, 1)"
     ],
     borderWidth: 1
+  };
+
+  weights = {
+    fairness1: {
+      main: 0,
+      underfitting: 0,
+      overfitting: 0,
+      statistical_parity_difference: 0,
+      equal_opportunity_difference: 0,
+      average_odds_difference: 0,
+      disparate_impact: 0,
+      class_balance: 0,
+    },
+    explainability1: {
+      main: 0,
+      algorithm_class: 0,
+      correlated_features: 0,
+      model_size: 0,
+      feature_relevance: 0,
+      permutation_feature_importance: 0,
+    },
+    robustness1: {
+      main: 0,
+      confidence_score: 0,
+      clique_method: 0,
+      loss_sensitivity: 0,
+      clever_score: 0,
+      er_fast_gradient_attack: 0,
+      er_carlini_wagner_attack: 0,
+      er_deepfool_attack: 0,
+    },
+    methodology1: {
+      main: 0,
+      normalization: 0,
+      missing_data: 0,
+      regularization: 0,
+      train_test_split: 0,
+      factsheet_completeness: 0,
+    },
+    fairness2: {
+      main: 0,
+      underfitting: 0,
+      overfitting: 0,
+      statistical_parity_difference: 0,
+      equal_opportunity_difference: 0,
+      average_odds_difference: 0,
+      disparate_impact: 0,
+      class_balance: 0,
+    },
+    explainability2: {
+      main: 0,
+      algorithm_class: 0,
+      correlated_features: 0,
+      model_size: 0,
+      feature_relevance: 0,
+      permutation_feature_importance: 0,
+    },
+    robustness2: {
+      main: 0,
+      confidence_score: 0,
+      clique_method: 0,
+      loss_sensitivity: 0,
+      clever_score: 0,
+      er_fast_gradient_attack: 0,
+      er_carlini_wagner_attack: 0,
+      er_deepfool_attack: 0,
+    },
+    methodology2: {
+      main: 0,
+      normalization: 0,
+      missing_data: 0,
+      regularization: 0,
+      train_test_split: 0,
+      factsheet_completeness: 0,
+    }
   };
 
   public trustChart1: Chart;
@@ -287,13 +365,13 @@ export class compareComponent implements OnInit {
           this.trustcalc.explain.algorithm1 = response.algorithm_class;
           this.trustcalc.explain.correlated1 = response.correlated_features;
           this.trustcalc.explain.model_size1 = response.model_size;
-          this.trustcalc.fairness_score1 = response.feature_relevance;
+          this.trustcalc.explain.feature_relevance1 = response.feature_relevance;
 
 
           this.trustcalc.explain.algorithm2 = response.algorithm_class2;
           this.trustcalc.explain.correlated2 = response.correlated_features2;
           this.trustcalc.explain.model_size2 = response.model_size2;
-          this.trustcalc.fairness_score2 = response.feature_relevance2;
+          this.trustcalc.explain.feature_relevance2 = response.feature_relevance2;
 
 
           this.trustcalc.robust.confidence_score1 = response.confidence_score;
@@ -324,70 +402,9 @@ export class compareComponent implements OnInit {
           this.trustcalc.account.train_test_split2 = response.train_test_split2;
           this.trustcalc.account.factsheet_completeness2 = response.factsheet_completeness2;
 
-          this.trustChart1 = this.createChart('canvas1', 'trust', 'TRUSTWORTHINESS OVERALL SCORE', [response.fairness_score1, response.explainability_score1, response.robustness_score1, response.methodology_score1]);
-          this.trustChart2 = this.createChart('canvas2', 'trust', 'TRUSTWORTHINESS OVERALL SCORE', [response.fairness_score2, response.explainability_score2, response.robustness_score2, response.methodology_score2]);
-          this.fairnessChart1 = this.createChart('canvas3', 'fair', 'FAIRNESS SCORE', [
-            response.underfitting,
-            response.overfitting,
-            response.statistical_parity_difference,
-            response.equal_opportunity_difference,
-            response.average_odds_difference,
-            response.disparate_impact,
-            response.class_balance,
-          ]);
-          this.fairnessChart2 = this.createChart('canvas4', 'fair', 'FAIRNESS SCORE', [
-            response.underfitting2,
-            response.overfitting2,
-            response.statistical_parity_difference2,
-            response.equal_opportunity_difference2,
-            response.average_odds_difference2,
-            response.disparate_impact2,
-            response.class_balance2,
-          ]);
-          this.explainChart1 = this.createChart('canvas5', 'explain', 'EXPLAINABILITY SCORE', [
-            response.algorithm_class,
-            response.correlated_features,
-            response.model_size,
-            response.feature_relevance,
-          ]);
-          this.explainChart2 = this.createChart('canvas6', 'explain', 'EXPLAINABILITY SCORE', [
-            response.algorithm_class2,
-            response.correlated_features2,
-            response.model_size2,
-            response.feature_relevance2,
-          ]);
-          this.robustChart1 = this.createChart('canvas7', 'robust', 'ROBUSTNESS SCORE', [
-            response.confidence_score,
-            response.clique_method,
-            response.loss_sensitivity,
-            response.clever_score,
-            response.er_fast_gradient_attack,
-            response.er_carlini_wagner_attack,
-            response.er_deepfool_attack,
-          ]);
-          this.robustChart2 = this.createChart('canvas8', 'robust', 'ROBUSTNESS SCORE', [
-            response.confidence_score2,
-            response.clique_method2,
-            response.loss_sensitivity2,
-            response.clever_score2,
-            response.er_fast_gradient_attack2,
-            response.er_carlini_wagner_attack2,
-            response.er_deepfool_attack2,
-          ]);
-          this.accountChart1 = this.createChart('canvas9', 'account', 'ACCOUNTABILITY', [
-            response.normalization,
-            response.missing_data,
-            response.regularization,
-            response.train_test_split,
-            response.factsheet_completeness,
-          ]);
-          this.accountChart2 = this.createChart('canvas10', 'account', 'ACCOUNTABILITY', [
-            response.normalization2,
-            response.missing_data2,
-            response.regularization2,
-            response.train_test_split2,
-            response.factsheet_completeness2,
-          ]);
+          this.makeChart();
+
+          this.weights = response.weight;
         },
         error => {
           if (error.status != 500)
@@ -396,4 +413,159 @@ export class compareComponent implements OnInit {
       );
   };
 
+  makeChart(): void {
+    this.trustChart1 = this.createChart('canvas1', 'trust', 'TRUSTWORTHINESS OVERALL SCORE', [this.trustcalc.fairness_score1, this.trustcalc.explainability_score1, this.trustcalc.robustness_score1, this.trustcalc.methodology_score1]);
+    this.trustChart2 = this.createChart('canvas2', 'trust', 'TRUSTWORTHINESS OVERALL SCORE', [this.trustcalc.fairness_score2, this.trustcalc.explainability_score2, this.trustcalc.robustness_score2, this.trustcalc.methodology_score2]);
+    this.fairnessChart1 = this.createChart('canvas3', 'fair', 'FAIRNESS SCORE', [
+      this.trustcalc.fair.underfitting1,
+      this.trustcalc.fair.overfitting1,
+      this.trustcalc.fair.statistical_parity_difference1,
+      this.trustcalc.fair.equal_opportunity_difference1,
+      this.trustcalc.fair.average_odds_difference1,
+      this.trustcalc.fair.disperate_impact1,
+      this.trustcalc.fair.class_balance1,
+    ]);
+    this.fairnessChart2 = this.createChart('canvas4', 'fair', 'FAIRNESS SCORE', [
+      this.trustcalc.fair.underfitting2,
+      this.trustcalc.fair.overfitting2,
+      this.trustcalc.fair.statistical_parity_difference2,
+      this.trustcalc.fair.equal_opportunity_difference2,
+      this.trustcalc.fair.average_odds_difference2,
+      this.trustcalc.fair.disperate_impact2,
+      this.trustcalc.fair.class_balance2,
+    ]);
+    this.explainChart1 = this.createChart('canvas5', 'explain', 'EXPLAINABILITY SCORE', [
+      this.trustcalc.explain.algorithm1,
+      this.trustcalc.explain.correlated1,
+      this.trustcalc.explain.model_size1,
+      this.trustcalc.explain.feature_relevance1,
+    ]);
+    this.explainChart2 = this.createChart('canvas6', 'explain', 'EXPLAINABILITY SCORE', [
+      this.trustcalc.explain.algorithm2,
+      this.trustcalc.explain.correlated2,
+      this.trustcalc.explain.model_size2,
+      this.trustcalc.explain.feature_relevance2,
+    ]);
+    this.robustChart1 = this.createChart('canvas7', 'robust', 'ROBUSTNESS SCORE', [
+      this.trustcalc.robust.confidence_score1,
+      this.trustcalc.robust.clique_method1,
+      this.trustcalc.robust.loss_sensitivity1,
+      this.trustcalc.robust.clever_score1,
+      this.trustcalc.robust.er_fast_gradient_attack1,
+      this.trustcalc.robust.er_carlini_wagner_attack1,
+      this.trustcalc.robust.er_deepfool_attack1,
+    ]);
+    this.robustChart2 = this.createChart('canvas8', 'robust', 'ROBUSTNESS SCORE', [
+      this.trustcalc.robust.confidence_score2,
+      this.trustcalc.robust.clique_method2,
+      this.trustcalc.robust.loss_sensitivity2,
+      this.trustcalc.robust.clever_score2,
+      this.trustcalc.robust.er_fast_gradient_attack2,
+      this.trustcalc.robust.er_carlini_wagner_attack2,
+      this.trustcalc.robust.er_deepfool_attack2,
+    ]);
+    this.accountChart1 = this.createChart('canvas9', 'account', 'ACCOUNTABILITY', [
+      this.trustcalc.account.normalization1,
+      this.trustcalc.account.missing_data1,
+      this.trustcalc.account.regularization1,
+      this.trustcalc.account.train_test_split1,
+      this.trustcalc.account.factsheet_completeness1,
+    ]);
+    this.accountChart2 = this.createChart('canvas10', 'account', 'ACCOUNTABILITY', [
+      this.trustcalc.account.normalization2,
+      this.trustcalc.account.missing_data2,
+      this.trustcalc.account.regularization2,
+      this.trustcalc.account.train_test_split2,
+      this.trustcalc.account.factsheet_completeness2,
+    ]);
+  }
+
+  scorePanelVisibility: boolean = false;
+
+  apply(): void {
+    console.log('asdfsa:', (isNaN(parseFloat(this.trustcalc.account.normalization1)) ? 0 : parseFloat(this.trustcalc.account.normalization1) * this.weights.methodology1.normalization),
+      (isNaN(parseFloat(this.trustcalc.account.missing_data1)) ? 0 : parseFloat(this.trustcalc.account.missing_data1) * this.weights.methodology1.missing_data),
+      (isNaN(parseFloat(this.trustcalc.account.regularization1)) ? 0 : parseFloat(this.trustcalc.account.regularization1) * this.weights.methodology1.regularization),
+      (isNaN(parseFloat(this.trustcalc.account.train_test_split1)) ? 0 : parseFloat(this.trustcalc.account.train_test_split1) * this.weights.methodology1.train_test_split),
+      (isNaN(parseFloat(this.trustcalc.account.factsheet_completeness1)) ? 0 : parseFloat(this.trustcalc.account.factsheet_completeness1) * this.weights.methodology1.factsheet_completeness));
+    this.trustcalc.fairness_score1 = (
+      parseFloat(this.trustcalc.fair.underfitting1) * this.weights.fairness1.underfitting +
+      (isNaN(parseFloat(this.trustcalc.fair.overfitting1)) ? 0 : parseFloat(this.trustcalc.fair.overfitting1) * this.weights.fairness1.overfitting) +
+      (isNaN(parseFloat(this.trustcalc.fair.statistical_parity_difference1)) ? 0 : parseFloat(this.trustcalc.fair.statistical_parity_difference1) * this.weights.fairness1.statistical_parity_difference) +
+      (isNaN(parseFloat(this.trustcalc.fair.equal_opportunity_difference1)) ? 0 : parseFloat(this.trustcalc.fair.equal_opportunity_difference1) * this.weights.fairness1.equal_opportunity_difference) +
+      (isNaN(parseFloat(this.trustcalc.fair.average_odds_difference1)) ? 0 : parseFloat(this.trustcalc.fair.average_odds_difference1) * this.weights.fairness1.average_odds_difference) +
+      (isNaN(parseFloat(this.trustcalc.fair.disperate_impact1)) ? 0 : parseFloat(this.trustcalc.fair.disperate_impact1) * this.weights.fairness1.disparate_impact) +
+      (isNaN(parseFloat(this.trustcalc.fair.class_balance1)) ? 0 : parseFloat(this.trustcalc.fair.class_balance1) * this.weights.fairness1.class_balance)
+    ).toFixed(2);
+    this.trustcalc.explainability_score1 = (
+      (isNaN(parseFloat(this.trustcalc.explain.algorithm1)) ? 0 : parseFloat(this.trustcalc.explain.algorithm1) * this.weights.explainability1.algorithm_class) +
+      (isNaN(parseFloat(this.trustcalc.explain.correlated1)) ? 0 : parseFloat(this.trustcalc.explain.correlated1) * this.weights.explainability1.correlated_features) +
+      (isNaN(parseFloat(this.trustcalc.explain.model_size1)) ? 0 : parseFloat(this.trustcalc.explain.model_size1) * this.weights.explainability1.model_size) +
+      (isNaN(parseFloat(this.trustcalc.explain.feature_relevance1)) ? 0 : parseFloat(this.trustcalc.explain.feature_relevance1) * this.weights.explainability1.feature_relevance) +
+      (isNaN(parseFloat(this.trustcalc.explain.permutation_feature_importance1)) ? 0 : parseFloat(this.trustcalc.explain.permutation_feature_importance1) * this.weights.explainability1.permutation_feature_importance)
+    ).toFixed(2);
+    this.trustcalc.methodology_score1 = (
+      (isNaN(parseFloat(this.trustcalc.account.normalization1)) ? 0 : parseFloat(this.trustcalc.account.normalization1) * this.weights.methodology1.normalization) +
+      (isNaN(parseFloat(this.trustcalc.account.missing_data1)) ? 0 : parseFloat(this.trustcalc.account.missing_data1) * this.weights.methodology1.missing_data) +
+      (isNaN(parseFloat(this.trustcalc.account.regularization1)) ? 0 : parseFloat(this.trustcalc.account.regularization1) * this.weights.methodology1.regularization) +
+      (isNaN(parseFloat(this.trustcalc.account.train_test_split1)) ? 0 : parseFloat(this.trustcalc.account.train_test_split1) * this.weights.methodology1.train_test_split) +
+      (isNaN(parseFloat(this.trustcalc.account.factsheet_completeness1)) ? 0 : parseFloat(this.trustcalc.account.factsheet_completeness1) * this.weights.methodology1.factsheet_completeness)
+    ).toFixed(2);
+    this.trustcalc.robustness_score1 = (
+      (isNaN(parseFloat(this.trustcalc.robust.confidence_score1)) ? 0 : parseFloat(this.trustcalc.robust.confidence_score1) * this.weights.robustness1.confidence_score) +
+      (isNaN(parseFloat(this.trustcalc.robust.clique_method1)) ? 0 : parseFloat(this.trustcalc.robust.clique_method1) * this.weights.robustness1.clique_method) +
+      (isNaN(parseFloat(this.trustcalc.robust.loss_sensitivity1)) ? 0 : parseFloat(this.trustcalc.robust.loss_sensitivity1) * this.weights.robustness1.loss_sensitivity) +
+      (isNaN(parseFloat(this.trustcalc.robust.clever_score1)) ? 0 : parseFloat(this.trustcalc.robust.clever_score1) * this.weights.robustness1.clever_score) +
+      (isNaN(parseFloat(this.trustcalc.robust.er_fast_gradient_attack1)) ? 0 : parseFloat(this.trustcalc.robust.er_fast_gradient_attack1) * this.weights.robustness1.er_fast_gradient_attack) +
+      (isNaN(parseFloat(this.trustcalc.robust.er_carlini_wagner_attack1)) ? 0 : parseFloat(this.trustcalc.robust.er_carlini_wagner_attack1) * this.weights.robustness1.er_carlini_wagner_attack) +
+      (isNaN(parseFloat(this.trustcalc.robust.er_deepfool_attack1)) ? 0 : parseFloat(this.trustcalc.robust.er_deepfool_attack1) * this.weights.robustness1.er_deepfool_attack)
+    ).toFixed(2);
+    this.trustcalc.trust_score1 = (
+      parseFloat(this.trustcalc.fairness_score1) * this.weights.fairness1.main +
+      parseFloat(this.trustcalc.explainability_score1) * this.weights.explainability1.main +
+      parseFloat(this.trustcalc.methodology_score1) * this.weights.methodology1.main +
+      parseFloat(this.trustcalc.robustness_score1) * this.weights.robustness1.main
+    ).toFixed(2);
+
+    this.trustcalc.fairness_score2 = (
+      parseFloat(this.trustcalc.fair.underfitting2) * this.weights.fairness1.underfitting +
+      (isNaN(parseFloat(this.trustcalc.fair.overfitting2)) ? 0 : parseFloat(this.trustcalc.fair.overfitting2) * this.weights.fairness1.overfitting) +
+      (isNaN(parseFloat(this.trustcalc.fair.statistical_parity_difference2)) ? 0 : parseFloat(this.trustcalc.fair.statistical_parity_difference2) * this.weights.fairness1.statistical_parity_difference) +
+      (isNaN(parseFloat(this.trustcalc.fair.equal_opportunity_difference2)) ? 0 : parseFloat(this.trustcalc.fair.equal_opportunity_difference2) * this.weights.fairness1.equal_opportunity_difference) +
+      (isNaN(parseFloat(this.trustcalc.fair.average_odds_difference2)) ? 0 : parseFloat(this.trustcalc.fair.average_odds_difference2) * this.weights.fairness1.average_odds_difference) +
+      (isNaN(parseFloat(this.trustcalc.fair.disperate_impact2)) ? 0 : parseFloat(this.trustcalc.fair.disperate_impact2) * this.weights.fairness1.disparate_impact) +
+      (isNaN(parseFloat(this.trustcalc.fair.class_balance2)) ? 0 : parseFloat(this.trustcalc.fair.class_balance2) * this.weights.fairness1.class_balance)
+    ).toFixed(2);
+    this.trustcalc.explainability_score2 = (
+      (isNaN(parseFloat(this.trustcalc.explain.algorithm2)) ? 0 : parseFloat(this.trustcalc.explain.algorithm2) * this.weights.explainability1.algorithm_class) +
+      (isNaN(parseFloat(this.trustcalc.explain.correlated2)) ? 0 : parseFloat(this.trustcalc.explain.correlated2) * this.weights.explainability1.correlated_features) +
+      (isNaN(parseFloat(this.trustcalc.explain.model_size2)) ? 0 : parseFloat(this.trustcalc.explain.model_size2) * this.weights.explainability1.model_size) +
+      (isNaN(parseFloat(this.trustcalc.explain.feature_relevance2)) ? 0 : parseFloat(this.trustcalc.explain.feature_relevance2) * this.weights.explainability1.feature_relevance) +
+      (isNaN(parseFloat(this.trustcalc.explain.permutation_feature_importance2)) ? 0 : parseFloat(this.trustcalc.explain.permutation_feature_importance2) * this.weights.explainability1.permutation_feature_importance)
+    ).toFixed(2);
+    this.trustcalc.methodology_score2 = (
+      (isNaN(parseFloat(this.trustcalc.account.normalization2)) ? 0 : parseFloat(this.trustcalc.account.normalization2) * this.weights.methodology1.normalization) +
+      (isNaN(parseFloat(this.trustcalc.account.missing_data2)) ? 0 : parseFloat(this.trustcalc.account.missing_data2) * this.weights.methodology1.missing_data) +
+      (isNaN(parseFloat(this.trustcalc.account.regularization2)) ? 0 : parseFloat(this.trustcalc.account.regularization2) * this.weights.methodology1.regularization) +
+      (isNaN(parseFloat(this.trustcalc.account.train_test_split2)) ? 0 : parseFloat(this.trustcalc.account.train_test_split2) * this.weights.methodology1.train_test_split) +
+      (isNaN(parseFloat(this.trustcalc.account.factsheet_completeness2)) ? 0 : parseFloat(this.trustcalc.account.factsheet_completeness2) * this.weights.methodology1.factsheet_completeness)
+    ).toFixed(2);
+    this.trustcalc.robustness_score2 = (
+      (isNaN(parseFloat(this.trustcalc.robust.confidence_score2)) ? 0 : parseFloat(this.trustcalc.robust.confidence_score2) * this.weights.robustness1.confidence_score) +
+      (isNaN(parseFloat(this.trustcalc.robust.clique_method2)) ? 0 : parseFloat(this.trustcalc.robust.clique_method2) * this.weights.robustness1.clique_method) +
+      (isNaN(parseFloat(this.trustcalc.robust.loss_sensitivity2)) ? 0 : parseFloat(this.trustcalc.robust.loss_sensitivity2) * this.weights.robustness1.loss_sensitivity) +
+      (isNaN(parseFloat(this.trustcalc.robust.clever_score2)) ? 0 : parseFloat(this.trustcalc.robust.clever_score2) * this.weights.robustness1.clever_score) +
+      (isNaN(parseFloat(this.trustcalc.robust.er_fast_gradient_attack2)) ? 0 : parseFloat(this.trustcalc.robust.er_fast_gradient_attack2) * this.weights.robustness1.er_fast_gradient_attack) +
+      (isNaN(parseFloat(this.trustcalc.robust.er_carlini_wagner_attack2)) ? 0 : parseFloat(this.trustcalc.robust.er_carlini_wagner_attack2) * this.weights.robustness1.er_carlini_wagner_attack) +
+      (isNaN(parseFloat(this.trustcalc.robust.er_deepfool_attack2)) ? 0 : parseFloat(this.trustcalc.robust.er_deepfool_attack2) * this.weights.robustness1.er_deepfool_attack)
+    ).toFixed(2);
+    this.trustcalc.trust_score2 = (
+      parseFloat(this.trustcalc.fairness_score2) * this.weights.fairness1.main +
+      parseFloat(this.trustcalc.explainability_score2) * this.weights.explainability1.main +
+      parseFloat(this.trustcalc.methodology_score2) * this.weights.methodology1.main +
+      parseFloat(this.trustcalc.robustness_score2) * this.weights.robustness1.main
+    ).toFixed(2);
+
+    // this.makeChart();
+  }
 }

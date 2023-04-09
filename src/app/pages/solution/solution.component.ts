@@ -6,12 +6,14 @@ import Papa from 'papaparse';
 import { ToastrService } from "ngx-toastr";
 import { FormControl } from '@angular/forms';
 import { TooltipPosition } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: "app-solution",
   styleUrls: ["solution.component.css"],
   templateUrl: "solution.component.html"
 })
+
 
 export class IconsComponent implements OnInit {
   positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
@@ -470,5 +472,30 @@ export class IconsComponent implements OnInit {
 
   showDescriptionTooltip = (flag: boolean) => {
     this.showDescription = flag;
+  }
+
+  newModelName: string = '';
+  newPurposeDescription: string = '';
+  newDomainDescription: string = '';
+  newTrainingDataDescription: string = '';
+  newModelInformation: string = '';
+  newAuthors: string = '';
+  newContactInformation: string = '';
+  newRegularization: string = '';
+
+  saveFact(): void {
+    const data = {
+      "model_name": this.newModelName,
+      "purpose_description": this.newPurposeDescription,
+      "domain_description": this.newDomainDescription,
+      "training_data_description": this.newTrainingDataDescription,
+      "model_information": this.newModelInformation,
+      "authors": this.newAuthors,
+      "contact_information": this.newContactInformation,
+      "regularization": this.newRegularization,
+    };
+    const blob = new Blob([JSON.stringify(data)], { type: 'text/plain' });
+    const tmpFile = new File([blob], 'newfactsheet.json');
+    this.FactsheetFile = tmpFile;
   }
 }

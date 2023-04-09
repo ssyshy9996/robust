@@ -275,6 +275,7 @@ export class analyzeComponent implements OnInit {
   }
 
   apply() {
+    console.log('under:', this.weights.fairness.underfitting);
     if (this.showVal1) {
       this.trustcalc.fairness_score = (parseFloat(this.trustcalc.underfitting) * this.weights.fairness.underfitting + parseFloat(this.trustcalc.overfitting) * this.weights.fairness.overfitting + parseFloat(this.trustcalc.statistical_parity_difference) * this.weights.fairness.statistical_parity_difference + parseFloat(this.trustcalc.equal_opportunity_difference) * this.weights.fairness.equal_opportunity_difference + parseFloat(this.trustcalc.average_odds_difference) * this.weights.fairness.average_odds_difference + parseFloat(this.trustcalc.disparate_impact) * this.weights.fairness.disparate_impact + parseFloat(this.trustcalc.class_balance) * this.weights.fairness.class_balance).toFixed(2);
       this.trustcalc.explainability_score = (parseFloat(this.trustcalc.algorithm_class) * this.weights.explainability.algorithm_class + parseFloat(this.trustcalc.correlated_features) * this.weights.explainability.correlated_features + parseFloat(this.trustcalc.model_size) * this.weights.explainability.model_size + parseFloat(this.trustcalc.feature_relevance) * this.weights.explainability.feature_relevance).toFixed(2);
@@ -286,5 +287,52 @@ export class analyzeComponent implements OnInit {
       this.trustcalc.methodology_score = (parseFloat(this.trustcalc.normalization) * this.weights.methodology.normalization + parseFloat(this.trustcalc.missing_data) * this.weights.methodology.missing_data + parseFloat(this.trustcalc.train_test_split) * this.weights.methodology.train_test_split + parseFloat(this.trustcalc.factsheet_completeness) * this.weights.methodology.factsheet_completeness).toFixed(2);
       this.trustcalc.robustness_score = (parseFloat(this.trustcalc.clever_score) * this.weights.robustness.clever_score).toFixed(2);
     }
+  }
+
+  fairnessMax = "1";
+  explainMax = "1";
+  robustMax = "1";
+  methodMax = "1";
+  pillarMax = "1";
+  updateSliderMax = () => {
+    this.fairnessMax = (1 -
+      this.weights.fairness.average_odds_difference -
+      this.weights.fairness.class_balance -
+      this.weights.fairness.disparate_impact -
+      this.weights.fairness.equal_opportunity_difference -
+      this.weights.fairness.overfitting -
+      this.weights.fairness.statistical_parity_difference -
+      this.weights.fairness.underfitting).toString();
+
+    this.explainMax = (1 -
+      this.weights.explainability.algorithm_class -
+      this.weights.explainability.correlated_features -
+      this.weights.explainability.feature_relevance -
+      this.weights.explainability.model_size -
+      this.weights.explainability.permutation_feature_importance).toString();
+
+    this.robustMax = (1 - this.weights.robustness.clever_score -
+      this.weights.robustness.clique_method -
+      this.weights.robustness.confidence_score -
+      this.weights.robustness.er_carlini_wagner_attack -
+      this.weights.robustness.er_deepfool_attack -
+      this.weights.robustness.er_fast_gradient_attack -
+      this.weights.robustness.loss_sensitivity).toString();
+
+    this.methodMax = (1 - this.weights.methodology.factsheet_completeness -
+      this.weights.methodology.missing_data -
+      this.weights.methodology.normalization -
+      this.weights.methodology.regularization -
+      this.weights.methodology.train_test_split).toString();
+
+    console.log('pillar:', this.pillarMax, this.weights.fairness.main,
+      this.weights.explainability.main,
+      this.weights.robustness.main,
+      this.weights.methodology.main);
+    this.pillarMax = (1 -
+      this.weights.fairness.main -
+      this.weights.explainability.main -
+      this.weights.methodology.main -
+      this.weights.robustness.main).toString();
   }
 }

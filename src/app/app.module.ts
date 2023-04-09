@@ -4,11 +4,14 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { ToastrModule } from 'ngx-toastr';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { IconsComponent } from './pages/solution/solution.component';
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AuthModule } from "@auth0/auth0-angular";
@@ -16,6 +19,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { CommentComponent } from './comment/comment.component';
+import { analyzeComponent } from "./pages/analyze/analyze.component";
+import { compareComponent } from "./pages/compare/compare.component";
 
 @NgModule({
   imports: [
@@ -24,6 +29,9 @@ import { CommentComponent } from './comment/comment.component';
     HttpClientModule,
     ComponentsModule,
     NgbModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatSliderModule,
     RouterModule,
     AppRoutingModule,
     NgHttpLoaderModule.forRoot(),
@@ -33,7 +41,7 @@ import { CommentComponent } from './comment/comment.component';
     }),
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent, CommentComponent],
+  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent, CommentComponent, IconsComponent, analyzeComponent, compareComponent],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],

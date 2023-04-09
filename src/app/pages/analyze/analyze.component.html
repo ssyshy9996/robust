@@ -296,89 +296,160 @@
     <div class=" row">
       <div class=" col-md-12">
         <div class=" card">
-          <div class=" card-header">
-            <button style="background: none;" (click)="showScoreBoard()">
-              <h5 class=" title">AnalyzeSolution</h5>
+          <div class="card-header p-3 text-center" style="background: #009B77;">
+            <button style="background: none; padding: 5px 12px;" (click)="showScoreBoard()">
+              <h5 class="title">Analyze Solution</h5>
             </button>
-            <div class="score-panel" *ngIf="scorePanelVisibility">
+            <div class="score-panel pt-3 mt-3" style="border-top: 1px solid white" *ngIf="scorePanelVisibility">
               <div class="metrics">
                 <h6>Weight Metrics</h6>
                 <div class="row">
                   <div class="fairness col-md-6 p-2">
                     <p class="fairness">Fairness</p>
-                    <div class="adjust"><span>underfitting</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.underfitting" /></div>
-                    <div class="adjust"><span>overfitting</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.overfitting" /></div>
-                    <div class="adjust"><span>statistical_parity_difference</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.statistical_parity_difference" /></div>
-                    <div class="adjust"><span>equal_opportunity_difference</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.equal_opportunity_difference" /></div>
-                    <div class="adjust"><span>average_odds_difference</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.average_odds_difference" /></div>
-                    <div class="adjust"><span>disparate_impact</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.disparate_impact" /></div>
-                    <div class="adjust"><span>class_balance</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.class_balance" /></div>
+                    <div class="adjust"><span>underfitting</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="weights.fairness.underfitting">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>overfitting</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.overfitting">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>statistical_parity_difference</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.statistical_parity_difference">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>equal_opportunity_difference</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.equal_opportunity_difference">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>average_odds_difference</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.fairness.average_odds_difference"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>disparate_impact</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.disparate_impact">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>class_balance</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.class_balance"></mat-slider>
+                    </div>
                   </div>
                   <div class="explainability col-md-6 p-2">
                     <p class="explainability">explainability</p>
-                    <div class="adjust"><span>algorithm_class</span><input type="number"
-                        [(ngModel)]="this.weights.explainability.algorithm_class" /></div>
-                    <div class="adjust"><span>correlated_features</span><input type="number"
-                        [(ngModel)]="this.weights.explainability.correlated_features" /></div>
-                    <div class="adjust"><span>model_size</span><input type="number"
-                        [(ngModel)]="this.weights.explainability.model_size" /></div>
-                    <div class="adjust"><span>feature_relevance</span><input type="number"
-                        [(ngModel)]="this.weights.explainability.feature_relevance" /></div>
+                    <div class="adjust"><span>algorithm_class</span>
+                      <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.explainability.algorithm_class"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>correlated_features</span>
+                      <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.explainability.correlated_features"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>model_size</span>
+                      <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.model_size">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>feature_relevance</span>
+                      <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.feature_relevance">
+                      </mat-slider>
+                    </div>
                   </div>
                   <div class="robustness p-2 col-md-6">
                     <p class="robustness">robustness</p>
-                    <div class="adjust"><span>confidence_score</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.confidence_score" /></div>
-                    <div class="adjust"><span>clique_method</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.clique_method" /></div>
-                    <div class="adjust"><span>loss_sensitivity</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.loss_sensitivity" /></div>
-                    <div class="adjust"><span>clever_score</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.clever_score" /></div>
-                    <div class="adjust"><span>er_fast_gradient_attack</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.er_fast_gradient_attack" /></div>
-                    <div class="adjust"><span>er_carlini_wagner_attack</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.er_carlini_wagner_attack" /></div>
-                    <div class="adjust"><span>er_deepfool_attack</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.er_deepfool_attack" /></div>
+                    <div class="adjust"><span>confidence_score</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.robustness.confidence_score"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>clique_method</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.clique_method"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>loss_sensitivity</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.robustness.loss_sensitivity"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>clever_score</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.clever_score"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>er_fast_gradient_attack</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.robustness.er_fast_gradient_attack"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>er_carlini_wagner_attack</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.robustness.er_carlini_wagner_attack"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>er_deepfool_attack</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.robustness.er_deepfool_attack"></mat-slider>
+                    </div>
                   </div>
                   <div class="methodology p-2 col-md-6">
                     <p class="methodology">methodology</p>
-                    <div class="adjust"><span>normalization</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.normalization" /></div>
-                    <div class="adjust"><span>missing_data</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.missing_data" /></div>
-                    <div class="adjust"><span>regularization</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.regularization" /></div>
-                    <div class="adjust"><span>train_test_split</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.train_test_split" /></div>
-                    <div class="adjust"><span>factsheet_completeness</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.factsheet_completeness" /></div>
+                    <div class="adjust"><span>normalization</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.normalization"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>missing_data</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.missing_data"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>regularization</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.regularization"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>train_test_split</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.train_test_split">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>factsheet_completeness</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
+                        [(ngModel)]="this.weights.methodology.factsheet_completeness"></mat-slider>
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="pillars">
                 <h6>Wieght Pillars</h6>
                 <div class="pillars p-2">
-                  <div class="adjust"><span>fairness</span><input type="number"
-                      [(ngModel)]="this.weights.fairness.main" /></div>
-                  <div class="adjust"><span>explainability</span><input type="number"
-                      [(ngModel)]="this.weights.explainability.main" /></div>
-                  <div class="adjust"><span>robustness</span><input type="number"
-                      [(ngModel)]="this.weights.robustness.main" /></div>
-                  <div class="adjust"><span>methodology</span><input type="number"
-                      [(ngModel)]="this.weights.methodology.main" /></div>
+                  <div class="adjust"><span>fairness</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.main"></mat-slider>
+                  </div>
+                  <div class="adjust"><span>explainability</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.main"></mat-slider>
+                  </div>
+                  <div class="adjust"><span>robustness</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.main"></mat-slider>
+                  </div>
+                  <div class="adjust"><span>methodology</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.main"></mat-slider>
+                  </div>
                 </div>
               </div>
+              <button (click)="apply()" style="background-color: #955251; padding: 5px 10px;">APPLY</button>
             </div>
-            <button (click)="apply()">APPLY</button>
           </div>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -388,15 +459,15 @@
               </li>
             </ul>
           </div>
-          <button (click)="toggleVal()" class="btn btn-primary">Supervised</button>
+          <button (click)="toggleVal()" class="btn btn-primary m-3">Supervised</button>
           <div class=" card-body">
             <form>
               <div class=" row">
                 <div class=" col-md-6">
                   <div class=" form-group">
                     <tr class="us-form error">
-                      <th>Select Scenarios</th>
-                      <td class="unwrap">
+                      <label>Select Scenarios</label>
+                      <td class="unwrap" style="background: none">
                         <select class="dropdown" name="ScenarioSelect" id="ScenarioSelect"
                           [(ngModel)]="trustcalc.SelectScenario" required>
                           <option>Select Scenario</option>
@@ -412,8 +483,8 @@
                 <div class=" col-md-6">
                   <div class=" form-group">
                     <tr class="us-form error">
-                      <th>Select Solutions</th>
-                      <td class="unwrap">
+                      <label>Select Solutions</label>
+                      <td class="unwrap" style="background: none">
                         <select class="dropdown" name="SolutionSelect" id="SolutionSelect"
                           [(ngModel)]="trustcalc.SelectSolution" required>
                           <option>Select Solution</option>
@@ -536,7 +607,7 @@
               <hr style="background: #666;">
 
               <div class="col-md-12 row">
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;">
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;">
                   <div class="col-md-12 form-group">
 
                     <!-- <div class="mx-3 row">
@@ -604,7 +675,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;">
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Explainability Score: {{ trustcalc.explainability_score }}</h4>
@@ -644,7 +715,7 @@
                   </div>
                 </div>
 
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;" *ngIf="trustcalc.methodology_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.methodology_score > 0">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Methodology Score: {{ trustcalc.methodology_score }}</h4>
@@ -693,7 +764,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;" *ngIf="trustcalc.robustness_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.robustness_score > 0">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Robustness Score: {{ trustcalc.robustness_score }}</h4>
@@ -760,7 +831,8 @@
             </form>
           </div>
           <div class=" card-footer">
-            <button (click)="analyze()" class=" btn btn-fill btn-danger" type="submit">Analyze Solution</button>
+            <button (click)="analyze()" class="analyze" type="submit">Analyze
+              Solution</button>
           </div>
         </div>
       </div>
@@ -770,69 +842,100 @@
     <div class=" row">
       <div class=" col-md-12">
         <div class=" card">
-          <div class=" card-header">
-            <button style="background: none;" (click)="showScoreBoard()">
-              <h5 class=" title">AnalyzeSolution</h5>
+          <div class=" card-header p-3 text-center" style="background: #009B77;">
+            <button style="background: none; padding: 5px 12px;" (click)="showScoreBoard()">
+              <h5 class=" title">Analyze Solution</h5>
             </button>
-            <div class="score-panel" *ngIf="scorePanelVisibility">
+            <div class="score-panel pt-3 mt-3" style="border-top: 1px solid white" *ngIf="scorePanelVisibility">
               <div class="metrics">
                 <h6>Weight Metrics</h6>
                 <div class="row">
                   <div class="fairness col-md-6 p-2">
                     <p class="fairness">Fairness</p>
-                    <div class="adjust"><span>underfitting</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.underfitting" /></div>
-                    <div class="adjust"><span>overfitting</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.overfitting" /></div>
-                    <div class="adjust"><span>statistical_parity_difference</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.statistical_parity_difference" /></div>
-                    <div class="adjust"><span>disparate_impact</span><input type="number"
-                        [(ngModel)]="this.weights.fairness.disparate_impact" /></div>
+                    <div class="adjust"><span>underfitting</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.fairness.underfitting"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>overfitting</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.fairness.overfitting"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>statistical_parity_difference</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.fairness.statistical_parity_difference"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>disparate_impact</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.fairness.disparate_impact"></mat-slider>
+                    </div>
                   </div>
                   <div class="explainability col-md-6 p-2">
                     <p class="explainability">explainability</p>
-                    <div class="adjust"><span>correlated_features</span><input type="number"
-                        [(ngModel)]="this.weights.explainability.correlated_features" /></div>
-                    <div class="adjust"><span>model_size</span><input type="number"
-                        [(ngModel)]="this.weights.explainability.model_size" /></div>
-                    <div class="adjust"><span>permutation_feature_importance</span><input type="number"
-                        [(ngModel)]="this.weights.explainability.permutation_feature_importance" /></div>
+                    <div class="adjust"><span>correlated_features</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.explainability.correlated_features">
+                      </mat-slider>
+                    </div>
+                    <div class="adjust"><span>model_size</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.explainability.model_size"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>permutation_feature_importance</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.explainability.permutation_feature_importance"></mat-slider>
+                    </div>
                   </div>
                   <div class="robustness p-2 col-md-6">
                     <p class="robustness">robustness</p>
-                    <div class="adjust"><span>clever_score</span><input type="number"
-                        [(ngModel)]="this.weights.robustness.clever_score" /></div>
+                    <div class="adjust"><span>clever_score</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.robustness.clever_score"></mat-slider>
+                    </div>
                   </div>
                   <div class="methodology p-2 col-md-6">
                     <p class="methodology">methodology</p>
-                    <div class="adjust"><span>normalization</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.normalization" /></div>
-                    <div class="adjust"><span>missing_data</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.missing_data" /></div>
-                    <div class="adjust"><span>train_test_split</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.train_test_split" /></div>
-                    <div class="adjust"><span>factsheet_completeness</span><input type="number"
-                        [(ngModel)]="this.weights.methodology.factsheet_completeness" /></div>
+                    <div class="adjust"><span>normalization</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.methodology.normalization"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>missing_data</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.methodology.missing_data"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>train_test_split</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.methodology.train_test_split"></mat-slider>
+                    </div>
+                    <div class="adjust"><span>factsheet_completeness</span>
+                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                        [(ngModel)]="this.weights.methodology.factsheet_completeness"></mat-slider>
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="pillars">
                 <h6>Wieght Pillars</h6>
                 <div class="pillars p-2">
-                  <div class="adjust"><span>fairness</span><input type="number"
-                      [(ngModel)]="this.weights.fairness.main" /></div>
-                  <div class="adjust"><span>explainability</span><input type="number"
-                      [(ngModel)]="this.weights.explainability.main" /></div>
-                  <div class="adjust"><span>robustness</span><input type="number"
-                      [(ngModel)]="this.weights.robustness.main" />
+                  <div class="adjust"><span>fairness</span>
+                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                      [(ngModel)]="this.weights.fairness.main"></mat-slider>
                   </div>
-                  <div class="adjust"><span>methodology</span><input type="number"
-                      [(ngModel)]="this.weights.methodology.main" />
+                  <div class="adjust"><span>explainability</span>
+                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                      [(ngModel)]="this.weights.explainability.main"></mat-slider>
+                  </div>
+                  <div class="adjust"><span>robustness</span>
+                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                      [(ngModel)]="this.weights.robustness.main"></mat-slider>
+                  </div>
+                  <div class="adjust"><span>methodology</span>
+                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                      [(ngModel)]="this.weights.methodology.main"></mat-slider>
                   </div>
                 </div>
               </div>
+              <button (click)="apply()">APPLY</button>
             </div>
-            <button (click)="apply()">APPLY</button>
           </div>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -842,15 +945,15 @@
               </li>
             </ul>
           </div>
-          <button (click)="toggleVal()" class="btn btn-primary">Unsupervised</button>
+          <button (click)="toggleVal()" class="btn btn-primary m-3">Unsupervised</button>
           <div class=" card-body">
             <form>
               <div class=" row">
                 <div class=" col-md-6">
                   <div class=" form-group">
                     <tr class="us-form error">
-                      <th>Select Scenarios</th>
-                      <td class="unwrap">
+                      <label>Select Scenarios</label>
+                      <td class="unwrap" style="background: none">
                         <select class="dropdown" name="ScenarioSelect" id="ScenarioSelect"
                           [(ngModel)]="trustcalc.SelectScenario" required>
                           <option>Select Scenario</option>
@@ -866,8 +969,8 @@
                 <div class=" col-md-6">
                   <div class=" form-group">
                     <tr class="us-form error">
-                      <th>Select Solutions</th>
-                      <td class="unwrap">
+                      <label>Select Solutions</label>
+                      <td class="unwrap" style="background: none">
                         <select class="dropdown" name="SolutionSelect" id="SolutionSelect"
                           [(ngModel)]="trustcalc.SelectSolution" required>
                           <option>Select Solution</option>
@@ -990,7 +1093,7 @@
               <hr style="background: #666;">
 
               <div class="col-md-12 row">
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;">
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Fairness Score: {{ trustcalc.fairness_score }} </h4>
@@ -1035,7 +1138,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;"
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;"
                   *ngIf="trustcalc.explainability_score > 0">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
@@ -1070,7 +1173,7 @@
                   </div>
                 </div>
 
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;" *ngIf="trustcalc.methodology_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.methodology_score > 0">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Methodology Score: {{ trustcalc.methodology_score }}</h4>
@@ -1114,7 +1217,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #230B1F;" *ngIf="trustcalc.robustness_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.robustness_score > 0">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Robustness Score: {{ trustcalc.robustness_score }}</h4>
@@ -1139,7 +1242,8 @@
             </form>
           </div>
           <div class=" card-footer">
-            <button (click)="analyze()" class=" btn btn-fill btn-danger" type="submit">Analyze Solution</button>
+            <button (click)="analyze()" class="analyze" type="submit">Analyze
+              Solution</button>
           </div>
         </div>
       </div>

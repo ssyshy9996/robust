@@ -291,27 +291,73 @@
     background: #FFFFE5;
   }
 </style>
-
 <div class=" content">
-  <div class="row p-2">
-    <div class="card">
-      <ul class="p-3">
-        <li class="card-header">
-          Your Solutions
-        </li>
-        <li *ngFor="let contact of solutionList" style="border-bottom: 1px solid gray">
-          <div class="card-item" style="display: flex; align-items: center; justify-content: space-between;">
-            <a [routerLink]="['/icons', contact.id]" (click)="showDetail(contact.id)">
-              <span class="mr-3" style="color: red">Name: {{ contact.solution_name }}</span>
-            </a>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="showVal1">
-      <div class=" col">
+  <mat-drawer-container style="background: none;">
+    <mat-drawer #drawer class="p-2" style="background: #2b3553;">
+      <form style="max-width: 300px;" class="create-factsheet">
+        <div>
+          <p style="color: black">model_name</p>
+          <input [(ngModel)]="newModelName" />
+        </div>
+        <div>
+          <p style="color: black">purpose_description</p>
+          <input [(ngModel)]="newPurposeDescription" />
+        </div>
+        <div>
+          <p style="color: black">domain_description</p>
+          <input [(ngModel)]="newDomainDescription" />
+        </div>
+        <div>
+          <p style="color: black">training_data_description</p>
+          <input [(ngModel)]="newTrainingDataDescription" />
+        </div>
+        <div>
+          <p style="color: black">model_information</p>
+          <input [(ngModel)]="newModelInformation" />
+        </div>
+        <div>
+          <p style="color: black">authors</p>
+          <input [(ngModel)]="newAuthors" />
+        </div>
+        <div>
+          <p style="color: black">contact_information</p>
+          <input [(ngModel)]="newContactInformation" />
+        </div>
+        <div>
+          <p style="color: black">regularization</p>
+          <select class="dropdown" [(ngModel)]="newRegularization">
+            <option>Lasso regression (L1)</option>
+            <option>Ridge regression (L2)</option>
+            <option>ElasticNet regression</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <button (click)="saveFact()">Save</button>
+      </form>
+    </mat-drawer>
+    <mat-drawer-content>
+      <div class="card" style="background-color: #009B77">
+        <ul style="margin-bottom: 0px;">
+          <li class="card-header d-flex align-items-center justify-content-center pb-2"
+            style="border-bottom: 1px solid white">
+            <h4 style="margin-top: 0px">
+              Your Solutions
+            </h4>
+          </li>
+          <li *ngFor="let contact of solutionList" class="p-3">
+            <div class="card-item" style="display: flex; align-items: center; justify-content: space-between;">
+              <a [routerLink]="['/icons', contact.id]" (click)="showDetail(contact.id)" style="font-size:larger">
+                <span class="mr-3" style="color: #D65076"><i class="fas fa-angle-right"></i>
+                  {{contact.solution_name}}
+                </span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="showVal1">
         <div class=" card">
-          <div class=" card-header">
+          <div class=" card-header mb-2">
             <h5 class=" title">Upload a Solution</h5>
           </div>
 
@@ -323,7 +369,7 @@
               </li>
             </ul>
           </div>
-          <button (click)="toggleVal()" class="btn btn-primary">Supervised</button>
+          <button (click)="toggleVal()" class="btn btn-primary m-3" style="border-radius: 25px">Supervised</button>
           <div class=" card-body">
             <form enctype="multipart/form-data">
               <div hidden>
@@ -464,7 +510,8 @@
                     </span>
                     <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"
                       name="Protectedvalues" multiple (change)="onProtectedValueChange($event.target.value)">
-                      <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">{{value}}
+                      <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">
+                        {{value}}
                       </option>
                     </select>
                   </div>
@@ -475,7 +522,8 @@
                 <div class=" col-md-4 pr-md-1">
                   <div class=" form-group">
                     <span>
-                      <label (mouseenter)="showTargetToolTip=true" (mouseleave)="showTargetToolTip=false"> Target column
+                      <label (mouseenter)="showTargetToolTip=true" (mouseleave)="showTargetToolTip=false"> Target
+                        column
                       </label>
                       <span class="tooltext" *ngIf="showTargetToolTip">Select the Target Column</span>
                     </span>
@@ -503,14 +551,17 @@
               </div>
               <div class=" row">
                 <div class=" col-md-6">
-                  <span>
+                  <div style="margin-bottom: 7px;">
                     <span style="color: red"><label (mouseenter)="showFactToolTip=true"
                         (mouseleave)="showFactToolTip=false" for="formFileLg"
                         class="form-label">Factsheet</label>*</span>
+                    <button mat-raised-button (click)="drawer.toggle()" class="create-fact">Create FactSheet</button>
                     <span class="tooltext" *ngIf="showFactToolTip">Select the FactSheet File</span>
-                  </span>
-                  <input class="form-control" id="Factsheetfile" name="Factsheetfile" (change)="onFactsheetfile($event)"
-                    required type="file" />
+                  </div>
+                  <div>
+                    <input class="form-control" id="Factsheetfile" name="Factsheetfile"
+                      (change)="onFactsheetfile($event)" required type="file" />
+                  </div>
                 </div>
                 <div class=" col-md-6">
                   <span>
@@ -524,20 +575,17 @@
               </div>
             </form>
           </div>
-          <div class=" card-footer">
-            <button (click)="savetrustcalc()" *ngIf="!isEditing" class=" btn btn-fill btn-danger"
-              type="submit">Upload</button>
-            <button (click)="changetrustcalc()" *ngIf="isEditing" class=" btn btn-fill" type="submit">Change</button>
-            <button (click)="deletetrustcalc()" class=" btn btn-fill" type="submit" *ngIf="isEditing">Delete</button>
+          <div class="card-footer">
+            <button (click)="savetrustcalc()" *ngIf="!isEditing" class="upload" type="submit">Upload</button>
+            <button (click)="changetrustcalc()" *ngIf="isEditing" class="change" type="submit">Change</button>
+            <button (click)="deletetrustcalc()" class="delete" type="submit" *ngIf="isEditing">Delete</button>
           </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="!showVal1">
-      <div class=" col">
+      <div *ngIf="!showVal1">
         <div class=" card">
-          <div class=" card-header">
-            <h5 class=" title">UplaodSolution</h5>
+          <div class=" card-header mb-2">
+            <h5 class=" title">Upload a Solution</h5>
           </div>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -547,7 +595,7 @@
               </li>
             </ul>
           </div>
-          <button (click)="toggleVal()" class="btn btn-primary">Unsupervised</button>
+          <button (click)="toggleVal()" class="btn btn-primary m-3" style="border-radius: 25px">Unsupervised</button>
           <div class=" card-body">
             <form enctype="multipart/form-data">
               <div hidden>
@@ -579,7 +627,8 @@
               <div class=" row">
                 <div class=" col-md-6 pr-md-1">
                   <div class=" form-group">
-                    <span style="color: red"><label (mouseenter)="showName=true" (mouseleave)="showName=false"> Name of
+                    <span style="color: red"><label (mouseenter)="showName=true" (mouseleave)="showName=false"> Name
+                        of
                         Solution </label>*
                       <span class="tooltext" *ngIf="showName">Type Name of the solution</span>
                     </span>
@@ -614,7 +663,8 @@
 
                 <div class=" col-md-6">
                   <span style="color: red"><label (mouseenter)="showOutlierToolTip=true"
-                      (mouseleave)="showOutlierToolTip=false" for="formFileLg" class="form-label">Outlier Data</label>*
+                      (mouseleave)="showOutlierToolTip=false" for="formFileLg" class="form-label">Outlier
+                      Data</label>*
                     <span class="tooltext" *ngIf="showOutlierToolTip">Select the outlier file</span>
                   </span>
                   <input class="form-control" id="Outlierdatafile" name="Outlierdatafile"
@@ -697,7 +747,8 @@
                     </span>
                     <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"
                       name="Protectedvalues" multiple (change)="onProtectedValueChange($event.target.value)">
-                      <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">{{value}}
+                      <option *ngFor="let value of uniqueValues" [value]="value" style="background: green;">
+                        {{value}}
                       </option>
                     </select>
                   </div>
@@ -705,10 +756,12 @@
               </div>
               <div class=" row">
                 <div class=" col-md-6">
-                  <span style="color: red"><label (mouseenter)="showFactToolTip=true"
-                      (mouseleave)="showFactToolTip=false" for="formFileLg" class="form-label">Factsheet</label>*
+                  <div style="margin-bottom: 7px; color: red;">
+                    <label (mouseenter)="showFactToolTip=true" (mouseleave)="showFactToolTip=false" for="formFileLg"
+                      class="form-label">Factsheet</label>*
                     <span class="tooltext" *ngIf="showFactToolTip">Select the Factsheet file</span>
-                  </span>
+                    <button mat-raised-button (click)="drawer.toggle()" class="create-fact">Create FactSheet</button>
+                  </div>
                   <input class="form-control" id="Factsheetfile" name="Factsheetfile" (change)="onFactsheetfile($event)"
                     required type="file" />
 
@@ -725,13 +778,12 @@
             </form>
           </div>
           <div class=" card-footer">
-            <button (click)="savetrustcalc()" class=" btn btn-fill btn-danger" *ngIf="!isEditing"
-              type="submit">Upload</button>
-            <button (click)="changetrustcalc()" class=" btn btn-fill" type="submit" *ngIf="isEditing">Change</button>
-            <button (click)="deletetrustcalc()" class=" btn btn-fill" type="submit" *ngIf="isEditing">Delete</button>
+            <button (click)="savetrustcalc()" class="upload" *ngIf="!isEditing" type="submit">Upload</button>
+            <button (click)="changetrustcalc()" class="change" type="submit" *ngIf="isEditing">Change</button>
+            <button (click)="deletetrustcalc()" class="delete" type="submit" *ngIf="isEditing">Delete</button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>

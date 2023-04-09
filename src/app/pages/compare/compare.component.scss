@@ -10,7 +10,6 @@ h5 {
 
 button {
   border-radius: 25px;
-  // border: 1px solid #DFCFBE;
 }
 
 button:focus-visible {
@@ -23,31 +22,23 @@ button:focus {
   outline: none !important;
 }
 
-.btn-primary {
-  background-color: #9B2335 !important;
-  background-image: none;
-}
-
-.btn-primary:hover {
-  background-color: #DFCFBE !important;
-  background-image: none !important;
-}
-
-.analyze {
-  padding: 3px 10px;
-  font-size: 13px;
-  color: white;
-  margin-left: 10px;
-  border-radius: 25px;
-  border: none;
-  background: #009B77;
-}
-
 label {
   font-size: 15px;
+  margin-right: 7px;
 }
 
 select {
   border-radius: 25px !important;
   text-align: center;
+}
+
+.compare {
+  border-radius: 25px;
+  background: #009B77;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
 }
