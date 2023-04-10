@@ -305,6 +305,7 @@ export class compareComponent implements OnInit {
       .subscribe(
         response => {
           response = this.convertFunction(response);
+          console.log('asdf:', response);
           this.trustcalc.accuracy = response.accuracy;
           this.trustcalc.classweightedf1score = response.classweightedf1score;
           this.trustcalc.classweightedprecision = response.classweightedprecision;

@@ -92,6 +92,7 @@ export class ScenarioComponent implements OnInit {
     if (scenarioId.length <= 0)
       return;
 
+    console.log('id:', scenarioId);
     if (confirm('Do you really want to delete this scneario?')) {
       this.trustcalcservice.deleteSenario(scenarioId).subscribe(response => {
         this.toastr.info('Successfully deleted', 'DELETE');

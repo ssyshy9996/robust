@@ -295,7 +295,7 @@
   <div class=" row">
     <div class=" col">
       <div *ngIf="!submitted" class="submit-form card">
-        <div class=" card-header p-3 text-center" style="background: dodgerblue">
+        <div class=" card-header p-3 text-center" style="background: palevioletred">
           <h4 style="margin-top:0px">Create Scenario</h4>
         </div>
         <div class=" card-body">
@@ -327,7 +327,7 @@
             <li *ngFor="let contact of trustcalc.scenarioList" class="mt-2">
               <div class="card-item" style="display: flex; align-items: center; justify-content: space-between;">
                 <a [routerLink]="['/maps', contact.id]" (click)="showDetail(contact.id)">
-                  <span class="mr-3" style="color: #D65076"><i class="fas fa-angle-right"></i> {{ contact.scenario_name
+                  <span class="mr-3" style="color: white"><i class="fas fa-angle-right"></i> {{ contact.scenario_name
                     }}</span>
                 </a>
               </div>

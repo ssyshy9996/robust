@@ -295,7 +295,7 @@
   <div class=" row">
     <div class=" col-md-12">
       <div class=" card">
-        <div class=" card-header p-3 text-center" style="background: dodgerblue;">
+        <div class=" card-header p-3 text-center" style="background: palevioletred;">
           <button style="background: none; padding: 5px 12px;" (click)="scorePanelVisibility=!scorePanelVisibility">
             <h5 class="title">Compare Solution</h5>
           </button>
@@ -593,7 +593,7 @@
               <div class=" col-md-6 pl-md-1">
                 <div class=" form-group">
                   <div class="mx-3 row">
-                    <h4>Model1 Information:</h4>
+                    <h4>General Information Model 1:</h4>
                   </div>
                   <div class="mx-3 row">
                     <label> Model Name: {{trustcalc.modelname1}} </label>
@@ -619,7 +619,7 @@
               <div class=" col-md-6 pl-md-1">
                 <div class=" form-group">
                   <div class="mx-3 row">
-                    <h4>Model2 Information:</h4>
+                    <h4>General Information Model 2:</h4>
                   </div>
                   <div class="mx-3 row">
                     <label> Model Name: {{trustcalc.modelname2}} </label>
@@ -645,7 +645,7 @@
               <div class=" col-md-6 pl-md-1">
                 <div class=" form-group">
                   <div class="mx-3 row">
-                    <h4>Model1 Information:</h4>
+                    <h4>Performance Metrics Model 1:</h4>
                   </div>
                   <div class="mx-3 row">
                     <label> Accuracy: {{trustcalc.accuracy}} </label>
@@ -674,7 +674,7 @@
               <div class=" col-md-6 pl-md-1">
                 <div class=" form-group">
                   <div class="mx-3 row">
-                    <h4>Model2 Information:</h4>
+                    <h4>Performance Metrics Model 2</h4>
                   </div>
                   <div class="mx-3 row">
                     <label> Accuracy: {{trustcalc.accuracy2}} </label>
@@ -701,7 +701,7 @@
               </div>
             </div>
 
-            <h3 align="left" class="col-md-6">Section</h3>
+            <h3 align="left" class="col-md-6">Scores</h3>
             <div class="row">
               <div class="col-md-6">
                 <canvas id="canvas1">{{ trustChart1 }}</canvas>
@@ -738,10 +738,10 @@
             <hr style="background: #666;">
             <div style="margin-top: 10px;" class="row col-md-12">
 
-              <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
+              <div class="card col-md-5 pl-md-1" style="background: palevioletred;">
                 <div class="col-md-12 form-group">
                   <div class="mx-3 row">
-                    <h4>For Solution1:</h4>
+                    <h4>Summary Model 1</h4>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
@@ -785,10 +785,10 @@
                 </div>
               </div>
               <div class="col-md-1"></div>
-              <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
+              <div class="card col-md-5 pl-md-1" style="background: palevioletred;">
                 <div class="col-md-12 form-group">
                   <div class="mx-3 row">
-                    <h4>For Solution2:</h4>
+                    <h4>Summary Model 2</h4>
                   </div>
                   <div class="mx-3 row">
                     <label class="col-md-12 row">
