@@ -23,6 +23,7 @@ export class analyzeComponent implements OnInit {
 
   toggleVal(): void {
     this.showVal1 = !this.showVal1;
+    this.fairnessMax = this.methodMax = this.pillarMax = this.robustMax = this.explainMax = "1";
   }
 
   convertFunction = (data: any) => {
@@ -177,6 +178,21 @@ export class analyzeComponent implements OnInit {
     this.myChartData.update();
   }
 
+  description: any = {
+    fairness: {
+    },
+    explainability: {
+    },
+    methodology: {
+    },
+    robustness: {
+    },
+    fairnessText: "",
+    explainabilityText: "",
+    methodologyText: "",
+    robustnessText: "",
+  };
+
   analyze(): void {
     const formData = new FormData();
     formData.append('Userid', this.trustcalc.Userid);
@@ -188,6 +204,7 @@ export class analyzeComponent implements OnInit {
       .subscribe(
         response => {
           response = this.convertFunction(response);
+          console.log('res:', response);
           this.trustcalc.ScenarioName = response.ScenarioName;
           this.trustcalc.LinktoDataset = response.LinktoDataset;
           this.trustcalc.Description = response.Description;
@@ -248,6 +265,33 @@ export class analyzeComponent implements OnInit {
           this.trustcalc.factsheet_completeness = response.factsheet_completeness;
 
           this.weights = response.weight;
+
+          this.description.fairness.underfitting_property = response.underfitting_property;
+          this.description.fairness.overfitting_property = response.overfitting_property;
+          this.description.fairness.statistical_parity_difference_property = response.statistical_parity_difference_property;
+          this.description.fairness.equal_opportunity_difference_property = response.equal_opportunity_difference_property;
+          this.description.fairness.average_odds_difference_property = response.average_odds_difference_property;
+          this.description.fairness.disparate_impact_property = response.disparate_impact_property;
+          this.description.fairness.class_balance_property = response.class_balance_property;
+          this.description.explainability.algorithm_class_property = response.algorithm_class_property;
+          this.description.explainability.correlated_features_property = response.correlated_features_property;
+          this.description.explainability.model_size_property = response.model_size_property;
+          this.description.explainability.feature_relevance_property = response.feature_relevance_property;
+          this.description.explainability.permutation_feature_importance_property = response.permutation_feature_importance_property;
+          this.description.methodology.normalization_property = response.normalization_property;
+          this.description.methodology.missing_data_property = response.missing_data_property;
+          this.description.methodology.regularization_property = response.regularization_property;
+          this.description.methodology.train_test_split_property = response.train_test_split_property;
+          this.description.methodology.factsheet_completeness_property = response.factsheet_completeness_property;
+          this.description.robustness.confidence_score_property = response.confidence_score_property;
+          this.description.robustness.clique_method_property = response.clique_method_property;
+          this.description.robustness.clever_score_property = response.clever_score_property;
+          this.description.robustness.er_fast_gradient_attack_property = response.er_fast_gradient_attack_property;
+          this.description.robustness.er_carlini_wagner_attack_property = response.er_carlini_wagner_attack_property;
+          this.description.robustness.er_deepfool_attack_property = response.er_deepfool_attack_property;
+          this.description.robustness.loss_sensitivity_property = response.loss_sensitivity_property;
+
+          this.makeDescriptionText();
         },
         error => {
           this.modalService.open(this.dialogRef);
@@ -325,14 +369,45 @@ export class analyzeComponent implements OnInit {
       this.weights.methodology.regularization -
       this.weights.methodology.train_test_split).toString();
 
-    console.log('pillar:', this.pillarMax, this.weights.fairness.main,
-      this.weights.explainability.main,
-      this.weights.robustness.main,
-      this.weights.methodology.main);
     this.pillarMax = (1 -
       this.weights.fairness.main -
       this.weights.explainability.main -
       this.weights.methodology.main -
       this.weights.robustness.main).toString();
+  }
+
+  propertyPanel: boolean = false;
+  makeDescriptionText = () => {
+    let innerHtml = '';
+    for (const [key, value] of Object.entries(this.description.fairness)) {
+      innerHtml += `
+      <h4 style="color: mediumaquamarine">${key}</h4>
+      <pre>${JSON.stringify(value, null, 2)}</pre>`;
+    }
+    this.description.fairnessText = innerHtml;
+    innerHtml = '';
+    for (const [key, value] of Object.entries(this.description.methodology)) {
+      if (value == 'undefined' || value == undefined) continue;
+      innerHtml += `
+      <h4 style="color: mediumaquamarine">${key}</h4>
+      <pre>${value == 'undefined' ? '' : JSON.stringify(value, null, 2)}</pre>`;
+    }
+    this.description.methodologyText = innerHtml;
+    innerHtml = '';
+    for (const [key, value] of Object.entries(this.description.explainability)) {
+      console.log('va:', value);
+      if (value == 'undefined' || value == undefined) continue;
+      innerHtml += `
+      <h4 style="color: mediumaquamarine">${key}</h4>
+      <pre>${value == 'undefined' ? '' : JSON.stringify(value, null, 2)}</pre>`;
+    }
+    this.description.explainabilityText = innerHtml;
+    innerHtml = '';
+    for (const [key, value] of Object.entries(this.description.robustness)) {
+      innerHtml += `
+      <h4 style="color: mediumaquamarine">${key}</h4>
+      <pre>${JSON.stringify(value, null, 2)}</pre>`;
+    }
+    this.description.robustnessText = innerHtml;
   }
 }

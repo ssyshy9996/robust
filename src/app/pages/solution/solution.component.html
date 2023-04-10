@@ -336,7 +336,7 @@
       </form>
     </mat-drawer>
     <mat-drawer-content>
-      <div class="card" style="background-color: #009B77">
+      <div class="card" style="background-color: dodgerblue">
         <ul style="margin-bottom: 0px;">
           <li class="card-header d-flex align-items-center justify-content-center pb-2"
             style="border-bottom: 1px solid white">
@@ -506,6 +506,7 @@
                     <span>
                       <label (mouseenter)="showProtectedValueToolTip=true"
                         (mouseleave)="showProtectedValueToolTip=false">Protected Values </label>
+                      <span style="color: white">Use CTRL + click to select multiple items</span>
                       <span class="tooltext" *ngIf="showProtectedValueToolTip">Select the Protected Value</span>
                     </span>
                     <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"
@@ -743,6 +744,7 @@
                     <span>
                       <label (mouseenter)="showProtectedToolTip=true"
                         (mouseleave)="showProtectedToolTip=false">Protected Values </label>
+                      <span style="color: white">(Use CTRL + click to select multiple items)</span>
                       <span class="tooltext" *ngIf="showProtectedToolTip">Select the Protected Values</span>
                     </span>
                     <select class="form-control" [(ngModel)]="trustcalc.Protectedvalues" id="Protectedvalues"

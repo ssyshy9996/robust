@@ -296,7 +296,7 @@
     <div class=" row">
       <div class=" col-md-12">
         <div class=" card">
-          <div class="card-header p-3 text-center" style="background: #009B77;">
+          <div class="card-header p-3 text-center" style="background: dodgerblue;">
             <button style="background: none; padding: 5px 12px;" (click)="showScoreBoard()">
               <h5 class="title">Analyze Solution</h5>
             </button>
@@ -306,59 +306,68 @@
                 <div class="row">
                   <div class="fairness col-md-6 p-2">
                     <p class="fairness">Fairness</p>
-                    <div class="adjust"><span>underfitting</span>
+                    <div class="adjust"><span>underfitting value: {{weights.fairness.underfitting.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="weights.fairness.underfitting">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>overfitting</span>
+                    <div class="adjust"><span>overfitting value: {{this.weights.fairness.overfitting.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.overfitting">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>statistical_parity_difference</span>
+                    <div class="adjust"><span>statistical_parity_difference value:
+                        {{this.weights.fairness.statistical_parity_difference.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.statistical_parity_difference">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>equal_opportunity_difference</span>
+                    <div class="adjust"><span>equal_opportunity_difference value:
+                        {{this.weights.fairness.equal_opportunity_difference.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.equal_opportunity_difference">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>average_odds_difference</span>
+                    <div class="adjust"><span>average_odds_difference value:
+                        {{this.weights.fairness.average_odds_difference.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.fairness.average_odds_difference"></mat-slider>
                     </div>
-                    <div class="adjust"><span>disparate_impact</span>
+                    <div class="adjust"><span>disparate_impact value:
+                        {{this.weights.fairness.disparate_impact.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.disparate_impact">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>class_balance</span>
+                    <div class="adjust"><span>class_balance value:
+                        {{this.weights.fairness.class_balance.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.class_balance"></mat-slider>
                     </div>
                   </div>
                   <div class="explainability col-md-6 p-2">
                     <p class="explainability">explainability</p>
-                    <div class="adjust"><span>algorithm_class</span>
+                    <div class="adjust"><span>algorithm_class value:
+                        {{this.weights.explainability.algorithm_class.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.explainability.algorithm_class"></mat-slider>
                     </div>
-                    <div class="adjust"><span>correlated_features</span>
+                    <div class="adjust"><span>correlated_features value:
+                        {{this.weights.explainability.correlated_features.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.explainability.correlated_features"></mat-slider>
                     </div>
-                    <div class="adjust"><span>model_size</span>
+                    <div class="adjust"><span>model_size value:
+                        {{this.weights.explainability.model_size.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.model_size">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>feature_relevance</span>
+                    <div class="adjust"><span>feature_relevance value:
+                        {{this.weights.explainability.feature_relevance.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.feature_relevance">
                       </mat-slider>
@@ -366,35 +375,42 @@
                   </div>
                   <div class="robustness p-2 col-md-6">
                     <p class="robustness">robustness</p>
-                    <div class="adjust"><span>confidence_score</span>
+                    <div class="adjust"><span>confidence_score value:
+                        {{this.weights.robustness.confidence_score.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.robustness.confidence_score"></mat-slider>
                     </div>
-                    <div class="adjust"><span>clique_method</span>
+                    <div class="adjust"><span>clique_method value:
+                        {{this.weights.robustness.clique_method.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.clique_method"></mat-slider>
                     </div>
-                    <div class="adjust"><span>loss_sensitivity</span>
+                    <div class="adjust"><span>loss_sensitivity value:
+                        {{this.weights.robustness.loss_sensitivity.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.robustness.loss_sensitivity"></mat-slider>
                     </div>
-                    <div class="adjust"><span>clever_score</span>
+                    <div class="adjust"><span>clever_score value:
+                        {{this.weights.robustness.clever_score.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.clever_score"></mat-slider>
                     </div>
-                    <div class="adjust"><span>er_fast_gradient_attack</span>
+                    <div class="adjust"><span>er_fast_gradient_attack value:
+                        {{this.weights.robustness.er_fast_gradient_attack.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.robustness.er_fast_gradient_attack"></mat-slider>
                     </div>
-                    <div class="adjust"><span>er_carlini_wagner_attack</span>
+                    <div class="adjust"><span>er_carlini_wagner_attack value:
+                        {{this.weights.robustness.er_carlini_wagner_attack.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.robustness.er_carlini_wagner_attack"></mat-slider>
                     </div>
-                    <div class="adjust"><span>er_deepfool_attack</span>
+                    <div class="adjust"><span>er_deepfool_attack value:
+                        {{this.weights.robustness.er_deepfool_attack.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.robustness.er_deepfool_attack"></mat-slider>
@@ -402,24 +418,29 @@
                   </div>
                   <div class="methodology p-2 col-md-6">
                     <p class="methodology">methodology</p>
-                    <div class="adjust"><span>normalization</span>
+                    <div class="adjust"><span>normalization value:
+                        {{this.weights.methodology.normalization.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.normalization"></mat-slider>
                     </div>
-                    <div class="adjust"><span>missing_data</span>
+                    <div class="adjust"><span>missing_data value:
+                        {{this.weights.methodology.missing_data.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.missing_data"></mat-slider>
                     </div>
-                    <div class="adjust"><span>regularization</span>
+                    <div class="adjust"><span>regularization value:
+                        {{this.weights.methodology.regularization.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.regularization"></mat-slider>
                     </div>
-                    <div class="adjust"><span>train_test_split</span>
+                    <div class="adjust"><span>train_test_split value:
+                        {{this.weights.methodology.train_test_split.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.train_test_split">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>factsheet_completeness</span>
+                    <div class="adjust"><span>factsheet_completeness value:
+                        {{this.weights.methodology.factsheet_completeness.toFixed(2)}}</span>
                       <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
                         (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.methodology.factsheet_completeness"></mat-slider>
@@ -430,19 +451,19 @@
               <div class="pillars">
                 <h6>Wieght Pillars</h6>
                 <div class="pillars p-2">
-                  <div class="adjust"><span>fairness</span>
+                  <div class="adjust"><span>fairness value: {{this.weights.fairness.main.toFixed(2)}}</span>
                     <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
                       (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.main"></mat-slider>
                   </div>
-                  <div class="adjust"><span>explainability</span>
+                  <div class="adjust"><span>explainability value: {{this.weights.explainability.main.toFixed(2)}}</span>
                     <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
                       (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.main"></mat-slider>
                   </div>
-                  <div class="adjust"><span>robustness</span>
+                  <div class="adjust"><span>robustness value: {{this.weights.robustness.main.toFixed(2)}}</span>
                     <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
                       (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.main"></mat-slider>
                   </div>
-                  <div class="adjust"><span>methodology</span>
+                  <div class="adjust"><span>methodology value: {{this.weights.methodology.main.toFixed(2)}}</span>
                     <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
                       (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.main"></mat-slider>
                   </div>
@@ -607,7 +628,7 @@
               <hr style="background: #666;">
 
               <div class="col-md-12 row">
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
 
                     <!-- <div class="mx-3 row">
@@ -675,7 +696,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Explainability Score: {{ trustcalc.explainability_score }}</h4>
@@ -684,28 +705,28 @@
                       <h6>Metrics Scores</h6>
                     </div>
 
-                    <div class="mx-3 row" *ngIf="trustcalc.algorithm_class > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Algorithm Class: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.algorithm_class
                           }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.correlated_features > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Correlated Features: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
                           trustcalc.correlated_features }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.model_size > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Model Size: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.model_size }}
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.feature_relevance > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Feature Relevance: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -715,7 +736,7 @@
                   </div>
                 </div>
 
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.methodology_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Methodology Score: {{ trustcalc.methodology_score }}</h4>
@@ -724,7 +745,7 @@
                       <h6>Metrics Scores</h6>
                     </div>
 
-                    <div class="mx-3 row" *ngIf="trustcalc.normalization > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Normalization: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.normalization
@@ -732,21 +753,21 @@
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.missing_data > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Missing Data: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{ trustcalc.missing_data }}
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.regularization > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Regularization: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.regularization
                           }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.train_test_split > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Train Test Split: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -754,7 +775,7 @@
                           }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.factsheet_completeness > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Factsheet Completeness: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{
@@ -764,7 +785,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.robustness_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Robustness Score: {{ trustcalc.robustness_score }}</h4>
@@ -773,7 +794,7 @@
                       <h6>Metrics Scores</h6>
                     </div>
 
-                    <div class="mx-3 row" *ngIf="trustcalc.confidence_score > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Confidence Score: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -781,7 +802,7 @@
                           }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.clique_method > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Clique Method: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.clique_method
@@ -789,7 +810,7 @@
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.loss_sensitivity > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Loss Sensitivity: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -797,28 +818,28 @@
                           }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.clever_score > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Clever Score: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.clever_score }}
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.er_fast_gradient_attack > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Er Fast Gradient Attack: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
                           trustcalc.er_fast_gradient_attack }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.er_carlini_wagner_attack > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Er Carlini Wagner Attack: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{
                           trustcalc.er_carlini_wagner_attack }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.er_deepfool_attack > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Er Deepfool Attack: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -842,7 +863,7 @@
     <div class=" row">
       <div class=" col-md-12">
         <div class=" card">
-          <div class=" card-header p-3 text-center" style="background: #009B77;">
+          <div class=" card-header p-3 text-center" style="background: dodgerblue;">
             <button style="background: none; padding: 5px 12px;" (click)="showScoreBoard()">
               <h5 class=" title">Analyze Solution</h5>
             </button>
@@ -852,62 +873,77 @@
                 <div class="row">
                   <div class="fairness col-md-6 p-2">
                     <p class="fairness">Fairness</p>
-                    <div class="adjust"><span>underfitting</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.fairness.underfitting"></mat-slider>
+                    <div class="adjust"><span>underfitting value:
+                        {{this.weights.fairness.underfitting.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.underfitting"></mat-slider>
                     </div>
-                    <div class="adjust"><span>overfitting</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.fairness.overfitting"></mat-slider>
+                    <div class="adjust"><span>overfitting value: {{this.weights.fairness.overfitting.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.overfitting"></mat-slider>
                     </div>
-                    <div class="adjust"><span>statistical_parity_difference</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                    <div class="adjust"><span>statistical_parity_difference value:
+                        {{this.weights.fairness.statistical_parity_difference.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.fairness.statistical_parity_difference"></mat-slider>
                     </div>
-                    <div class="adjust"><span>disparate_impact</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.fairness.disparate_impact"></mat-slider>
+                    <div class="adjust"><span>disparate_impact value:
+                        {{this.weights.fairness.disparate_impact.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="fairnessMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.disparate_impact"></mat-slider>
                     </div>
                   </div>
                   <div class="explainability col-md-6 p-2">
                     <p class="explainability">explainability</p>
-                    <div class="adjust"><span>correlated_features</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.explainability.correlated_features">
+                    <div class="adjust"><span>correlated_features value:
+                        {{this.weights.explainability.correlated_features.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.correlated_features">
                       </mat-slider>
                     </div>
-                    <div class="adjust"><span>model_size</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.explainability.model_size"></mat-slider>
+                    <div class="adjust"><span>model_size value:
+                        {{this.weights.explainability.model_size.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.model_size"></mat-slider>
                     </div>
-                    <div class="adjust"><span>permutation_feature_importance</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                    <div class="adjust"><span>permutation_feature_importance value:
+                        {{this.weights.explainability.permutation_feature_importance.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="explainMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.explainability.permutation_feature_importance"></mat-slider>
                     </div>
                   </div>
                   <div class="robustness p-2 col-md-6">
                     <p class="robustness">robustness</p>
-                    <div class="adjust"><span>clever_score</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.robustness.clever_score"></mat-slider>
+                    <div class="adjust"><span>clever_score value:
+                        {{this.weights.robustness.clever_score.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="robustMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.clever_score"></mat-slider>
                     </div>
                   </div>
                   <div class="methodology p-2 col-md-6">
                     <p class="methodology">methodology</p>
-                    <div class="adjust"><span>normalization</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.methodology.normalization"></mat-slider>
+                    <div class="adjust"><span>normalization value:
+                        {{this.weights.methodology.normalization.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.normalization"></mat-slider>
                     </div>
-                    <div class="adjust"><span>missing_data</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                        [(ngModel)]="this.weights.methodology.missing_data"></mat-slider>
+                    <div class="adjust"><span>missing_data value:
+                        {{this.weights.methodology.missing_data.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.missing_data"></mat-slider>
                     </div>
-                    <div class="adjust"><span>train_test_split</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                    <div class="adjust"><span>train_test_split value:
+                        {{this.weights.methodology.train_test_split.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.methodology.train_test_split"></mat-slider>
                     </div>
-                    <div class="adjust"><span>factsheet_completeness</span>
-                      <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
+                    <div class="adjust"><span>factsheet_completeness value:
+                        {{this.weights.methodology.factsheet_completeness.toFixed(2)}}</span>
+                      <mat-slider class="example-margin" [max]="methodMax" min="0" step="0.01" discrete thumbLabel
+                        (change)="updateSliderMax()"
                         [(ngModel)]="this.weights.methodology.factsheet_completeness"></mat-slider>
                     </div>
                   </div>
@@ -916,21 +952,21 @@
               <div class="pillars">
                 <h6>Wieght Pillars</h6>
                 <div class="pillars p-2">
-                  <div class="adjust"><span>fairness</span>
-                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                      [(ngModel)]="this.weights.fairness.main"></mat-slider>
+                  <div class="adjust"><span>fairness value: {{this.weights.fairness.main.toFixed(2)}}</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.fairness.main"></mat-slider>
                   </div>
-                  <div class="adjust"><span>explainability</span>
-                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                      [(ngModel)]="this.weights.explainability.main"></mat-slider>
+                  <div class="adjust"><span>explainability value: {{this.weights.explainability.main.toFixed(2)}}</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.explainability.main"></mat-slider>
                   </div>
-                  <div class="adjust"><span>robustness</span>
-                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                      [(ngModel)]="this.weights.robustness.main"></mat-slider>
+                  <div class="adjust"><span>robustness value: {{this.weights.robustness.main.toFixed(2)}}</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.robustness.main"></mat-slider>
                   </div>
-                  <div class="adjust"><span>methodology</span>
-                    <mat-slider class="example-margin" max="1" min="0" step="0.01" discrete thumbLabel
-                      [(ngModel)]="this.weights.methodology.main"></mat-slider>
+                  <div class="adjust"><span>methodology value: {{this.weights.methodology.main.toFixed(2)}}</span>
+                    <mat-slider class="example-margin" [max]="pillarMax" min="0" step="0.01" discrete thumbLabel
+                      (change)="updateSliderMax()" [(ngModel)]="this.weights.methodology.main"></mat-slider>
                   </div>
                 </div>
               </div>
@@ -1093,7 +1129,7 @@
               <hr style="background: #666;">
 
               <div class="col-md-12 row">
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Fairness Score: {{ trustcalc.fairness_score }} </h4>
@@ -1102,7 +1138,7 @@
                       <h6>Metrics Scores</h6>
                     </div>
 
-                    <div class="mx-3 row" *ngIf="trustcalc.underfitting > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Underfitting: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{ trustcalc.underfitting
@@ -1110,7 +1146,7 @@
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.overfitting > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Overfitting: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.overfitting
@@ -1118,7 +1154,7 @@
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.statistical_parity_difference > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Statistical Parity Difference: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -1126,7 +1162,7 @@
                       </label>
                     </div>
 
-                    <div class="mx-3 row" *ngIf="trustcalc.disparate_impact > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Disparate Impact: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{
@@ -1138,8 +1174,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;"
-                  *ngIf="trustcalc.explainability_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Explainability Score: {{ trustcalc.explainability_score }}</h4>
@@ -1149,21 +1184,21 @@
                     </div>
 
 
-                    <div class="mx-3 row" *ngIf="trustcalc.correlated_features > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Correlated Features: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
                           trustcalc.correlated_features }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.model_size > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Model Size: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.model_size }}
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.permutation_feature_importance > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9"> Permutation Feature Importance: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -1173,7 +1208,7 @@
                   </div>
                 </div>
 
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.methodology_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Methodology Score: {{ trustcalc.methodology_score }}</h4>
@@ -1182,7 +1217,7 @@
                       <h6>Metrics Scores</h6>
                     </div>
 
-                    <div class="mx-3 row" *ngIf="trustcalc.normalization > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Normalization: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.normalization
@@ -1190,7 +1225,7 @@
                         </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.missing_data > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Missing Data: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{ trustcalc.missing_data
@@ -1199,7 +1234,7 @@
                       </label>
                     </div>
 
-                    <div class="mx-3 row" *ngIf="trustcalc.train_test_split > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Train Test Split: </label>
                         <label class="col-md-3" style="text-align: right; color: #FF0202;"> {{
@@ -1207,7 +1242,7 @@
                           }} </label>
                       </label>
                     </div>
-                    <div class="mx-3 row" *ngIf="trustcalc.factsheet_completeness > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Factsheet Completeness: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{
@@ -1217,7 +1252,7 @@
                   </div>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="card col-md-5 pl-md-1" style="background: #009B77;" *ngIf="trustcalc.robustness_score > 0">
+                <div class="card col-md-5 pl-md-1" style="background: dodgerblue;">
                   <div class="col-md-12 form-group">
                     <div class="mx-3 row">
                       <h4>Robustness Score: {{ trustcalc.robustness_score }}</h4>
@@ -1227,7 +1262,7 @@
                     </div>
 
 
-                    <div class="mx-3 row" *ngIf="trustcalc.clever_score > 0">
+                    <div class="mx-3 row">
                       <label class="col-md-12 row">
                         <label class="col-md-9" align="left"> Clever Score: </label>
                         <label class="col-md-3" style="text-align: right; color: #8FFF00;"> {{ trustcalc.clever_score
@@ -1248,6 +1283,17 @@
         </div>
       </div>
     </div>
+  </div>
+  <button class="btn-primary" (click)="propertyPanel = !propertyPanel">Show Properties</button>
+  <div class="properties-panel" *ngIf="propertyPanel">
+    <h3 class="fairness">Fairness Properties</h3>
+    <div [innerHtml]="this.description.fairnessText"></div>
+    <h3 class="fairness">Explainability Properties</h3>
+    <div [innerHtml]="this.description.explainabilityText"></div>
+    <h3 class="fairness">Methodology Properties</h3>
+    <div [innerHtml]="this.description.methodologyText"></div>
+    <h3 class="fairness">Robustness Properties</h3>
+    <div [innerHtml]="this.description.robustnessText"></div>
   </div>
   <ng-template #dialogRef let-c="close" let-d="dismiss">
     <div class="modal-header">

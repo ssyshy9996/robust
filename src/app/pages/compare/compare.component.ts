@@ -273,6 +273,8 @@ export class compareComponent implements OnInit {
     this.trustcalcservice.getsolution(localStorage.getItem('email')).subscribe((data: any) => {
       this.SolutionName = data.SolutionName;
     });
+
+    this.makeChart();
   }
 
   createChart(id: string, labelId: string, label: string, data): Chart {

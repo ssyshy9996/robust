@@ -43,7 +43,7 @@ textarea:active {
   margin-left: 10px;
   border-radius: 25px;
   border: none;
-  background: #009B77;
+  background: dodgerblue;
 }
 
 .create-factsheet {
@@ -66,7 +66,7 @@ input {
 
 .upload {
   border-radius: 25px;
-  background: #009B77;
+  background: dodgerblue;
   border: none;
   outline: none;
   color: white;
